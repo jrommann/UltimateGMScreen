@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Ultimate_GM_Screen.Magic_Items.UC_Add_Magic_Item"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ultimate_GM_Screen.Magic_Items"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Label x:Name="label" Content="Name" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Height="22"/>
+        <TextBox x:Name="nameText" Height="30" Margin="48,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="label1" Content="Description" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="descText" Margin="10,103,10,73" TextWrapping="Wrap" Text="" AcceptsReturn="True" FontSize="14"/>
+        <Label x:Name="label_Copy" Content="Source" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Height="29"/>
+        <TextBox x:Name="sourceText" Height="30" Margin="53,47,93,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="14"/>
+        <xctk:IntegerUpDown x:Name="pageNumber" Watermark="Page #" Minimum="0" AllowSpin="True" Height="29" VerticalAlignment="Top" Margin="0,48,10,0" HorizontalAlignment="Right" Width="78" DefaultValue="0" Background="#FF3E3E4D" Foreground="White" BorderBrush="#FF4A4A5E" FontSize="14" />
+        <Button x:Name="addBtn" Content="Add" Margin="73,0,10,9" Height="24" VerticalAlignment="Bottom" Click="addBtn_Click"/>
+        <CheckBox x:Name="clearEntriesCheckBox" Content="Clear" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Height="23" Width="58"/>
+        <Label x:Name="label_Copy1" Content="Tags" HorizontalAlignment="Left" Margin="10,0,0,33" VerticalAlignment="Bottom" Height="29"/>
+        <TextBox x:Name="tagsText" Height="30" Margin="48,0,10,38" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" FontSize="14"/>
+    </Grid>
+</UserControl>

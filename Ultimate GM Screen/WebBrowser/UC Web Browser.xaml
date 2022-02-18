@@ -12,12 +12,12 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="textBox" Text="TextBox" Grid.Row="0" Margin="0,0,85,5"/>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" Width="75" Click="button_Click"/>
+        <TextBox x:Name="addressbox" Text="" Grid.Row="0" Margin="0,0,65,5" KeyDown="addressbox_KeyDown"/>
+        <Button x:Name="refreshBtn" Content="Refresh" HorizontalAlignment="Right" Margin="0,0,0,5" Width="60" Click="RefreshBtn_Click"/>
 
 
 
-        <Wpf:WebView2 x:Name="browser" Grid.Row="1" Margin="5,0,5,5"/>
+        <Wpf:WebView2 x:Name="browser" Grid.Row="1" Margin="0"/>
 
 
 

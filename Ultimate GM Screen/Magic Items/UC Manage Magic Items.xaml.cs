@@ -62,7 +62,7 @@ namespace Ultimate_GM_Screen.Magic_Items
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var item = itemListBox.SelectedItem as MagicItem;
-            DatabaseManager.MagicItem_Delete(item);
+            DatabaseManager.Delete(item);
         }
 
         private void itemListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

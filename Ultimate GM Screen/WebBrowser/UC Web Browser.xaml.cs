@@ -25,9 +25,15 @@ namespace Ultimate_GM_Screen.WebBrowser
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-            browser.Source = new Uri(textBox.Text, UriKind.Absolute);
+            browser.Reload();
+        }
+
+        private void addressbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter || e.Key == Key.Return)
+                browser.Source = new Uri(addressbox.Text, UriKind.Absolute);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Ultimate_GM_Screen.Magic_Items
             item.PageNumber = pageNumber.Value.Value;
             item.Description = descText.Text;
             item.Tags = tagsText.Text;
-            DatabaseManager.MagicItem_Add(item);
+            DatabaseManager.Add(item);
         }
 
         void UpdateItem()
@@ -77,7 +77,7 @@ namespace Ultimate_GM_Screen.Magic_Items
             _currentItem.PageNumber = pageNumber.Value.Value;
             _currentItem.Description = descText.Text;
             _currentItem.Tags = tagsText.Text;
-            DatabaseManager.MagicItem_Update(_currentItem);
+            DatabaseManager.Update(_currentItem);
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)

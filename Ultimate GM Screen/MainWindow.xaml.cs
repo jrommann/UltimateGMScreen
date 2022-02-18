@@ -92,18 +92,6 @@ namespace Ultimate_GM_Screen
                         break;
                 }
             }
-        }
-
-        private void browserBtn_Click(object sender, RoutedEventArgs e)
-        {
-            browser.Visibility = Visibility.Visible;
-            magicItems.Visibility = Visibility.Hidden;
-        }
-
-        private void magicItemBtn_Click(object sender, RoutedEventArgs e)
-        {
-            browser.Visibility = Visibility.Hidden;
-            magicItems.Visibility = Visibility.Visible;
-        }
+        }       
     }
 }

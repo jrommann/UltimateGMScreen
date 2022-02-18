@@ -39,20 +39,12 @@ namespace Ultimate_GM_Screen.Entities
             textBox_path.Text = _current.Path;
             textBox_name.Text = _current.Name;
             textBox_tags.Text = _current.Tags;
-            textEditor_details.Text = _current.Details;
+            textEditor.Set(_current.Details);
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            _current.Path = textBox_path.Text;
-            _current.Name = textBox_name.Text;
-            _current.Tags = textBox_tags.Text;
-            _current.Details = textEditor_details.Text;
-
-            if (_edit)
-                DatabaseManager.Update(_current);
-            else
-                DatabaseManager.Add(_current);
+            Save();
         }
 
         private void newBtn_Click(object sender, RoutedEventArgs e)
@@ -64,5 +56,19 @@ namespace Ultimate_GM_Screen.Entities
                 textBox_path.Text = path;
             
         }
+
+        async void Save()
+        {
+            _current.Path = textBox_path.Text;
+            _current.Name = textBox_name.Text;
+            _current.Tags = textBox_tags.Text;
+            _current.Details = await textEditor.Get();
+
+            if (_edit)
+                DatabaseManager.Update(_current);
+            else
+                DatabaseManager.Add(_current);
+        }
+
     }
 }

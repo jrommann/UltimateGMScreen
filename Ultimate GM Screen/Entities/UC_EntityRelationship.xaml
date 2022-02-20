@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Ultimate_GM_Screen.Entities.UC_EntityRelationship"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Height="30">
+    <Grid>        
+        <DockPanel LastChildFill="False">
+            <Label Margin="0,0,5,0">
+                <Hyperlink x:Name="label_child_link" Click="label_child_link_Click">Label</Hyperlink>
+            </Label>
+            <Label x:Name="label_title" Content="Label" Margin="0,0,5,0"/>                  
+            <Button x:Name="button_delete" Content="Delete" Width="50" Height="30" DockPanel.Dock="Right" Margin="5,0,0,0"/>
+            <Button x:Name="button_edit" Content="Edit" Width="50" Height="30" DockPanel.Dock="Right" Margin="5,0,0,0"/>            
+        </DockPanel>
+    </Grid>
+</UserControl>

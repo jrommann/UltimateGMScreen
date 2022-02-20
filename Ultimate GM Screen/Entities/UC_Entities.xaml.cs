@@ -103,7 +103,7 @@ namespace Ultimate_GM_Screen.Entities
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             noteEditor.Load();
-            LoadTreeView(DatabaseManager.Entiies_GetAll());
+            try { LoadTreeView(DatabaseManager.Entiies_GetAll()); } catch { }
         }
 
         private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

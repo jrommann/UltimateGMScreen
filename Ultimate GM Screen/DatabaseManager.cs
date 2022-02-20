@@ -17,6 +17,9 @@ namespace Ultimate_GM_Screen
         public delegate void Event_EntitiesChanged(Entity specificItem = null);
         static public event Event_EntitiesChanged OnEntitiesChanged;
 
+        public delegate void Event_RelationshipsChanged(EntityRelationship specificItem = null);
+        static public event Event_RelationshipsChanged OnRelationshipsChanged;
+
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
@@ -25,6 +28,7 @@ namespace Ultimate_GM_Screen
             _db = new SQLiteConnection(filepath);
             _db.CreateTable<MagicItem>();
             _db.CreateTable<Entity>();
+            _db.CreateTable<EntityRelationship>();
         }
 
         #region -> public methods
@@ -56,6 +60,8 @@ namespace Ultimate_GM_Screen
                     OnMagicItemsChanged?.Invoke(item as MagicItem);
                 else if (item is Entity)
                     OnEntitiesChanged?.Invoke(item as Entity);
+                else if (item is EntityRelationship)
+                    OnRelationshipsChanged?.Invoke(item as EntityRelationship);
             }
             catch { return false; }
 
@@ -75,6 +81,8 @@ namespace Ultimate_GM_Screen
                     OnMagicItemsChanged?.Invoke();
                 else if (item is Entity)
                     OnEntitiesChanged?.Invoke();
+                else if (item is EntityRelationship)
+                    OnRelationshipsChanged?.Invoke();
             }
             catch { return false; }
 
@@ -94,6 +102,8 @@ namespace Ultimate_GM_Screen
                     OnMagicItemsChanged?.Invoke(item as MagicItem);
                 else if (item is Entity)
                     OnEntitiesChanged?.Invoke(item as Entity);
+                else if (item is EntityRelationship)
+                    OnRelationshipsChanged?.Invoke(item as EntityRelationship);
             }
             catch { return false; }
 
@@ -107,9 +117,25 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Query<Entity>("SELECT * FROM Entities");
+            var list = _db.Table<Entity>().ToList();
             list.Sort((x, y) => x.Name.CompareTo(y.Name));
             return list;
+        }
+
+        static public Entity Entity_FromID(int id)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return _db.Find<Entity>(x => x.ID == id);
+        }
+
+        static public List<EntityRelationship> EntityRelationship_GetAll(int parentID)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return _db.Table<EntityRelationship>().Where(t => t.ParentID == parentID).ToList();
         }
         #endregion
 

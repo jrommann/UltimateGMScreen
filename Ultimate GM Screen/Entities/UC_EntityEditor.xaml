@@ -1,26 +1,56 @@
-﻿<UserControl
+﻿<UserControl x:Class="Ultimate_GM_Screen.Entities.UC_EntityEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
-             xmlns:Ultimate_GM_Screen="clr-namespace:Ultimate_GM_Screen" x:Class="Ultimate_GM_Screen.Entities.UC_EntityEditor"
+             xmlns:Ultimate_GM_Screen="clr-namespace:Ultimate_GM_Screen" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ToolBarTray x:Name="toolBar" Height="29" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="300*"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ToolBarTray x:Name="toolBar" Height="29" VerticalAlignment="Top" Grid.Row="0">
             <ToolBar>
-                <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
                 <Button x:Name="saveBtn" Content="Save" Click="saveBtn_Click" />
+                <Button x:Name="copyBtn" Content="Copy" Click="copyBtn_Click" />
+                <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
+                <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>
             </ToolBar>
         </ToolBarTray>
-        <Label Content="Folder" HorizontalAlignment="Left" Margin="9,40,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox_path" Height="23" Margin="50,36,95,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <CheckBox x:Name="checkBox_keepPath" Content="Keep Path" HorizontalAlignment="Right" Margin="0,40,10,0" VerticalAlignment="Top" Width="80"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="12,66,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox_name" Height="23" Margin="50,64,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label Content="Tags" HorizontalAlignment="Left" Margin="20,95,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox_tags" Height="23" Margin="50,92,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Ultimate_GM_Screen:UC_TextEditor x:Name="textEditor" Margin="9,120,10,10"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Folder" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="2,8,0,0"/>
+            <TextBox Grid.Row="0" x:Name="textBox_path" Height="23" Margin="41,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Label Grid.Row="1" Content="Name" HorizontalAlignment="Left" Margin="5,8,0,0" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="1" x:Name="textBox_name" Height="23" Margin="41,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="356"/>
+            <Label Grid.Row="1" Content="Tags" Margin="411,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25"/>
+            <TextBox Grid.Row="1" x:Name="textBox_tags" Height="23" Margin="441,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        </Grid>
+        <Wpf:WebView2 x:Name="webView" Margin="2,5,10,10" Grid.Row="2"/>
+        <GridSplitter Grid.Row="3" Background="#FF3D3D4C"></GridSplitter>
+        <Grid Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Height="30">
+                <Button x:Name="button_addRelationship" Width="120" Content="Add Relationship" Click="button_addRelationship_Click"></Button>
+                
+            </StackPanel>
+            <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Margin="0">            
+                <DockPanel x:Name="dockpanel_relationships" LastChildFill="False">
+                    
+                </DockPanel>         
+        </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

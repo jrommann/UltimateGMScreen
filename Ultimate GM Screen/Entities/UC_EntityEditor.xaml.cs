@@ -26,6 +26,7 @@ namespace Ultimate_GM_Screen.Entities
         public UC_EntityEditor()
         {
             InitializeComponent();
+            InitializeAsync();
         }
 
         public void Load(Entity current=null, bool edit=false)
@@ -39,7 +40,11 @@ namespace Ultimate_GM_Screen.Entities
             textBox_path.Text = _current.Path;
             textBox_name.Text = _current.Name;
             textBox_tags.Text = _current.Tags;
-            textEditor.Set(_current.Details);
+            SetBrowserText(_current.Details);
+
+            var rList = DatabaseManager.EntityRelationship_GetAll(_current.ID);
+            foreach (var r in rList)
+                Relationship_Add(r);
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
@@ -62,7 +67,7 @@ namespace Ultimate_GM_Screen.Entities
             _current.Path = textBox_path.Text;
             _current.Name = textBox_name.Text;
             _current.Tags = textBox_tags.Text;
-            _current.Details = await textEditor.Get();
+            _current.Details = await GetBrowserText();
 
             if (_edit)
                 DatabaseManager.Update(_current);
@@ -70,5 +75,69 @@ namespace Ultimate_GM_Screen.Entities
                 DatabaseManager.Add(_current);
         }
 
+        private void copyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _current = new Entity();
+            _edit = false;
+            textBox_name.Text += "(Copy)";
+            Save();
+            Load(_current, true);
+        }
+
+        bool _webInit = false;       
+                
+
+        private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (_webInit)
+                SetBrowserText(_current.Details);
+        }
+
+        async void InitializeAsync()
+        {
+            await webView.EnsureCoreWebView2Async(null);
+            _webInit = true;
+
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tinymce\\index.html");
+            webView.Source = new Uri("file:///" + path);
+            webView.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);
+            webView.NavigationCompleted += WebView_NavigationCompleted;
+
+            if (App.Current.MainWindow != null)
+                SizeChanged += UserControl_SizeChanged;
+        }
+
+        void SetBrowserText(string text)
+        {            
+            webView.ExecuteScriptAsync(string.Format("set('{0}')", text));
+        }
+
+        async Task<string> GetBrowserText()
+        {
+            string result = await webView.ExecuteScriptAsync(@"save()");
+            result = result.Remove(0, 1).Remove(result.Length - 2, 1);
+            return result;
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {         
+            if (_webInit)
+                webView.Reload();
+        }  
+        private void button_addRelationship_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new Window_EditRelationship();
+            w.Load(_current, null, false);
+            if (w.ShowDialog().Value)
+                Relationship_Add(w.Relationship);
+        }
+
+        void Relationship_Add(EntityRelationship rel)
+        {
+            var r = new UC_EntityRelationship();
+            r.Load(rel);
+            DockPanel.SetDock(r, Dock.Top);
+            dockpanel_relationships.Children.Add(r);
+        }
     }
 }

@@ -76,6 +76,8 @@ namespace Ultimate_GM_Screen
             try
             {
                 _db.Delete(item);
+                if (item is Entity)
+                    Delete_Relationships(item as Entity);
 
                 if (item is MagicItem)
                     OnMagicItemsChanged?.Invoke();
@@ -87,6 +89,13 @@ namespace Ultimate_GM_Screen
             catch { return false; }
 
             return true;
+        }
+
+        static public void Delete_Relationships(Entity e)
+        {
+            var list = EntityRelationship_GetAll(e.ID);
+            foreach (var r in list)
+                Delete(r);
         }
 
         static public bool Update(object item)

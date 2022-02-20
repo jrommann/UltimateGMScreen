@@ -21,6 +21,8 @@ namespace Ultimate_GM_Screen.Entities
     /// </summary>
     public partial class UC_Entities : UserControl
     {
+        Entity _currentEntity;
+
         public UC_Entities()
         {
             InitializeComponent();
@@ -34,14 +36,17 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)
-        {
-
+        {            
+            if(_currentEntity != null)
+                DatabaseManager.Delete(_currentEntity);
         }
 
         void LoadTreeView(List<Entity> entries)
         {
             var parents = new List<Dictionary<string, TreeViewItem>>();
             treeView.Items.Clear();
+
+            #region -> build tree
             foreach (var e in entries)
             {
                 if (!string.IsNullOrEmpty(e.Path))
@@ -58,7 +63,6 @@ namespace Ultimate_GM_Screen.Entities
                             parent = parents[i][split[i]];
                         else
                         {
-
                             var p = new TreeViewItem();
                             p.Header = split[i];
                             p.IsExpanded = true;
@@ -72,13 +76,35 @@ namespace Ultimate_GM_Screen.Entities
                             parent = p;
                         }
                     }
-                    #endregion
+                    #endregion     
+                }
+            }
+            #endregion
 
-                    parent?.Items.Add(e);
+            #region -> populate tree
+            foreach (var e in entries)
+            {
+                if (!string.IsNullOrEmpty(e.Path))
+                {                    
+                    string path = string.Format("{0}/{1}", e.Path, e.Name);
+                    var split = path.Split('/');
+                    TreeViewItem parent = null;
+                    int pCount = parents.Count;
+                    for (int i = 0; i < split.Length; i++)
+                    {
+                        if (i<pCount && parents[i].ContainsKey(split[i]))
+                            parent = parents[i][split[i]];   
+                    }
+
+                    if (parent.Header as string == e.Name)
+                        parent.Header = e;
+                    else
+                        parent.Items.Add(e);
                 }
                 else
-                    treeView.Items.Add(e);
+                    treeView.Items.Add(e);                
             }
+            #endregion
 
             try
             {
@@ -104,12 +130,61 @@ namespace Ultimate_GM_Screen.Entities
         {
             noteEditor.Load();
             try { LoadTreeView(DatabaseManager.Entiies_GetAll()); } catch { }
+            Loaded -= UserControl_Loaded;
         }
 
         private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (e.NewValue is Entity)
-                noteEditor.Load(e.NewValue as Entity, true);
+                ChangeNote(e.NewValue as Entity, true);
+            else if (e.NewValue is TreeViewItem)
+            {
+                var t = e.NewValue as TreeViewItem;
+                if (t.Header is Entity)
+                    ChangeNote(t.Header as Entity, true);
+                else
+                    ChangeNote(BuildNewEnt(e.NewValue as TreeViewItem), false);
+            }
+        }
+
+        Entity BuildNewEnt(TreeViewItem target)
+        {
+            return null;
+
+            Entity t = new Entity();
+            t.Name = target.Header as string;
+            StringBuilder path = new StringBuilder();
+
+            foreach (object n in treeView.Items)
+            {
+                if(n is TreeViewItem)
+                    PrintRecursive(n as TreeViewItem, target, path);
+            }
+
+            t.Path = path.ToString();
+            return t;
+        }
+        private void PrintRecursive(TreeViewItem treeNode, TreeViewItem target, StringBuilder sb)
+        {
+            if (treeNode == target)
+            {
+                sb.Append(treeNode.Header);
+                return;
+            }
+
+            // Visit each node recursively.  
+            foreach (TreeViewItem n in treeNode.Items)
+            {
+                if (n is TreeViewItem)
+                    PrintRecursive(n as TreeViewItem, target, sb);
+            }
+        }
+
+        async void ChangeNote(Entity ent, bool edit)
+        {            
+            await noteEditor.Save();
+            noteEditor.Load(ent, edit);
+            _currentEntity = ent;
         }
     }
 }

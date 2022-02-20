@@ -1,0 +1,14 @@
+﻿<adonisControls:AdonisWindow x:Class="Ultimate_GM_Screen.Entities.Window_Entity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
+        mc:Ignorable="d"
+        Title="Window_Entity" Height="450" Width="800" Closing="AdonisWindow_Closing">
+    <Grid>
+        <local:UC_EntityEditor x:Name="entityEditor"/>
+    </Grid>
+</adonisControls:AdonisWindow>

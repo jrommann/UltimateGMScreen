@@ -252,6 +252,9 @@
     <Compile Include="Entities\UC_EntityRelationship.xaml.cs">
       <DependentUpon>UC_EntityRelationship.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Window_Entity.xaml.cs">
+      <DependentUpon>Window_Entity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Magic Items\MagicItem.cs" />
     <Compile Include="Magic Items\UC Add Magic Item.xaml.cs">
       <DependentUpon>UC Add Magic Item.xaml</DependentUpon>
@@ -275,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Entities\UC_EntityRelationship.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Entities\Window_Entity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -46,7 +46,7 @@ namespace Ultimate_GM_Screen
                         MessageBoxButtons.Custom("Open Existing", OPEN_BTN),
                         MessageBoxButtons.Custom("Create New", CREATE_BTN),
                     },
-                    IsSoundEnabled = false,
+                    IsSoundEnabled = false,                    
                 };
                 #endregion
 

@@ -38,17 +38,20 @@ namespace Ultimate_GM_Screen.Entities
 
         private void label_child_link_Click(object sender, RoutedEventArgs e)
         {
-
+            var w = new Window_Entity();
+            w.Load(_relationship.Child);
+            w.Show();
         }
 
         private void button_edit_Click(object sender, RoutedEventArgs e)
         {
-
+            var w = new Window_EditRelationship();
+            w.Load(_relationship.Parent, _relationship, true);            
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)
         {
-
+            DatabaseManager.Delete(_relationship);
         }
     }
 }

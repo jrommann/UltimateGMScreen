@@ -135,13 +135,16 @@ namespace Ultimate_GM_Screen.Entities
 
         private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (e.NewValue is Entity)
-                ChangeNote(e.NewValue as Entity, true);
-            else if (e.NewValue is TreeViewItem)
+            if (e.NewValue != null)
             {
-                var t = e.NewValue as TreeViewItem;
-                if (t.Header is Entity)
-                    ChangeNote(t.Header as Entity, true);
+                if (e.NewValue is Entity)
+                    ChangeNote(e.NewValue as Entity, true);
+                else if (e.NewValue is TreeViewItem)
+                {
+                    var t = e.NewValue as TreeViewItem;
+                    if (t.Header is Entity)
+                        ChangeNote(t.Header as Entity, true);
+                }
             }
         }
 

@@ -10,8 +10,8 @@
       tinymce.init({
           selector: '#mytextarea',
           plugins: 'hr lists advlist table',
-          toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent hr',
-          menubar: 'table tools',
+          toolbar: 'styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent hr',
+          menubar: 'table',
           skin: 'oxide-dark',
           content_css: 'dark',
           browser_spellcheck: true,
@@ -25,7 +25,8 @@
             return editor.getContent();
         }
 
-        function set(text) {
+        function set(text)
+        {
             var editor = tinymce.get('mytextarea');
             editor.setContent(text);
         }

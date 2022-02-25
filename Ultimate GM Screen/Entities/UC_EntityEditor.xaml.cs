@@ -62,9 +62,9 @@ namespace Ultimate_GM_Screen.Entities
             catch { }
         }
 
-        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        async private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            Save();
+            await Save();
         }
 
         private void newBtn_Click(object sender, RoutedEventArgs e)
@@ -96,19 +96,19 @@ namespace Ultimate_GM_Screen.Entities
             _edit = true;
         }
 
-        private void copyBtn_Click(object sender, RoutedEventArgs e)
+        async private void copyBtn_Click(object sender, RoutedEventArgs e)
         {
             _current = new Entity();
             _edit = false;
             textBox_name.Text += "(Copy)";
-            Save();
-            Load(_current, false);
+            await Save();
+            Load(_current, true);
         }
 
         bool _webInit = false;       
                 
 
-        private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        async private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (_webInit)
                 SetBrowserText(_current.Details);
@@ -128,8 +128,9 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         void SetBrowserText(string text)
-        {            
-            webView.ExecuteScriptAsync(string.Format("set('{0}')", text));
+        {
+            if (_webInit)
+                webView.ExecuteScriptAsync(string.Format("set(\"{0}\")", text));    
         }
 
         async Task<string> GetBrowserText()

@@ -43,10 +43,7 @@ namespace Ultimate_GM_Screen.Entities
         {            
             _edit = edit;
             if (current == null)
-            {
                 _current = new Entity();
-                _current.Name = "Note " + DatabaseManager.Entity_Count();
-            }
             else
                 _current = current;
 
@@ -56,9 +53,13 @@ namespace Ultimate_GM_Screen.Entities
             SetBrowserText(_current.Details);
 
             dockpanel_relationships.Children.Clear();
-            var rList = DatabaseManager.EntityRelationship_GetAll(_current.ID);
-            foreach (var r in rList)
-                Relationship_Add(r);
+            try
+            {
+                var rList = DatabaseManager.EntityRelationship_GetAll(_current.ID);
+                foreach (var r in rList)
+                    Relationship_Add(r);
+            }
+            catch { }
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
@@ -71,9 +72,10 @@ namespace Ultimate_GM_Screen.Entities
             string path = textBox_path.Text;
             Load();
 
+            textBox_name.Text = "Note " + DatabaseManager.Entity_Count();
+
             if (checkBox_keepPath.IsChecked.Value)
-                textBox_path.Text = path;
-            
+                textBox_path.Text = path;           
         }
 
         public async Task Save()
@@ -100,7 +102,7 @@ namespace Ultimate_GM_Screen.Entities
             _edit = false;
             textBox_name.Text += "(Copy)";
             Save();
-            Load(_current, true);
+            Load(_current, false);
         }
 
         bool _webInit = false;       
@@ -146,8 +148,7 @@ namespace Ultimate_GM_Screen.Entities
         {
             var w = new Window_EditRelationship();
             w.Load(_current, null, false);
-            if (w.ShowDialog().Value)
-                Relationship_Add(w.Relationship);
+            w.ShowDialog();
         }
 
         void Relationship_Add(EntityRelationship rel)

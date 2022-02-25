@@ -8,7 +8,7 @@
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:Magic_Items="clr-namespace:Ultimate_GM_Screen.Magic_Items" xmlns:WebBrowser="clr-namespace:Ultimate_GM_Screen.WebBrowser" xmlns:Entities="clr-namespace:Ultimate_GM_Screen.Entities" xmlns:Resources="clr-namespace:Ultimate_GM_Screen.Resources" x:Class="Ultimate_GM_Screen.MainWindow"
         mc:Ignorable="d"
-        Title="Ultimate GM Screen" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="Ultimate GM Screen" Height="450" Width="800" Loaded="Window_Loaded" WindowState="Maximized">
     <Grid>
         <TabControl x:Name="tabControl" Margin="0 ">
             <TabItem Header="Tabletop">

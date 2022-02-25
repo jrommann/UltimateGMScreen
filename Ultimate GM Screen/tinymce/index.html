@@ -9,8 +9,14 @@
     <script>
       tinymce.init({
           selector: '#mytextarea',
-          skin: (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oxide-dark' : 'oxide'),
-          content_css: (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'),
+          plugins: 'hr lists advlist table',
+          toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent hr',
+          menubar: 'table tools',
+          skin: 'oxide-dark',
+          content_css: 'dark',
+          browser_spellcheck: true,
+          statusbar: false,
+          indentation: '20px',
       });
 
         function save()

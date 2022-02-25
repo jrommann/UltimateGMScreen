@@ -97,8 +97,8 @@ namespace Ultimate_GM_Screen.Resources
 
         private void button_go_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(textbox_address.Text))
-                browser.Source = new Uri(textbox_address.Text);
+            if (!string.IsNullOrEmpty(textbox_address.Text))
+                try { browser.Source = new Uri(textbox_address.Text); } catch { }
         }
 
         private void button_browse_Click(object sender, RoutedEventArgs e)

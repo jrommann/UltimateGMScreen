@@ -27,7 +27,8 @@ namespace Ultimate_GM_Screen.WebBrowser
 
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-            browser.Reload();
+            if(browser.Source != null)
+                browser.Reload();
         }
 
         private void addressbox_KeyDown(object sender, KeyEventArgs e)

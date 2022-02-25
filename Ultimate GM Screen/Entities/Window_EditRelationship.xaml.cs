@@ -29,7 +29,7 @@ namespace Ultimate_GM_Screen.Entities
         {
             InitializeComponent();
 
-            listBox_choices.ItemsSource = DatabaseManager.Entiies_GetAll();
+            listBox_choices.ItemsSource = DatabaseManager.Entities_GetAll();
         }
 
         public void Load(Entity parent, EntityRelationship rel, bool isEdit)

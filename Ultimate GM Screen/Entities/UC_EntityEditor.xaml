@@ -13,7 +13,7 @@
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="300*"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
-            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="200*"></RowDefinition>
         </Grid.RowDefinitions>
         <ToolBarTray x:Name="toolBar" Height="29" VerticalAlignment="Top" Grid.Row="0">
             <ToolBar>

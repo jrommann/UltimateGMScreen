@@ -14,34 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ultimate_GM_Screen.Entities
+namespace Ultimate_GM_Screen.Resources
 {
     /// <summary>
-    /// Interaction logic for UC_Entities.xaml
+    /// Interaction logic for UC_Resources.xaml
     /// </summary>
-    public partial class UC_Entities : UserControl
+    public partial class UC_Resources : UserControl
     {
-        Entity _currentEntity;
+        Resource _currentResource;
+        bool _loaded = false;
 
-        public UC_Entities()
+        public UC_Resources()
         {
             InitializeComponent();
-
-            DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
+            
+            DatabaseManager.OnResourcesChanged += DatabaseManager_OnResourcesChanged;
         }
 
-        private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null)
-        {            
-            LoadTreeView(DatabaseManager.Entities_GetAll());
+        private void DatabaseManager_OnResourcesChanged(Resource specificItem = null)
+        {
+            LoadTreeView(DatabaseManager.Resources_GetAll());
         }
 
-        private void button_delete_Click(object sender, RoutedEventArgs e)
-        {            
-            if(_currentEntity != null)
-                DatabaseManager.Delete(_currentEntity);
-        }
-
-        void LoadTreeView(List<Entity> entries)
+        void LoadTreeView(List<Resource> entries)
         {
             var parents = new List<Dictionary<string, TreeViewItem>>();
             treeView.Items.Clear();
@@ -85,15 +80,15 @@ namespace Ultimate_GM_Screen.Entities
             foreach (var e in entries)
             {
                 if (!string.IsNullOrEmpty(e.Path))
-                {                    
+                {
                     string path = string.Format("{0}/{1}", e.Path, e.Name);
                     var split = path.Split('/');
                     TreeViewItem parent = null;
                     int pCount = parents.Count;
                     for (int i = 0; i < split.Length; i++)
                     {
-                        if (i<pCount && parents[i].ContainsKey(split[i]))
-                            parent = parents[i][split[i]];   
+                        if (i < pCount && parents[i].ContainsKey(split[i]))
+                            parent = parents[i][split[i]];
                     }
 
                     if (parent.Header as string == e.Name)
@@ -102,7 +97,7 @@ namespace Ultimate_GM_Screen.Entities
                         parent.Items.Add(e);
                 }
                 else
-                    treeView.Items.Add(e);                
+                    treeView.Items.Add(e);
             }
             #endregion
 
@@ -116,7 +111,7 @@ namespace Ultimate_GM_Screen.Entities
                     {
                         kv.Value.Items.SortDescriptions.Clear();
 
-                        if (kv.Value.Items[0] is Entity)
+                        if (kv.Value.Items[0] is Resource)
                             kv.Value.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                         else
                             kv.Value.Items.SortDescriptions.Add(new SortDescription("Header", ListSortDirection.Ascending));
@@ -126,30 +121,41 @@ namespace Ultimate_GM_Screen.Entities
             catch { }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            noteEditor.Load();
-            try { LoadTreeView(DatabaseManager.Entities_GetAll()); } catch { }
-            Loaded -= UserControl_Loaded;
-        }
-
         private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (e.NewValue is Entity)
-                ChangeNote(e.NewValue as Entity, true);
+            if (e.NewValue is Resource)
+                ChangeResource(e.NewValue as Resource, true);
             else if (e.NewValue is TreeViewItem)
             {
                 var t = e.NewValue as TreeViewItem;
-                if (t.Header is Entity)
-                    ChangeNote(t.Header as Entity, true);
+                if (t.Header is Resource)
+                    ChangeResource(t.Header as Resource, true);
             }
         }
 
-        async void ChangeNote(Entity ent, bool edit)
-        {            
-            await noteEditor.Save();
-            noteEditor.Load(ent, edit);
-            _currentEntity = ent;
+        void ChangeResource(Resource res, bool edit)
+        {
+            resourceEditor.Save();
+            resourceEditor.Load(res, edit);
+            _currentResource = res;
+        }
+
+        private void button_delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentResource != null)
+            {
+                DatabaseManager.Delete(_currentResource);
+                _currentResource = null;
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_loaded)
+                return;
+
+            try { LoadTreeView(DatabaseManager.Resources_GetAll()); } catch { }
+            _loaded = true;
         }
     }
 }

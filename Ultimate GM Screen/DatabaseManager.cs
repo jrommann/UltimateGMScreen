@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ultimate_GM_Screen.Magic_Items;
 using Ultimate_GM_Screen.Entities;
+using Ultimate_GM_Screen.Resources;
 
 namespace Ultimate_GM_Screen
 {
@@ -20,6 +21,9 @@ namespace Ultimate_GM_Screen
         public delegate void Event_RelationshipsChanged(EntityRelationship specificItem = null);
         static public event Event_RelationshipsChanged OnRelationshipsChanged;
 
+        public delegate void Event_ResourcesChanged(Resource specificItem = null);
+        static public event Event_ResourcesChanged OnResourcesChanged;
+
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
@@ -29,6 +33,7 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<MagicItem>();
             _db.CreateTable<Entity>();
             _db.CreateTable<EntityRelationship>();
+            _db.CreateTable<Resource>();
         }
 
         #region -> public methods
@@ -62,6 +67,8 @@ namespace Ultimate_GM_Screen
                     OnEntitiesChanged?.Invoke(item as Entity);
                 else if (item is EntityRelationship)
                     OnRelationshipsChanged?.Invoke(item as EntityRelationship);
+                else if (item is Resource)
+                    OnResourcesChanged?.Invoke(item as Resource);
             }
             catch { return false; }
 
@@ -85,18 +92,15 @@ namespace Ultimate_GM_Screen
                     OnEntitiesChanged?.Invoke();
                 else if (item is EntityRelationship)
                     OnRelationshipsChanged?.Invoke();
+                else if (item is Resource)
+                    OnResourcesChanged?.Invoke();
             }
             catch { return false; }
 
             return true;
         }
 
-        static public void Delete_Relationships(Entity e)
-        {
-            var list = EntityRelationship_GetAll(e.ID);
-            foreach (var r in list)
-                Delete(r);
-        }
+        
 
         static public bool Update(object item)
         {
@@ -113,15 +117,47 @@ namespace Ultimate_GM_Screen
                     OnEntitiesChanged?.Invoke(item as Entity);
                 else if (item is EntityRelationship)
                     OnRelationshipsChanged?.Invoke(item as EntityRelationship);
+                else if (item is Resource)
+                    OnResourcesChanged?.Invoke(item as Resource);
             }
             catch { return false; }
 
             return true;
         }
         #endregion
+        static void Delete_Relationships(Entity e)
+        {
+            var list = EntityRelationship_GetAll(e.ID);
+            foreach (var r in list)
+                Delete(r);
+        }
+
+        #region -> resource specific
+        static public int Resource_Count()
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+            return _db.Table<Resource>().Count();
+        }
+        static public List<Resource> Resources_GetAll()
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            var list = _db.Table<Resource>().ToList();
+            list.Sort((x, y) => x.Name.CompareTo(y.Name));
+            return list;
+        }
+        #endregion
 
         #region -> entity specific
-        static public List<Entity> Entiies_GetAll()
+        static public int Entity_Count()
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+            return _db.Table<Entity>().Count();
+        }
+        static public List<Entity> Entities_GetAll()
         {
             if (_db == null)
                 throw new Exception("Database NOT opened");

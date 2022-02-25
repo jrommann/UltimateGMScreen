@@ -43,7 +43,10 @@ namespace Ultimate_GM_Screen.Entities
         {            
             _edit = edit;
             if (current == null)
+            {
                 _current = new Entity();
+                _current.Name = "Note " + DatabaseManager.Entity_Count();
+            }
             else
                 _current = current;
 
@@ -87,6 +90,8 @@ namespace Ultimate_GM_Screen.Entities
                 DatabaseManager.Update(_current);
             else
                 DatabaseManager.Add(_current);
+
+            _edit = true;
         }
 
         private void copyBtn_Click(object sender, RoutedEventArgs e)

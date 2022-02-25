@@ -108,7 +108,7 @@ namespace Ultimate_GM_Screen.Entities
         bool _webInit = false;       
                 
 
-        async private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (_webInit)
                 SetBrowserText(_current.Details);
@@ -123,8 +123,6 @@ namespace Ultimate_GM_Screen.Entities
             webView.Source = new Uri("file:///" + path);
             webView.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);
             webView.NavigationCompleted += WebView_NavigationCompleted;
-
-            SizeChanged += UserControl_SizeChanged;
         }
 
         void SetBrowserText(string text)
@@ -139,12 +137,7 @@ namespace Ultimate_GM_Screen.Entities
             result = result.Remove(0, 1).Remove(result.Length - 2, 1);
             return result;
         }
-
-        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (_webInit)
-                try { webView.Reload(); } catch { }
-        }  
+        
         private void button_addRelationship_Click(object sender, RoutedEventArgs e)
         {
             var w = new Window_EditRelationship();
@@ -158,6 +151,19 @@ namespace Ultimate_GM_Screen.Entities
             r.Load(rel);
             DockPanel.SetDock(r, Dock.Top);
             dockpanel_relationships.Children.Add(r);
+        }
+
+        private void popoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new Window_Entity();
+            w.Load(_current);
+            w.Show();
+        }     
+
+        private void webView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_webInit)
+                try { webView.Reload(); } catch { }
         }
     }
 }

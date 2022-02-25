@@ -154,5 +154,22 @@ namespace Ultimate_GM_Screen.Entities
             noteEditor.Load(ent, edit);
             _currentEntity = ent;
         }
+
+        private void treeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = Common.VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+            if (treeViewItem != null)
+            {
+                e.Handled = true;
+                if (treeViewItem.Header is Entity)
+                {
+                    var w = new Window_Entity();
+                    w.Load(treeViewItem.Header as Entity);
+                    w.Show();
+                }
+            }
+        }
+        
     }
 }

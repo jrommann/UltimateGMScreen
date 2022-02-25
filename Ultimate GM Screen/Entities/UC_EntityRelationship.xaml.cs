@@ -46,7 +46,8 @@ namespace Ultimate_GM_Screen.Entities
         private void button_edit_Click(object sender, RoutedEventArgs e)
         {
             var w = new Window_EditRelationship();
-            w.Load(_relationship.Parent, _relationship, true);            
+            w.Load(_relationship.Parent, _relationship, true);
+            w.ShowDialog();
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)

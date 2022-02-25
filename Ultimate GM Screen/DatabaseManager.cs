@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Ultimate_GM_Screen.Magic_Items;
 using Ultimate_GM_Screen.Entities;
 using Ultimate_GM_Screen.Resources;
+using System.Windows;
 
 namespace Ultimate_GM_Screen
 {
@@ -95,7 +96,7 @@ namespace Ultimate_GM_Screen
                 else if (item is Resource)
                     OnResourcesChanged?.Invoke();
             }
-            catch { return false; }
+            catch(SystemException x) { MessageBox.Show(x.ToString()); return false; }
 
             return true;
         }

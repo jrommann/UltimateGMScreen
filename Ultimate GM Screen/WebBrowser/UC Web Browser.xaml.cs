@@ -20,9 +20,28 @@ namespace Ultimate_GM_Screen.WebBrowser
     /// </summary>
     public partial class UC_Web_Browser : UserControl
     {
+        public string StartingAddress { get; set; }
+        bool _webInit = false;
+
         public UC_Web_Browser()
         {
             InitializeComponent();
+            InitializeAsync();                
+        }
+
+        async void InitializeAsync()
+        {
+            await browser.EnsureCoreWebView2Async(null);
+            _webInit = true;
+
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tinymce\\index.html");
+            browser.Source = new Uri("file:///" + path);
+            browser.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);
+            if (!string.IsNullOrEmpty(StartingAddress))
+            {
+                browser.Source = new Uri(StartingAddress);
+                addressbox.Text = StartingAddress;
+            }
         }
 
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)

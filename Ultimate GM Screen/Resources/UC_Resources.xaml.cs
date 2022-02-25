@@ -157,5 +157,21 @@ namespace Ultimate_GM_Screen.Resources
             try { LoadTreeView(DatabaseManager.Resources_GetAll()); } catch { }
             _loaded = true;
         }
+
+        private void treeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = Common.VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+            if (treeViewItem != null)
+            {                
+                e.Handled = true;
+                if (treeViewItem.Header is Resource)
+                {
+                    var w = new Window_Resource();
+                    w.Load(treeViewItem.Header as Resource);
+                    w.Show();
+                }
+            }
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Ultimate_GM_Screen
         public MainWindow()
         {
             InitializeComponent();
+            browser.StartingAddress = Properties.Settings.Default.TableTopAddress;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -91,7 +92,13 @@ namespace Ultimate_GM_Screen
                         }
                         break;
                 }
-            }
-        }       
+            }            
+        }
+
+        private void AdonisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.TableTopAddress = browser.browser.Source.ToString();
+            Properties.Settings.Default.Save();
+        }
     }
 }

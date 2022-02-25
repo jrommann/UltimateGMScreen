@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>        
         <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
-        <TreeView x:Name="treeView" Margin="10,10,10,39" SelectedItemChanged="treeView_SelectedItemChanged">
+        <TreeView x:Name="treeView" Margin="10,10,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
             </TreeView.Resources>

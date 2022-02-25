@@ -10,9 +10,9 @@ namespace Ultimate_GM_Screen.Entities
     [Table("EntityRelationships")]
     public class EntityRelationship
     {
-        [Unique]
-        public int ParentID { get; set; }
-        [Unique]
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }        
+        public int ParentID { get; set; }       
         public int ChildID { get; set; }
         public string Description { get; set; }
 

@@ -20,6 +20,7 @@
                 <Button x:Name="saveBtn" Content="Save" Click="saveBtn_Click" />
                 <Button x:Name="copyBtn" Content="Copy" Click="copyBtn_Click" />
                 <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
+                <Button x:Name="popoutBtn" Content="Popout" Click="popoutBtn_Click"/>
                 <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>
             </ToolBar>
         </ToolBarTray>
@@ -35,7 +36,7 @@
             <Label Grid.Row="1" Content="Tags" Margin="411,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25"/>
             <TextBox Grid.Row="1" x:Name="textBox_tags" Height="23" Margin="441,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>
-        <Wpf:WebView2 x:Name="webView" Margin="2,5,10,10" Grid.Row="2"/>
+        <Wpf:WebView2 x:Name="webView" Margin="2,5,10,10" Grid.Row="2" SizeChanged="webView_SizeChanged"/>
         <GridSplitter Grid.Row="3" Background="#FF3D3D4C"></GridSplitter>
         <Grid Grid.Row="4">
             <Grid.RowDefinitions>

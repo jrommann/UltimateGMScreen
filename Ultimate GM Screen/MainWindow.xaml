@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ultimate_GM_Screen"
+        xmlns:local="clr-namespace:Ultimate_GM_Screen"                             
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:Magic_Items="clr-namespace:Ultimate_GM_Screen.Magic_Items" xmlns:WebBrowser="clr-namespace:Ultimate_GM_Screen.WebBrowser" xmlns:Entities="clr-namespace:Ultimate_GM_Screen.Entities" xmlns:Resources="clr-namespace:Ultimate_GM_Screen.Resources" x:Class="Ultimate_GM_Screen.MainWindow"
         mc:Ignorable="d"
         Title="Ultimate GM Screen" Height="450" Width="800" Loaded="Window_Loaded" WindowState="Maximized" Closing="AdonisWindow_Closing">
     <Grid>
-        <TabControl x:Name="tabControl" Margin="0 ">
+        <TabControl x:Name="tabControl" Margin="0">            
             <TabItem Header="Tabletop">
                 <Grid>
                     <WebBrowser:UC_Web_Browser x:Name="browser" />

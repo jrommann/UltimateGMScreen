@@ -20,11 +20,14 @@ namespace Ultimate_GM_Screen.Entities
     /// </summary>
     public partial class UC_EntityEditor : UserControl
     {
+        public static RoutedCommand SaveCommand = new RoutedCommand();
         Entity _current = new Entity();
         bool _edit = false;
 
         public UC_EntityEditor()
         {
+            SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
+
             InitializeComponent();
             InitializeAsync();
 
@@ -163,7 +166,19 @@ namespace Ultimate_GM_Screen.Entities
         private void webView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_webInit)
+            {                
                 try { webView.Reload(); } catch { }
+            }
+        }
+
+        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            
+        }
+
+        private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Save();
         }
     }
 }

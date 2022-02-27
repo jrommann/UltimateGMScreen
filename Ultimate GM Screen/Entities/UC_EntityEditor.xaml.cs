@@ -23,7 +23,7 @@ namespace Ultimate_GM_Screen.Entities
         public static RoutedCommand SaveCommand = new RoutedCommand();
         Entity _current = new Entity();
         bool _edit = false;
-
+        bool _webInit = false;
         public UC_EntityEditor()
         {
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
@@ -86,29 +86,54 @@ namespace Ultimate_GM_Screen.Entities
             if (string.IsNullOrEmpty(textBox_name.Text))
                 return;
 
-            _current.Path = textBox_path.Text;
-            _current.Name = textBox_name.Text;
-            _current.Tags = textBox_tags.Text;
-            _current.Details = await GetBrowserText();
+            bool save = false;
 
-            if (_edit)
-                DatabaseManager.Update(_current);
-            else
-                DatabaseManager.Add(_current);
+            if (_current.Path != textBox_path.Text)
+            {
+                save = true;
+                _current.Path = textBox_path.Text;
+            }
 
-            _edit = true;
+            if (_current.Name != textBox_name.Text)
+            {
+                save = true;
+                _current.Name = textBox_name.Text;
+            }
+
+            if (_current.Tags != textBox_tags.Text)
+            {
+                save = true;
+                _current.Tags = textBox_tags.Text;
+            }
+
+            string text = await GetBrowserText();
+            if (_current.Details != text)
+            {
+                save = true;
+                _current.Details = text;
+            }
+
+            if (save)
+            {
+                if (_edit)
+                    DatabaseManager.Update(_current);
+                else
+                    DatabaseManager.Add(_current);
+
+                _edit = true;
+            }
         }
 
         async private void copyBtn_Click(object sender, RoutedEventArgs e)
         {
             _current = new Entity();
             _edit = false;
-            textBox_name.Text += "(Copy)";
+            textBox_name.Text += "(Copy)";                
             await Save();
             Load(_current, true);
         }
 
-        bool _webInit = false;       
+        
                 
 
         private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
@@ -166,19 +191,19 @@ namespace Ultimate_GM_Screen.Entities
         private void webView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_webInit)
-            {                
+            {               
                 try { webView.Reload(); } catch { }
             }
+        }        
+
+        async private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            await Save();
         }
 
-        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        async private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            Save();
+            await Save();
         }
     }
 }

@@ -8,6 +8,10 @@ using Ultimate_GM_Screen.Magic_Items;
 using Ultimate_GM_Screen.Entities;
 using Ultimate_GM_Screen.Resources;
 using System.Windows;
+using ToastNotifications;
+using ToastNotifications.Position;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
 
 namespace Ultimate_GM_Screen
 {
@@ -28,6 +32,8 @@ namespace Ultimate_GM_Screen
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
+        static Notifier _notifier;
+
         DatabaseManager(string filepath)
         {
             _db = new SQLiteConnection(filepath);
@@ -35,6 +41,21 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<Entity>();
             _db.CreateTable<EntityRelationship>();
             _db.CreateTable<Resource>();
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.BottomLeft,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(1),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
 
         #region -> public methods
@@ -61,17 +82,14 @@ namespace Ultimate_GM_Screen
             try
             {
                 _db.Insert(item);
-
-                if (item is MagicItem)
-                    OnMagicItemsChanged?.Invoke(item as MagicItem);
-                else if (item is Entity)
-                    OnEntitiesChanged?.Invoke(item as Entity);
-                else if (item is EntityRelationship)
-                    OnRelationshipsChanged?.Invoke(item as EntityRelationship);
-                else if (item is Resource)
-                    OnResourcesChanged?.Invoke(item as Resource);
+                TriggerEvents(item);
+                
             }
-            catch { return false; }
+            catch (System.Exception x)
+            {
+                MessageBox.Show(x.ToString());
+                return false;
+            }
 
             return true;
         }
@@ -87,21 +105,16 @@ namespace Ultimate_GM_Screen
                 if (item is Entity)
                     Delete_Relationships(item as Entity);
 
-                if (item is MagicItem)
-                    OnMagicItemsChanged?.Invoke();
-                else if (item is Entity)
-                    OnEntitiesChanged?.Invoke();
-                else if (item is EntityRelationship)
-                    OnRelationshipsChanged?.Invoke();
-                else if (item is Resource)
-                    OnResourcesChanged?.Invoke();
+                TriggerEvents(item, false);
             }
-            catch(SystemException x) { MessageBox.Show(x.ToString()); return false; }
+            catch(SystemException x)
+            { 
+                MessageBox.Show(x.ToString());
+                return false;
+            }
 
             return true;
-        }
-
-        
+        }        
 
         static public bool Update(object item)
         {
@@ -111,26 +124,45 @@ namespace Ultimate_GM_Screen
             try
             {
                 _db.Update(item);
-
-                if (item is MagicItem)
-                    OnMagicItemsChanged?.Invoke(item as MagicItem);
-                else if (item is Entity)
-                    OnEntitiesChanged?.Invoke(item as Entity);
-                else if (item is EntityRelationship)
-                    OnRelationshipsChanged?.Invoke(item as EntityRelationship);
-                else if (item is Resource)
-                    OnResourcesChanged?.Invoke(item as Resource);
+                TriggerEvents(item);
             }
             catch { return false; }
 
             return true;
         }
         #endregion
+        
         static void Delete_Relationships(Entity e)
         {
             var list = EntityRelationship_GetAll(e.ID);
             foreach (var r in list)
                 Delete(r);
+        }
+        static void TriggerEvents(object item, bool saved = true)
+        {
+            if (item is MagicItem)
+            {
+                if (saved)
+                    _notifier.ShowSuccess("Saved " + (item as MagicItem).Name);
+
+                OnMagicItemsChanged?.Invoke(item as MagicItem);
+            }
+            else if (item is Entity)
+            {
+                if (saved)
+                    _notifier.ShowSuccess("Saved " + (item as Entity).Name);
+
+                OnEntitiesChanged?.Invoke(item as Entity);
+            }
+            else if (item is EntityRelationship)
+                OnRelationshipsChanged?.Invoke(item as EntityRelationship);
+            else if (item is Resource)
+            {
+                if (saved)
+                    _notifier.ShowSuccess("Saved " + (item as Resource).Name);
+
+                OnResourcesChanged?.Invoke(item as Resource);
+            }
         }
 
         #region -> resource specific

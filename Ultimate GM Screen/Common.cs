@@ -18,5 +18,17 @@ namespace Ultimate_GM_Screen
 
             return source as TreeViewItem;
         }
+
+        public static string UserDataFolder
+        {
+            get 
+            {
+                string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "UltimateGMScreen");
+                if (!System.IO.Directory.Exists(path))
+                    System.IO.Directory.CreateDirectory(path);
+
+                return path;
+            }
+        }
     }
 }

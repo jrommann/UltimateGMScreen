@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,16 +27,15 @@ namespace Ultimate_GM_Screen.WebBrowser
         public UC_Web_Browser()
         {
             InitializeComponent();
-            InitializeAsync();                
+            InitializeAsync();                        
         }
 
         async void InitializeAsync()
         {
-            await browser.EnsureCoreWebView2Async(null);
+            var browserEnviorment = await CoreWebView2Environment.CreateAsync(null, Common.UserDataFolder);
+            await browser.EnsureCoreWebView2Async(browserEnviorment);
             _webInit = true;
-
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tinymce\\index.html");
-            browser.Source = new Uri("file:///" + path);
+            
             browser.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);
             if (!string.IsNullOrEmpty(StartingAddress))
             {
@@ -54,6 +54,11 @@ namespace Ultimate_GM_Screen.WebBrowser
         {
             if(e.Key == Key.Enter || e.Key == Key.Return)
                 browser.Source = new Uri(addressbox.Text, UriKind.Absolute);
+        }
+
+        private void goBtn_Click(object sender, RoutedEventArgs e)
+        {
+            browser.Source = new Uri(addressbox.Text, UriKind.Absolute);
         }
     }
 }

@@ -18,8 +18,7 @@
             <ToolBar>
                 <Button x:Name="saveBtn" Content="Save" Click="saveBtn_Click" />
                 <Button x:Name="copyBtn" Content="Copy" Click="copyBtn_Click" />
-                <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
-                <Button x:Name="popoutBtn" Content="Popout" Click="popoutBtn_Click"/>
+                <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>                
                 <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>
             </ToolBar>
         </ToolBarTray>

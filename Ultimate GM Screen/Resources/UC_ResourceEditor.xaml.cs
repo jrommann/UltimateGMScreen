@@ -111,13 +111,6 @@ namespace Ultimate_GM_Screen.Resources
         {
             New();
         }
-        private void popoutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var w = new Window_Resource();
-            w.Load(_current);
-            w.Show();
-        }
-
         private void button_go_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(textbox_address.Text))

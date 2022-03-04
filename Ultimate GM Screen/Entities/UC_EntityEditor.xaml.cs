@@ -87,6 +87,7 @@ namespace Ultimate_GM_Screen.Entities
                 return;
 
             bool save = false;
+            var revision = new EntityRevision(_current);
 
             if (_current.Path != textBox_path.Text)
             {
@@ -116,7 +117,10 @@ namespace Ultimate_GM_Screen.Entities
             if (save)
             {
                 if (_edit)
+                {
+                    DatabaseManager.Add(revision);
                     DatabaseManager.Update(_current);
+                }
                 else
                     DatabaseManager.Add(_current);
 
@@ -132,9 +136,6 @@ namespace Ultimate_GM_Screen.Entities
             await Save();
             Load(_current, true);
         }
-
-        
-                
 
         private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
@@ -181,13 +182,6 @@ namespace Ultimate_GM_Screen.Entities
             dockpanel_relationships.Children.Add(r);
         }
 
-        private void popoutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var w = new Window_Entity();
-            w.Load(_current);
-            w.Show();
-        }     
-
         private void webView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_webInit)
@@ -204,6 +198,15 @@ namespace Ultimate_GM_Screen.Entities
         async private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
             await Save();
+        }
+
+        private void revisionsBtn_Click(object sender, RoutedEventArgs e)
+        {            
+            var w = new Window_EntityRevisions();
+            w.Current = _current;
+            w.ShowDialog();
+
+            Load(DatabaseManager.Entity_FromID(_current.ID), true);
         }
     }
 }

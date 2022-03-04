@@ -29,6 +29,9 @@ namespace Ultimate_GM_Screen
         public delegate void Event_ResourcesChanged(Resource specificItem = null);
         static public event Event_ResourcesChanged OnResourcesChanged;
 
+        public delegate void Event_RevisionsChanged();
+        static public event Event_RevisionsChanged OnRevisionsChanged;
+
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
@@ -40,7 +43,8 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<MagicItem>();
             _db.CreateTable<Entity>();
             _db.CreateTable<EntityRelationship>();
-            _db.CreateTable<Resource>();
+            _db.CreateTable<EntityRevision>();
+            _db.CreateTable<Resource>();            
 
             _notifier = new Notifier(cfg =>
             {
@@ -103,7 +107,10 @@ namespace Ultimate_GM_Screen
             {
                 _db.Delete(item);
                 if (item is Entity)
+                {
                     Delete_Relationships(item as Entity);
+                    Delete_Revisions(item as Entity);
+                }
 
                 TriggerEvents(item, false);
             }
@@ -114,7 +121,7 @@ namespace Ultimate_GM_Screen
             }
 
             return true;
-        }        
+        }
 
         static public bool Update(object item)
         {
@@ -138,6 +145,13 @@ namespace Ultimate_GM_Screen
             foreach (var r in list)
                 Delete(r);
         }
+        static void Delete_Revisions(Entity entity)
+        {
+            var list = Entity_GetRevisions(entity.ID);            
+            foreach (var r in list)
+                Delete(r);
+        }
+
         static void TriggerEvents(object item, bool saved = true)
         {
             if (item is MagicItem)
@@ -163,6 +177,8 @@ namespace Ultimate_GM_Screen
 
                 OnResourcesChanged?.Invoke(item as Resource);
             }
+            else if (item is EntityRevision)
+                OnRevisionsChanged?.Invoke();
         }
 
         #region -> resource specific
@@ -184,6 +200,16 @@ namespace Ultimate_GM_Screen
         #endregion
 
         #region -> entity specific
+        static public List<EntityRevision> Entity_GetRevisions(int entityID)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            var list = _db.Table<EntityRevision>().Where(t => t.EntityID == entityID).ToList();
+            list.Sort((x, y) => y.Date.CompareTo(x.Date));
+            return list;
+        }
+
         static public int Entity_Count()
         {
             if (_db == null)

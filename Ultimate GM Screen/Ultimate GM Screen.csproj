@@ -213,6 +213,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TinyHtml.Wpf, Version=1.2.2.0, Culture=neutral, PublicKeyToken=0d9b4779392fd444, processorArchitecture=MSIL">
+      <HintPath>packages\TinyHtml.Wpf.1.2.2\lib\net46\TinyHtml.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="ToastNotifications, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
       <HintPath>packages\ToastNotifications.2.5.1\lib\net40\ToastNotifications.dll</HintPath>
     </Reference>
@@ -247,6 +250,10 @@
     <Compile Include="DatabaseManager.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntityRelationship.cs" />
+    <Compile Include="Entities\EntityRevision.cs" />
+    <Compile Include="Entities\UC_EntityRevisionEntry.xaml.cs">
+      <DependentUpon>UC_EntityRevisionEntry.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Window_EditRelationship.xaml.cs">
       <DependentUpon>Window_EditRelationship.xaml</DependentUpon>
     </Compile>
@@ -261,6 +268,9 @@
     </Compile>
     <Compile Include="Entities\Window_Entity.xaml.cs">
       <DependentUpon>Window_Entity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Window_EntityRevisions.xaml.cs">
+      <DependentUpon>Window_EntityRevisions.xaml</DependentUpon>
     </Compile>
     <Compile Include="Magic Items\MagicItem.cs" />
     <Compile Include="Magic Items\UC Add Magic Item.xaml.cs">
@@ -282,6 +292,10 @@
     <Compile Include="WebBrowser\UC Web Browser.xaml.cs">
       <DependentUpon>UC Web Browser.xaml</DependentUpon>
     </Compile>
+    <Page Include="Entities\UC_EntityRevisionEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Entities\Window_EditRelationship.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -299,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Entities\Window_Entity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Entities\Window_EntityRevisions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -64,16 +64,33 @@ namespace Ultimate_GM_Screen.Resources
             if (string.IsNullOrEmpty(textbox_name.Text))
                 return;
 
-            _current.Path = textbox_path.Text;
-            _current.Name = textbox_name.Text;
-            _current.Address = textbox_address.Text;
+            bool save = false;
 
-            if (_edit)
-                DatabaseManager.Update(_current);
-            else
-                DatabaseManager.Add(_current);
+            if (_current.Path != textbox_path.Text)
+            {
+                _current.Path = textbox_path.Text;
+                save = true;
+            }
+            if (_current.Name != textbox_name.Text)
+            {
+                _current.Name = textbox_name.Text;
+                save = true;
+            }
+            if (_current.Address != textbox_address.Text)
+            {
+                _current.Address = textbox_address.Text;
+                save = true;
+            }
 
-            _edit = true;
+            if (save)
+            {
+                if (_edit)
+                    DatabaseManager.Update(_current);
+                else
+                    DatabaseManager.Add(_current);
+
+                _edit = true;
+            }
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)

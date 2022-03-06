@@ -22,8 +22,11 @@ namespace Ultimate_GM_Screen.Entities
     {
         public static RoutedCommand SaveCommand = new RoutedCommand();
         Entity _current = new Entity();
+        public Entity Current { get { return _current; } }
+
         bool _edit = false;
         bool _webInit = false;
+        bool _saving = false;
         public UC_EntityEditor()
         {
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
@@ -129,12 +132,13 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         async private void copyBtn_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             _current = new Entity();
             _edit = false;
-            textBox_name.Text += "(Copy)";                
+            textBox_name.Text += "(Copy)";
+
             await Save();
-            Load(_current, true);
+            Load(_current, true);            
         }
 
         private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
@@ -191,11 +195,6 @@ namespace Ultimate_GM_Screen.Entities
         }        
 
         async private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            await Save();
-        }
-
-        async private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
             await Save();
         }

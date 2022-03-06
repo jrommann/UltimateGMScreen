@@ -7,7 +7,7 @@
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
         mc:Ignorable="d"
-        Title="Window_Entity" Height="800" Width="800" Closing="AdonisWindow_Closing">
+        Title="Window_Entity" Height="800" Width="800">
     <Grid>
         <local:UC_EntityEditor x:Name="entityEditor"/>
     </Grid>

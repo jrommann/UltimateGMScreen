@@ -31,10 +31,5 @@ namespace Ultimate_GM_Screen.Entities
             Title = ent.Name;
             entityEditor.Load(ent, true);
         }
-
-        private void AdonisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            entityEditor.Save();
-        }
     }
 }

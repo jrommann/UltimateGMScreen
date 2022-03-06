@@ -27,12 +27,24 @@ namespace Ultimate_GM_Screen.Entities
         {
             InitializeComponent();
 
-            DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
+            DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;            
         }
 
         private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null)
-        {            
-            LoadTreeView(DatabaseManager.Entities_GetAll());
+        {
+            //if (specificItem != null)
+            //{
+            //    if (noteEditor.Current.ID != specificItem.ID ||
+            //        noteEditor.Current.Path != specificItem.Path ||
+            //        noteEditor.Current.Name != specificItem.Name)
+            //    {
+            //        LoadTreeView(DatabaseManager.Entities_GetAll());
+            //    }
+            //}
+            //else
+            //{
+                LoadTreeView(DatabaseManager.Entities_GetAll());
+            //}
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)
@@ -151,6 +163,7 @@ namespace Ultimate_GM_Screen.Entities
         async void ChangeNote(Entity ent, bool edit)
         {            
             await noteEditor.Save();
+               
             noteEditor.Load(ent, edit);
             _currentEntity = ent;
         }

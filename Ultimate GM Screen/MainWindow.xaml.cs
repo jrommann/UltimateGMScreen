@@ -100,5 +100,32 @@ namespace Ultimate_GM_Screen
             Properties.Settings.Default.TableTopAddress = browser.browser.Source.ToString();
             Properties.Settings.Default.Save();
         }
+               
+        private void tabControl_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Home || e.Key == Key.End)
+                e.Handled = true;
+        }
+
+        private void buttonTable_Click(object sender, RoutedEventArgs e)
+        {
+            browser.Visibility = Visibility.Visible;
+            notes.Visibility = Visibility.Hidden;
+            resources.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonNotes_Click(object sender, RoutedEventArgs e)
+        {            
+            notes.Visibility = Visibility.Visible;
+            browser.Visibility = Visibility.Hidden;
+            resources.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonResources_Click(object sender, RoutedEventArgs e)
+        {
+            resources.Visibility = Visibility.Visible;
+            notes.Visibility = Visibility.Hidden;
+            browser.Visibility = Visibility.Hidden;            
+        }
     }
 }

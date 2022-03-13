@@ -10,22 +10,17 @@
         mc:Ignorable="d"
         Title="Ultimate GM Screen" Height="450" Width="800" Loaded="Window_Loaded" WindowState="Maximized" Closing="AdonisWindow_Closing">
     <Grid>
-        <TabControl x:Name="tabControl" Margin="0">            
-            <TabItem Header="Tabletop">
-                <Grid>
-                    <WebBrowser:UC_Web_Browser x:Name="browser" />
-                </Grid>
-            </TabItem>
-            <TabItem Header="Notes">
-                <Grid>
-                    <Entities:UC_Entities/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Resources">
-                <Grid>
-                    <Resources:UC_Resources/>
-                </Grid>
-            </TabItem>
-        </TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="buttonTable" Content="Table" Margin="0,0,1,0" Click="buttonTable_Click"/>
+            <Button x:Name="buttonNotes" Content="Notes" Margin="0,0,1,0" Click="buttonNotes_Click"/>
+            <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click"/>
+        </StackPanel>
+        <WebBrowser:UC_Web_Browser Grid.Row="1" x:Name="browser" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Entities:UC_Entities Grid.Row="1" x:Name="notes" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
+        <Resources:UC_Resources Grid.Row="1" x:Name="resources" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
     </Grid>
 </adonisControls:AdonisWindow>

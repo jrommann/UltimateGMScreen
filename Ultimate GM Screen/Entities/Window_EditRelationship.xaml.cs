@@ -51,7 +51,9 @@ namespace Ultimate_GM_Screen.Entities
         private void button_save_Click(object sender, RoutedEventArgs e)
         {
             Relationship.Description = textBox_description.Text;
-            Relationship.ChildID = (listBox_choices.SelectedItem as Entity).ID;
+            if(listBox_choices.SelectedItem != null)
+                Relationship.ChildID = (listBox_choices.SelectedItem as Entity).ID;
+            
             if (_isEdit)
                 DatabaseManager.Update(Relationship);
             else

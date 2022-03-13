@@ -26,12 +26,15 @@ namespace Ultimate_GM_Screen.WebBrowser
 
         public UC_Web_Browser()
         {
-            InitializeComponent();
+            InitializeComponent();           
             InitializeAsync();                        
         }
 
         async void InitializeAsync()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+                return;
+
             var browserEnviorment = await CoreWebView2Environment.CreateAsync(null, Common.UserDataFolder);
             await browser.EnsureCoreWebView2Async(browserEnviorment);
             _webInit = true;

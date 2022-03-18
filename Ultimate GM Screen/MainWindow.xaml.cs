@@ -112,6 +112,7 @@ namespace Ultimate_GM_Screen
             browser.Visibility = Visibility.Visible;
             notes.Visibility = Visibility.Hidden;
             resources.Visibility = Visibility.Hidden;
+            search.Visibility = Visibility.Hidden;
         }
 
         private void buttonNotes_Click(object sender, RoutedEventArgs e)
@@ -119,11 +120,21 @@ namespace Ultimate_GM_Screen
             notes.Visibility = Visibility.Visible;
             browser.Visibility = Visibility.Hidden;
             resources.Visibility = Visibility.Hidden;
+            search.Visibility = Visibility.Hidden;
         }
 
         private void buttonResources_Click(object sender, RoutedEventArgs e)
         {
             resources.Visibility = Visibility.Visible;
+            notes.Visibility = Visibility.Hidden;
+            browser.Visibility = Visibility.Hidden;
+            search.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            search.Visibility = Visibility.Visible;
+            resources.Visibility = Visibility.Hidden;
             notes.Visibility = Visibility.Hidden;
             browser.Visibility = Visibility.Hidden;            
         }

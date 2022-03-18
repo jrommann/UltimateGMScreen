@@ -272,6 +272,7 @@
     <Compile Include="Entities\Window_EntityRevisions.xaml.cs">
       <DependentUpon>Window_EntityRevisions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Magic Items\MagicItem.cs" />
     <Compile Include="Magic Items\UC Add Magic Item.xaml.cs">
       <DependentUpon>UC Add Magic Item.xaml</DependentUpon>
@@ -288,6 +289,12 @@
     </Compile>
     <Compile Include="Resources\Window_Resource.xaml.cs">
       <DependentUpon>Window_Resource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Search\UC_Search.xaml.cs">
+      <DependentUpon>UC_Search.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Search\UC_SearchResult.xaml.cs">
+      <DependentUpon>UC_SearchResult.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebBrowser\UC Web Browser.xaml.cs">
       <DependentUpon>UC Web Browser.xaml</DependentUpon>
@@ -349,6 +356,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Window_Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Search\UC_Search.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Search\UC_SearchResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

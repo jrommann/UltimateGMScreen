@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Ultimate_GM_Screen.Entities
 {
@@ -27,6 +20,7 @@ namespace Ultimate_GM_Screen.Entities
         bool _edit = false;
         bool _webInit = false;
         bool _saving = false;
+        Timer _autoSaveTimer;
         public UC_EntityEditor()
         {
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
@@ -35,6 +29,16 @@ namespace Ultimate_GM_Screen.Entities
             InitializeAsync();
 
             DatabaseManager.OnRelationshipsChanged += DatabaseManager_OnRelationshipsChanged;
+
+            _autoSaveTimer = new Timer();
+            _autoSaveTimer.Elapsed += _autoSaveTimer_Elapsed;
+            _autoSaveTimer.Interval = 5000;
+            _autoSaveTimer.Start();
+        }
+
+        private void _autoSaveTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(() => { Save(); });
         }
 
         private void DatabaseManager_OnRelationshipsChanged(EntityRelationship specificItem = null)

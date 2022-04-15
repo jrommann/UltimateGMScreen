@@ -36,17 +36,26 @@ namespace Ultimate_GM_Screen
                 #region -> ask
                 const string CREATE_BTN = "create";
                 const string OPEN_BTN = "open";
+                const string EXIST_BTN = "exist";
+
+                var btns = new List<IMessageBoxButtonModel>();
+
+                string existing = Properties.Settings.Default.LastDatabase;
+                if (!string.IsNullOrEmpty(existing) && System.IO.File.Exists(existing))
+                {
+                    string name = System.IO.Path.GetFileName(existing);
+                    btns.Add(MessageBoxButtons.Custom("Open " + name, EXIST_BTN));
+                }
+
+                btns.Add(MessageBoxButtons.Custom("Open Existing", OPEN_BTN));
+                btns.Add(MessageBoxButtons.Custom("Create New", CREATE_BTN));
 
                 var messageBox = new MessageBoxModel
                 {
-                    Text = "Open an existing or create a new GM database",
+                    Text = "Open existing or create a new GM database",
                     Caption = "Existing or New GM Database",
                     Icon = AdonisUI.Controls.MessageBoxImage.Question,
-                    Buttons = new[]
-                    {
-                        MessageBoxButtons.Custom("Open Existing", OPEN_BTN),
-                        MessageBoxButtons.Custom("Create New", CREATE_BTN),
-                    },
+                    Buttons = btns.ToArray(),
                     IsSoundEnabled = false,                    
                 };
                 #endregion
@@ -55,7 +64,11 @@ namespace Ultimate_GM_Screen
                 switch (messageBox.Result)
                 {
                     case AdonisUI.Controls.MessageBoxResult.Custom:
-                        if ((string)messageBox.ButtonPressed.Id == OPEN_BTN)
+                        if ((string)messageBox.ButtonPressed.Id == EXIST_BTN)
+                        {                            
+                            _db = DatabaseManager.Open(Properties.Settings.Default.LastDatabase);                            
+                        }
+                        else if ((string)messageBox.ButtonPressed.Id == OPEN_BTN)
                         {
                             #region -> open
                             // Create OpenFileDialog
@@ -70,7 +83,12 @@ namespace Ultimate_GM_Screen
 
                             // Get the selected file name and display in a TextBox 
                             if (result == true)
+                            {
+                                Properties.Settings.Default.LastDatabase = dlg.FileName;
+                                Properties.Settings.Default.Save();
+
                                 _db = DatabaseManager.Open(dlg.FileName);
+                            }
                             #endregion
                         }
                         else if ((string)messageBox.ButtonPressed.Id == CREATE_BTN)
@@ -87,7 +105,12 @@ namespace Ultimate_GM_Screen
 
                             // Process save file dialog box results
                             if (result == true)
+                            {
+                                Properties.Settings.Default.LastDatabase = dlg.FileName;
+                                Properties.Settings.Default.Save();
+
                                 _db = DatabaseManager.Open(dlg.FileName);
+                            }
                             #endregion
                         }
                         break;

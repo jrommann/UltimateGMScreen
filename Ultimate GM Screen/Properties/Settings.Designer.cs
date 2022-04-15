@@ -34,5 +34,17 @@ namespace Ultimate_GM_Screen.Properties {
                 this["TableTopAddress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastDatabase {
+            get {
+                return ((string)(this["LastDatabase"]));
+            }
+            set {
+                this["LastDatabase"] = value;
+            }
+        }
     }
 }

@@ -65,7 +65,8 @@ namespace Ultimate_GM_Screen
                 {
                     case AdonisUI.Controls.MessageBoxResult.Custom:
                         if ((string)messageBox.ButtonPressed.Id == EXIST_BTN)
-                        {                            
+                        {
+                            Title = Title + " - " + Properties.Settings.Default.LastDatabase;
                             _db = DatabaseManager.Open(Properties.Settings.Default.LastDatabase);                            
                         }
                         else if ((string)messageBox.ButtonPressed.Id == OPEN_BTN)
@@ -86,6 +87,7 @@ namespace Ultimate_GM_Screen
                             {
                                 Properties.Settings.Default.LastDatabase = dlg.FileName;
                                 Properties.Settings.Default.Save();
+                                Title = Title + " - " + dlg.FileName;
 
                                 _db = DatabaseManager.Open(dlg.FileName);
                             }
@@ -108,6 +110,7 @@ namespace Ultimate_GM_Screen
                             {
                                 Properties.Settings.Default.LastDatabase = dlg.FileName;
                                 Properties.Settings.Default.Save();
+                                Title = Title + " - " + dlg.FileName;
 
                                 _db = DatabaseManager.Open(dlg.FileName);
                             }

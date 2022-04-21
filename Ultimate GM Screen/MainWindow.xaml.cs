@@ -1,18 +1,9 @@
 ﻿using AdonisUI.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Ultimate_GM_Screen
 {
@@ -21,14 +12,13 @@ namespace Ultimate_GM_Screen
     /// </summary>
     public partial class MainWindow : AdonisWindow
     {
-        DatabaseManager _db = null;
+        DatabaseManager _db = null;       
 
         public MainWindow()
         {
             InitializeComponent();
             browser.StartingAddress = Properties.Settings.Default.TableTopAddress;
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (_db == null)
@@ -125,13 +115,7 @@ namespace Ultimate_GM_Screen
         {
             Properties.Settings.Default.TableTopAddress = browser.browser.Source.ToString();
             Properties.Settings.Default.Save();
-        }
-               
-        private void tabControl_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Home || e.Key == Key.End)
-                e.Handled = true;
-        }
+        }  
 
         private void buttonTable_Click(object sender, RoutedEventArgs e)
         {

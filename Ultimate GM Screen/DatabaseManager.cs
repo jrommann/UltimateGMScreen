@@ -35,7 +35,7 @@ namespace Ultimate_GM_Screen
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
-        static Notifier _notifier;
+        //static Notifier _notifier;
 
         DatabaseManager(string filepath)
         {
@@ -46,20 +46,20 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<EntityRevision>();
             _db.CreateTable<Resource>();            
 
-            _notifier = new Notifier(cfg =>
-            {
-                cfg.PositionProvider = new WindowPositionProvider(
-                    parentWindow: Application.Current.MainWindow,
-                    corner: Corner.BottomRight,
-                    offsetX: 10,
-                    offsetY: 10);
+            //_notifier = new Notifier(cfg =>
+            //{
+            //    cfg.PositionProvider = new WindowPositionProvider(
+            //        parentWindow: Application.Current.MainWindow,
+            //        corner: Corner.BottomRight,
+            //        offsetX: 10,
+            //        offsetY: 10);
 
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(1),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+            //    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+            //        notificationLifetime: TimeSpan.FromSeconds(1),
+            //        maximumNotificationCount: MaximumNotificationCount.FromCount(5));
 
-                cfg.Dispatcher = Application.Current.Dispatcher;
-            });
+            //    cfg.Dispatcher = Application.Current.Dispatcher;
+            //});
         }
 
         #region -> public methods
@@ -156,15 +156,15 @@ namespace Ultimate_GM_Screen
         {
             if (item is MagicItem)
             {
-                if (saved)
-                    _notifier.ShowSuccess("Saved " + (item as MagicItem).Name);
+                //if (saved)
+                //    _notifier.ShowSuccess("Saved " + (item as MagicItem).Name);
 
                 OnMagicItemsChanged?.Invoke(item as MagicItem);
             }
             else if (item is Entity)
             {
-                if (saved)
-                    _notifier.ShowSuccess("Saved " + (item as Entity).Name);
+                //if (saved)
+                //    _notifier.ShowSuccess("Saved " + (item as Entity).Name);
 
                 OnEntitiesChanged?.Invoke(item as Entity);
             }
@@ -172,8 +172,8 @@ namespace Ultimate_GM_Screen
                 OnRelationshipsChanged?.Invoke(item as EntityRelationship);
             else if (item is Resource)
             {
-                if (saved)
-                    _notifier.ShowSuccess("Saved " + (item as Resource).Name);
+                //if (saved)
+                //    _notifier.ShowSuccess("Saved " + (item as Resource).Name);
 
                 OnResourcesChanged?.Invoke(item as Resource);
             }

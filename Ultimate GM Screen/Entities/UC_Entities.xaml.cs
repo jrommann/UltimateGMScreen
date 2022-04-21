@@ -183,6 +183,5 @@ namespace Ultimate_GM_Screen.Entities
                 }
             }
         }
-        
     }
 }

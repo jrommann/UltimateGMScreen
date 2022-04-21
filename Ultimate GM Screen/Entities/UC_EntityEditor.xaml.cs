@@ -20,7 +20,7 @@ namespace Ultimate_GM_Screen.Entities
         bool _edit = false;
         bool _webInit = false;
         bool _saving = false;
-        Timer _autoSaveTimer;
+        
         public UC_EntityEditor()
         {
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
@@ -28,18 +28,8 @@ namespace Ultimate_GM_Screen.Entities
             InitializeComponent();
             InitializeAsync();
 
-            DatabaseManager.OnRelationshipsChanged += DatabaseManager_OnRelationshipsChanged;
-
-            _autoSaveTimer = new Timer();
-            _autoSaveTimer.Elapsed += _autoSaveTimer_Elapsed;
-            _autoSaveTimer.Interval = 5000;
-            _autoSaveTimer.Start();
-        }
-
-        private void _autoSaveTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            Dispatcher.Invoke(() => { Save(); });
-        }
+            DatabaseManager.OnRelationshipsChanged += DatabaseManager_OnRelationshipsChanged;            
+        }        
 
         private void DatabaseManager_OnRelationshipsChanged(EntityRelationship specificItem = null)
         {

@@ -13,7 +13,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Button Grid.Row="0" x:Name="buttonName" Content="Open" Click="buttonName_Click"/>
-            <Expander Grid.Row="1" Margin="10">
+            <Expander Grid.Row="1" Margin="10" Expanded="Expander_Expanded">
                 <local1:WpfHtmlControl x:Name="detailsHtml"/>
             </Expander>
         </Grid>

@@ -31,8 +31,7 @@ namespace Ultimate_GM_Screen.Search
         public void Load(Entity e)
         {
             _entry = e;
-            groupbox.Header = e.Name;
-            detailsHtml.Html = System.Text.RegularExpressions.Regex.Unescape(e.Details);
+            groupbox.Header = e.Name;            
         }
 
         private void buttonName_Click(object sender, RoutedEventArgs e)
@@ -40,6 +39,11 @@ namespace Ultimate_GM_Screen.Search
             var entry = new Window_Entity();
             entry.Load(_entry);
             entry.Show();
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            detailsHtml.Html = System.Text.RegularExpressions.Regex.Unescape(_entry.Details);
         }
     }
 }

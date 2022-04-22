@@ -17,6 +17,7 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="buttonTable" Content="Table" Margin="0,0,1,0" Click="buttonTable_Click"/>
             <Button x:Name="buttonNotes" Content="Notes" Margin="0,0,1,0" Click="buttonNotes_Click"/>
+            <Button x:Name="buttonMagicItems" Content="Magic Items" Margin="0,0,1,0" Click="buttonMagicItems_Click"/>
             <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click"/>
             <Button x:Name="buttonSearch" Content="Search" Click="buttonSearch_Click"/>
         </StackPanel>
@@ -24,5 +25,6 @@
         <Entities:UC_Entities Grid.Row="1" x:Name="notes" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
         <Resources:UC_Resources Grid.Row="1" x:Name="resources" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
         <Search:UC_Search Grid.Row="1" x:Name="search" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
+        <Magic_Items:UC_Manage_Magic_Items Grid.Row="1" x:Name="magicItems" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
     </Grid>
 </adonisControls:AdonisWindow>

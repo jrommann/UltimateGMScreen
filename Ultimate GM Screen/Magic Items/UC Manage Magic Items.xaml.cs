@@ -16,9 +16,12 @@ namespace Ultimate_GM_Screen.Magic_Items
     {
         public UC_Manage_Magic_Items()
         {
-            InitializeComponent();
-
+            InitializeComponent();            
+        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
             DatabaseManager.OnMagicItemsChanged += DatabaseManager_OnItemsChanged;
+            itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll();
         }
 
         private void DatabaseManager_OnItemsChanged(MagicItem specificItem = null)
@@ -78,5 +81,7 @@ namespace Ultimate_GM_Screen.Magic_Items
             if (list.Count > 0)
                 AdonisUI.Controls.MessageBox.Show(list[r.Next(0, list.Count)].ToStringFull(), caption: "Random Item", buttons: AdonisUI.Controls.MessageBoxButton.OK);
         }
+
+        
     }
 }

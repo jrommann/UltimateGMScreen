@@ -123,6 +123,7 @@ namespace Ultimate_GM_Screen
             notes.Visibility = Visibility.Hidden;
             resources.Visibility = Visibility.Hidden;
             search.Visibility = Visibility.Hidden;
+            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonNotes_Click(object sender, RoutedEventArgs e)
@@ -131,6 +132,7 @@ namespace Ultimate_GM_Screen
             browser.Visibility = Visibility.Hidden;
             resources.Visibility = Visibility.Hidden;
             search.Visibility = Visibility.Hidden;
+            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonResources_Click(object sender, RoutedEventArgs e)
@@ -139,6 +141,7 @@ namespace Ultimate_GM_Screen
             notes.Visibility = Visibility.Hidden;
             browser.Visibility = Visibility.Hidden;
             search.Visibility = Visibility.Hidden;
+            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
@@ -146,7 +149,17 @@ namespace Ultimate_GM_Screen
             search.Visibility = Visibility.Visible;
             resources.Visibility = Visibility.Hidden;
             notes.Visibility = Visibility.Hidden;
-            browser.Visibility = Visibility.Hidden;            
+            browser.Visibility = Visibility.Hidden;
+            magicItems.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonMagicItems_Click(object sender, RoutedEventArgs e)
+        {
+            magicItems.Visibility = Visibility.Visible;
+            search.Visibility = Visibility.Hidden;
+            resources.Visibility = Visibility.Hidden;
+            notes.Visibility = Visibility.Hidden;
+            browser.Visibility = Visibility.Hidden;
         }
     }
 }

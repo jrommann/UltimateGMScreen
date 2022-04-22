@@ -263,8 +263,8 @@ namespace Ultimate_GM_Screen
         {
             if (_db == null)
                 throw new Exception("Database NOT opened");
-            
-            var list = _db.Query<MagicItem>("SELECT * FROM MagicItems");
+
+            var list = _db.Table<MagicItem>().ToList();
             list.Sort((x, y) => x.Name.CompareTo(y.Name));
             return list;
         }

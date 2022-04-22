@@ -20,18 +20,12 @@ namespace Ultimate_GM_Screen.Entities
     /// </summary>
     public partial class UC_EntityRevisionEntry : UserControl
     {
-        public EntityRevision Current { get; set; }
+        public EntityRevision Current { get; private set; }
         
         public UC_EntityRevisionEntry()
         {
             InitializeComponent();
-        }        
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {            
-            dateLbl.Content = Current.Date;            
-            detailsHtml.Html = System.Text.RegularExpressions.Regex.Unescape(Current.Details);
-        }
+        }  
 
         private void restoreBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -46,6 +40,17 @@ namespace Ultimate_GM_Screen.Entities
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             DatabaseManager.Delete(Current);
+        }
+
+        public void Load(EntityRevision er)
+        {
+            Current = er;
+            dateLbl.Content = Current.Date;            
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            detailsHtml.Html = System.Text.RegularExpressions.Regex.Unescape(Current.Details);
         }
     }
 }

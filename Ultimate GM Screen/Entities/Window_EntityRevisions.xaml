@@ -9,8 +9,20 @@
         mc:Ignorable="d"
         Title="Revisions" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35
+                           "/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="menuPanel" Orientation="Horizontal" Grid.Row="0">
+            <Button x:Name="prevBtn" Content="Prev" Margin="5" Click="prevBtn_Click"/>
+            <Label x:Name="revisionsLbl" Content="Page 1 of 10" Margin="5,10,5,5"/>
+            <Button x:Name="nextBtn" Content="Next" Margin="5" Click="nextBtn_Click"/>
+            <Button x:Name="deleteAllBtn" Content="Delete Listed" Margin="5" Click="deleteAllBtn_Click"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="stackPanel" Margin="0"/>
         </ScrollViewer>
+        
     </Grid>
 </adonisControls:AdonisWindow>

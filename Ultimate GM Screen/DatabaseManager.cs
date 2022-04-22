@@ -35,7 +35,7 @@ namespace Ultimate_GM_Screen
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
-        //static Notifier _notifier;
+        static Notifier _notifier;
 
         DatabaseManager(string filepath)
         {
@@ -44,22 +44,22 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<Entity>();
             _db.CreateTable<EntityRelationship>();
             _db.CreateTable<EntityRevision>();
-            _db.CreateTable<Resource>();            
+            _db.CreateTable<Resource>();
 
-            //_notifier = new Notifier(cfg =>
-            //{
-            //    cfg.PositionProvider = new WindowPositionProvider(
-            //        parentWindow: Application.Current.MainWindow,
-            //        corner: Corner.BottomRight,
-            //        offsetX: 10,
-            //        offsetY: 10);
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.BottomRight,
+                    offsetX: 10,
+                    offsetY: 10);
 
-            //    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-            //        notificationLifetime: TimeSpan.FromSeconds(1),
-            //        maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(1),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
 
-            //    cfg.Dispatcher = Application.Current.Dispatcher;
-            //});
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
 
         #region -> public methods
@@ -147,7 +147,7 @@ namespace Ultimate_GM_Screen
         }
         static void Delete_Revisions(Entity entity)
         {
-            var list = Entity_GetRevisions(entity.ID);            
+            var list = Entity_GetRevisions(entity.ID, 0, 0);            
             foreach (var r in list)
                 Delete(r);
         }
@@ -156,15 +156,15 @@ namespace Ultimate_GM_Screen
         {
             if (item is MagicItem)
             {
-                //if (saved)
-                //    _notifier.ShowSuccess("Saved " + (item as MagicItem).Name);
+                if (saved)
+                    _notifier.ShowSuccess("Saved " + (item as MagicItem).Name);
 
                 OnMagicItemsChanged?.Invoke(item as MagicItem);
             }
             else if (item is Entity)
             {
-                //if (saved)
-                //    _notifier.ShowSuccess("Saved " + (item as Entity).Name);
+                if (saved)
+                    _notifier.ShowSuccess("Saved " + (item as Entity).Name);
 
                 OnEntitiesChanged?.Invoke(item as Entity);
             }
@@ -172,8 +172,8 @@ namespace Ultimate_GM_Screen
                 OnRelationshipsChanged?.Invoke(item as EntityRelationship);
             else if (item is Resource)
             {
-                //if (saved)
-                //    _notifier.ShowSuccess("Saved " + (item as Resource).Name);
+                if (saved)
+                    _notifier.ShowSuccess("Saved " + (item as Resource).Name);
 
                 OnResourcesChanged?.Invoke(item as Resource);
             }
@@ -200,14 +200,29 @@ namespace Ultimate_GM_Screen
         #endregion
 
         #region -> entity specific
-        static public List<EntityRevision> Entity_GetRevisions(int entityID)
+        static public List<EntityRevision> Entity_GetRevisions(int entityID, int page, int pageSize)
         {
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Table<EntityRevision>().Where(t => t.EntityID == entityID).ToList();
-            list.Sort((x, y) => y.Date.CompareTo(x.Date));
+            int skip = Math.Max(page - 1, 0) * pageSize;
+            if (pageSize == 0)
+                pageSize = _db.Table<EntityRevision>().Count();
+
+            var list = _db.Table<EntityRevision>().Where(t => t.EntityID == entityID)
+                .OrderByDescending(t => t.Date)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToList();
+
             return list;
+        }
+
+        static public int Entity_RevisionCount(int entityID)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+            return _db.Table<EntityRevision>().Count(x=>x.EntityID == entityID);
         }
 
         static public int Entity_Count()

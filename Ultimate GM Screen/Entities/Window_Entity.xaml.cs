@@ -24,6 +24,9 @@ namespace Ultimate_GM_Screen.Entities
         public Window_Entity()
         {
             InitializeComponent();
+            entityEditor.CanPopout = false;
+            entityEditor.CanPin = false;
+
         }
 
         public void Load(Entity ent)

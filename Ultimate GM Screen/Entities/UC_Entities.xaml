@@ -20,11 +20,14 @@
         </TreeView>
         <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
         <GridSplitter Grid.Column="1"></GridSplitter>
-        <Grid Grid.Column="2">
+        <Grid x:Name="notesGrid" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <StackPanel x:Name="stackpanel_pinnedNotes" Grid.Row="0" Orientation="Horizontal">
+                <Button x:Name="btn_Current" Content="Current" Click="btn_Current_Click"/>
+            </StackPanel>
             <local:UC_EntityEditor Grid.Row="1" x:Name="noteEditor" Margin="0"/>
         </Grid>
         <TextBox x:Name="textBox_search" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>

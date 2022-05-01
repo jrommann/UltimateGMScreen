@@ -16,15 +16,17 @@
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="300*"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
-            <RowDefinition Height="200*"></RowDefinition>
+            <RowDefinition Height="100*"></RowDefinition>
         </Grid.RowDefinitions>
         <ToolBarTray x:Name="toolBar" Height="29" VerticalAlignment="Top" Grid.Row="0">
             <ToolBar>
                 <Button x:Name="saveBtn" Content="Save" Click="saveBtn_Click" />
                 <Button x:Name="copyBtn" Content="Copy" Click="copyBtn_Click" />
-                <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>                
-                <Button x:Name="revisionsBtn" Content="Revisions" Click="revisionsBtn_Click"/>
-                <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>
+                <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
+                <Button x:Name="pinBtn" Content="Pin" Click="pinBtn_Click"/>
+                <Button x:Name="popoutBtn" Content="Popout" Click="popoutBtn_Click"/>
+                <Button x:Name="revisionsBtn" Content="Revisions" Click="revisionsBtn_Click"/>                
+                <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>                
             </ToolBar>
         </ToolBarTray>
         <Grid Grid.Row="1">

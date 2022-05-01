@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,14 +13,26 @@ namespace Ultimate_GM_Screen.Entities
     /// </summary>
     public partial class UC_EntityEditor : UserControl
     {
+        public delegate void Event_PinClicked(Entity item = null);
+        public event Event_PinClicked OnPinClicked;
+        public event Event_PinClicked OnUnpinClicked;
+
+        bool _canPopout = true;
+        public bool CanPopout { get { return _canPopout; } set { _canPopout = value; popoutBtn.Visibility = (value ? Visibility.Visible : Visibility.Collapsed); } }
+        bool _canPin = true;
+        public bool CanPin { get { return _canPin; } set { _canPin = value; pinBtn.Visibility = (value ? Visibility.Visible : Visibility.Collapsed); } }
+
+        bool _pinned = false;
+        public bool Pinned { get { return _pinned; } set { _pinned = value; pinBtn.Content = (value ? "Unpin" : "Pin"); } }
+
         public static RoutedCommand SaveCommand = new RoutedCommand();
         Entity _current = new Entity();
         public Entity Current { get { return _current; } }
 
         bool _edit = false;
         bool _webInit = false;
-        bool _saving = false;
         
+
         public UC_EntityEditor()
         {
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
@@ -200,6 +212,30 @@ namespace Ultimate_GM_Screen.Entities
             w.ShowDialog();
 
             Load(DatabaseManager.Entity_FromID(_current.ID), true);
+        }
+
+        private void pinBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CanPin)
+            {
+                if (_pinned)
+                    OnUnpinClicked?.Invoke(_current);
+                else
+                    OnPinClicked?.Invoke(_current);       
+            }
+        }
+
+        private void popoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CanPopout && _current != null)
+            {
+                var win = new Window_Entity();
+                win.Load(_current);
+                win.ShowInTaskbar = true;
+                win.Owner = this.Parent as Window;
+                win.ShowActivated = true;
+                win.Show();
+            }
         }
     }
 }

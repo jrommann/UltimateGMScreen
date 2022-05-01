@@ -22,29 +22,58 @@ namespace Ultimate_GM_Screen.Entities
     public partial class UC_Entities : UserControl
     {
         Entity _currentEntity;
-        List<UC_EntityEditor> _pinned = new List<UC_EntityEditor>();
+        
+        List<UC_EntityEditor> _pinnedEditors = new List<UC_EntityEditor>();
+        List<Button> _pinnedButtons = new List<Button>();
+
         public UC_Entities()
         {
             InitializeComponent();
 
-            DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;            
+            DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
+            noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
+        }
+
+        private void NoteEditor_OnPinClicked(Entity note = null)
+        {
+            if (note == null)
+                return;
+
+            var editor = new UC_EntityEditor();            
+            editor.SetValue(Grid.RowProperty, 1);            
+            editor.Load(note);            
+            editor.CanPopout = false;
+            editor.Visibility = Visibility.Hidden;
+            editor.Pinned = true;
+            editor.OnUnpinClicked += Editor_OnUnpinClicked;
+            notesGrid.Children.Add(editor);
+            _pinnedEditors.Add(editor);
+
+            var btn = new Button();
+            btn.Content = note.Name;
+            btn.Click += (object sender, RoutedEventArgs e) => { Switch_Displayed_Note(editor); };
+            btn.Tag = note;
+            _pinnedButtons.Add(btn);
+
+            stackpanel_pinnedNotes.Children.Add(btn);
+        }
+
+        private void Editor_OnUnpinClicked(Entity item = null)
+        {
+            var btn = _pinnedButtons.Find(x => x.Tag == item);
+            var editor = _pinnedEditors.Find(x => x.Current == item);
+            _pinnedButtons.Remove(btn);
+            _pinnedEditors.Remove(editor);
+
+            stackpanel_pinnedNotes.Children.Remove(btn);
+            notesGrid.Children.Remove(editor);
+
+            Switch_Displayed_Note(noteEditor);
         }
 
         private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null)
-        {
-            //if (specificItem != null)
-            //{
-            //    if (noteEditor.Current.ID != specificItem.ID ||
-            //        noteEditor.Current.Path != specificItem.Path ||
-            //        noteEditor.Current.Name != specificItem.Name)
-            //    {
-            //        LoadTreeView(DatabaseManager.Entities_GetAll());
-            //    }
-            //}
-            //else
-            //{
-                LoadTreeView(DatabaseManager.Entities_GetAll());
-            //}
+        {            
+            LoadTreeView(DatabaseManager.Entities_GetAll());
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)
@@ -199,6 +228,19 @@ namespace Ultimate_GM_Screen.Entities
                 var notes = DatabaseManager.Entities_FindByName(textBox_search.Text);
                 LoadTreeView(notes);
             }
+        }
+
+        private void btn_Current_Click(object sender, RoutedEventArgs e)
+        {
+            Switch_Displayed_Note(noteEditor);
+        }
+
+        void Switch_Displayed_Note(UC_EntityEditor show)
+        {
+            noteEditor.Visibility = Visibility.Hidden;
+            _pinnedEditors.ForEach(x => x.Visibility = Visibility.Hidden);
+
+            show.Visibility = Visibility.Visible;
         }
     }
 }

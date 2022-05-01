@@ -119,43 +119,37 @@ namespace Ultimate_GM_Screen
 
         private void buttonTable_Click(object sender, RoutedEventArgs e)
         {
+            HideAll();
             browser.Visibility = Visibility.Visible;
-            notes.Visibility = Visibility.Hidden;
-            resources.Visibility = Visibility.Hidden;
-            search.Visibility = Visibility.Hidden;
-            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonNotes_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            HideAll();
             notes.Visibility = Visibility.Visible;
-            browser.Visibility = Visibility.Hidden;
-            resources.Visibility = Visibility.Hidden;
-            search.Visibility = Visibility.Hidden;
-            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonResources_Click(object sender, RoutedEventArgs e)
         {
+            HideAll();
             resources.Visibility = Visibility.Visible;
-            notes.Visibility = Visibility.Hidden;
-            browser.Visibility = Visibility.Hidden;
-            search.Visibility = Visibility.Hidden;
-            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
+            HideAll();
             search.Visibility = Visibility.Visible;
-            resources.Visibility = Visibility.Hidden;
-            notes.Visibility = Visibility.Hidden;
-            browser.Visibility = Visibility.Hidden;
-            magicItems.Visibility = Visibility.Hidden;
         }
 
         private void buttonMagicItems_Click(object sender, RoutedEventArgs e)
         {
-            magicItems.Visibility = Visibility.Visible;
+            HideAll();
+            magicItems.Visibility = Visibility.Visible;            
+        }
+
+        void HideAll()
+        {            
+            magicItems.Visibility = Visibility.Hidden;
             search.Visibility = Visibility.Hidden;
             resources.Visibility = Visibility.Hidden;
             notes.Visibility = Visibility.Hidden;

@@ -21,12 +21,12 @@ namespace Ultimate_GM_Screen.Magic_Items
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             DatabaseManager.OnMagicItemsChanged += DatabaseManager_OnItemsChanged;
-            itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll();
+            try { itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll(); } catch { }
         }
 
         private void DatabaseManager_OnItemsChanged(MagicItem specificItem = null)
         {
-            itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll();
+            try { itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll(); } catch { }
         }        
 
         private void perchanceBtn_Click(object sender, RoutedEventArgs e)

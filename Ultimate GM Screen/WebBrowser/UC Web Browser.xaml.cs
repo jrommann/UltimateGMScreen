@@ -21,8 +21,7 @@ namespace Ultimate_GM_Screen.WebBrowser
     /// </summary>
     public partial class UC_Web_Browser : UserControl
     {
-        public string StartingAddress { get; set; }
-        bool _webInit = false;
+        public string StartingAddress { get; set; }        
 
         public UC_Web_Browser()
         {
@@ -36,8 +35,7 @@ namespace Ultimate_GM_Screen.WebBrowser
                 return;
 
             var browserEnviorment = await CoreWebView2Environment.CreateAsync(null, Common.UserDataFolder);
-            await browser.EnsureCoreWebView2Async(browserEnviorment);
-            _webInit = true;
+            await browser.EnsureCoreWebView2Async(browserEnviorment);            
             
             browser.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);
             if (!string.IsNullOrEmpty(StartingAddress))

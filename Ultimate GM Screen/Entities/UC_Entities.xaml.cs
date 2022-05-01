@@ -22,7 +22,7 @@ namespace Ultimate_GM_Screen.Entities
     public partial class UC_Entities : UserControl
     {
         Entity _currentEntity;
-
+        List<UC_EntityEditor> _pinned = new List<UC_EntityEditor>();
         public UC_Entities()
         {
             InitializeComponent();
@@ -177,10 +177,27 @@ namespace Ultimate_GM_Screen.Entities
                 e.Handled = true;
                 if (treeViewItem.Header is Entity)
                 {
-                    var w = new Window_Entity();
-                    w.Load(treeViewItem.Header as Entity);
-                    w.Show();
+                    var win = new Window_Entity();                   
+                    win.Load(treeViewItem.Header as Entity);                    
+                    win.ShowInTaskbar = true;
+                    win.Owner = this.Parent as Window;
+                    win.ShowActivated = true;
+                    win.Show();
                 }
+            }
+        }
+
+        private void textBox_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!DatabaseManager.IsOpened)
+                return;
+
+            if (string.IsNullOrEmpty(textBox_search.Text))
+                LoadTreeView(DatabaseManager.Entities_GetAll());
+            else
+            {
+                var notes = DatabaseManager.Entities_FindByName(textBox_search.Text);
+                LoadTreeView(notes);
             }
         }
     }

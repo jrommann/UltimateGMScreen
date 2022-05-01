@@ -12,6 +12,7 @@ using ToastNotifications;
 using ToastNotifications.Position;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
+using System.Linq.Expressions;
 
 namespace Ultimate_GM_Screen
 {
@@ -63,6 +64,8 @@ namespace Ultimate_GM_Screen
         }
 
         #region -> public methods
+        static public bool IsOpened { get { return _instance != null; } }
+
         static public DatabaseManager Open(string filepath)
         {
             _instance = new DatabaseManager(filepath);
@@ -236,7 +239,7 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Table<Entity>().ToList();
+            var list = _db.Table<Entity>().ToList();           
             list.Sort((x, y) => x.Name.CompareTo(y.Name));
             return list;
         }
@@ -255,6 +258,14 @@ namespace Ultimate_GM_Screen
                 throw new Exception("Database NOT opened");
 
             return _db.Table<EntityRelationship>().Where(t => t.ParentID == parentID).ToList();
+        }
+
+        static public List<Entity> Entities_FindByName(string name)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return _db.Table<Entity>().AsEnumerable().Where(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.Name).ToList();
         }
         #endregion
 

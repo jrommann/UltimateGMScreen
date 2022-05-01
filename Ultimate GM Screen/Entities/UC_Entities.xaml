@@ -11,14 +11,22 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>        
-        <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
-        <TreeView x:Name="treeView" Margin="10,10,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
+        </Grid.ColumnDefinitions>
+
+        <TreeView x:Name="treeView" Margin="10,38,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
             </TreeView.Resources>
         </TreeView>
+        <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
         <GridSplitter Grid.Column="1"></GridSplitter>
-        <local:UC_EntityEditor x:Name="noteEditor" Grid.Column="2" Margin="0"/>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <local:UC_EntityEditor Grid.Row="1" x:Name="noteEditor" Margin="0"/>
+        </Grid>
+        <TextBox x:Name="textBox_search" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
     </Grid>
 </UserControl>

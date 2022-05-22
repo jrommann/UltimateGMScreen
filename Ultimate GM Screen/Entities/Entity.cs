@@ -21,5 +21,16 @@ namespace Ultimate_GM_Screen.Entities
         {
             return Name;
         }
+
+        public Entity() { }
+
+        public Entity(Entity toCopy)
+        {            
+            this.ID = toCopy.ID;
+            this.Path = toCopy.Path;
+            this.Name = toCopy.Name;
+            this.Details = toCopy.Details;
+            this.Tags = toCopy.Tags;
+        }
     }
 }

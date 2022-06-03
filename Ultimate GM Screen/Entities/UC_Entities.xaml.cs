@@ -41,7 +41,7 @@ namespace Ultimate_GM_Screen.Entities
 
             var editor = new UC_EntityEditor();            
             editor.SetValue(Grid.RowProperty, 1);            
-            editor.Load(note);            
+            editor.Load(note, true);            
             editor.CanPopout = false;
             editor.Visibility = Visibility.Hidden;
             editor.Pinned = true;

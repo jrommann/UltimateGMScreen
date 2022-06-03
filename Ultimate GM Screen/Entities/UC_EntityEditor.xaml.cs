@@ -57,7 +57,7 @@ namespace Ultimate_GM_Screen.Entities
             if (current == null)
                 _current = new Entity();
             else
-                _current = new Entity(current);
+                _current = current;
 
             textBox_path.Text = _current.Path;
             textBox_name.Text = _current.Name;

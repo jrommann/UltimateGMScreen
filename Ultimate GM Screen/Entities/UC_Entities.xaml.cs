@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Ultimate_GM_Screen.Entities
 {
@@ -25,6 +26,7 @@ namespace Ultimate_GM_Screen.Entities
         
         List<UC_EntityEditor> _pinnedEditors = new List<UC_EntityEditor>();
         List<Button> _pinnedButtons = new List<Button>();
+        ObservableCollection<Entity> _noteHistory = new ObservableCollection<Entity>();       
 
         public UC_Entities()
         {
@@ -32,6 +34,8 @@ namespace Ultimate_GM_Screen.Entities
 
             DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
             noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
+
+            comboBox_history.ItemsSource = _noteHistory;
         }
 
         private void NoteEditor_OnPinClicked(Entity note = null)
@@ -192,9 +196,12 @@ namespace Ultimate_GM_Screen.Entities
         async void ChangeNote(Entity ent, bool edit)
         {            
             await noteEditor.Save();
-               
+            AddToHistory(noteEditor.Current);   
+
             noteEditor.Load(ent, edit);
             _currentEntity = ent;
+
+            Switch_Displayed_Note(noteEditor);
         }
 
         private void treeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -241,6 +248,23 @@ namespace Ultimate_GM_Screen.Entities
             _pinnedEditors.ForEach(x => x.Visibility = Visibility.Hidden);
 
             show.Visibility = Visibility.Visible;
+        }
+
+        private void comboBox_history_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBox_history.SelectedItem is Entity)
+            {
+                Switch_Displayed_Note(noteEditor);                     
+                
+                ChangeNote(comboBox_history.SelectedItem as Entity, true);
+                comboBox_history.SelectedItem = null;
+            }
+        }
+
+        void AddToHistory(Entity note)
+        {
+            _noteHistory.Remove(note);            
+            _noteHistory.Insert(0, note);            
         }
     }
 }

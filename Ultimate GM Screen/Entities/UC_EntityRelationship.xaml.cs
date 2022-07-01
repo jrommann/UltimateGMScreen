@@ -32,8 +32,10 @@ namespace Ultimate_GM_Screen.Entities
             _relationship = rel;
             label_title.Content = rel.Description;
             label_child_link.Inlines.Clear();
-            label_child_link.Inlines.Add(rel.Child.Name);
-
+            if(rel.Child != null)
+                label_child_link.Inlines.Add(rel.Child.Name);
+            else
+                label_child_link.Inlines.Add("Note Deleted!");
         }
 
         private void label_child_link_Click(object sender, RoutedEventArgs e)

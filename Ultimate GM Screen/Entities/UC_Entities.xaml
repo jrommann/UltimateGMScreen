@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TreeView x:Name="treeView" Margin="10,38,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
+        <TreeView x:Name="treeView" Margin="10,67,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
             </TreeView.Resources>
@@ -26,10 +26,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel x:Name="stackpanel_pinnedNotes" Grid.Row="0" Orientation="Horizontal">
-                <Button x:Name="btn_Current" Content="Current" Click="btn_Current_Click"/>
+                <Button x:Name="btn_Current" Content="Home" Click="btn_Current_Click"/>
             </StackPanel>
             <local:UC_EntityEditor Grid.Row="1" x:Name="noteEditor" Margin="0"/>
         </Grid>
-        <TextBox x:Name="textBox_search" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
+        <TextBox x:Name="textBox_search" Height="23" Margin="10,39,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
+        <ComboBox x:Name="comboBox_history" Margin="10,10,10,0" VerticalAlignment="Top" SelectionChanged="comboBox_history_SelectionChanged"/>
     </Grid>
 </UserControl>

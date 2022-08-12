@@ -266,5 +266,10 @@ namespace Ultimate_GM_Screen.Entities
             _noteHistory.Remove(note);            
             _noteHistory.Insert(0, note);            
         }
+
+        private void button_clearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            textBox_search.Text = "";
+        }
     }
 }

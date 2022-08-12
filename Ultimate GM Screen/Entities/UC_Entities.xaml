@@ -30,7 +30,8 @@
             </StackPanel>
             <local:UC_EntityEditor Grid.Row="1" x:Name="noteEditor" Margin="0"/>
         </Grid>
-        <TextBox x:Name="textBox_search" Height="23" Margin="10,39,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
+        <TextBox x:Name="textBox_search" Height="23" Margin="10,39,35,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
+        <Button x:Name="button_clearSearch" Content="X" Margin="0,39,10,0" Click="button_clearSearch_Click" HorizontalAlignment="Right" Width="25" Height="23" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox_history" Margin="10,10,10,0" VerticalAlignment="Top" SelectionChanged="comboBox_history_SelectionChanged"/>
     </Grid>
 </UserControl>

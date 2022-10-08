@@ -193,9 +193,9 @@ namespace Ultimate_GM_Screen.Entities
             }
         }
 
-        async void ChangeNote(Entity ent, bool edit)
+        void ChangeNote(Entity ent, bool edit)
         {            
-            await noteEditor.Save();
+            noteEditor.Save();
             AddToHistory(noteEditor.Current);   
 
             noteEditor.Load(ent, edit);

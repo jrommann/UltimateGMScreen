@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
-             xmlns:Ultimate_GM_Screen="clr-namespace:Ultimate_GM_Screen" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:Ultimate_GM_Screen="clr-namespace:Ultimate_GM_Screen" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:markdown="clr-namespace:Ultimate_GM_Screen.Markdown"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.CommandBindings>
@@ -25,8 +25,8 @@
                 <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
                 <Button x:Name="pinBtn" Content="Pin" Click="pinBtn_Click"/>
                 <Button x:Name="popoutBtn" Content="Popout" Click="popoutBtn_Click"/>
-                <Button x:Name="revisionsBtn" Content="Revisions" Click="revisionsBtn_Click"/>                
-                <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>                
+                <Button x:Name="revisionsBtn" Content="Revisions" Click="revisionsBtn_Click"/>
+                <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>
             </ToolBar>
         </ToolBarTray>
         <Grid Grid.Row="1">
@@ -41,22 +41,24 @@
             <Label Grid.Row="1" Content="Tags" Margin="411,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25"/>
             <TextBox Grid.Row="1" x:Name="textBox_tags" Height="23" Margin="441,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>
-        <Wpf:WebView2 x:Name="webView" Margin="2,5,10,10" Grid.Row="2" SizeChanged="webView_SizeChanged"/>
+        <markdown:UC_MarkdownEditor x:Name="markdownEditor" Grid.Row="2"/>
         <GridSplitter Grid.Row="3" Background="#FF3D3D4C"></GridSplitter>
         <Grid Grid.Row="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
+
             <StackPanel Grid.Row="0" Orientation="Horizontal" Height="30">
                 <Button x:Name="button_addRelationship" Width="120" Content="Add Relationship" Click="button_addRelationship_Click"></Button>
-                
+
             </StackPanel>
-            <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Margin="0">            
+            <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Margin="0">
                 <DockPanel x:Name="dockpanel_relationships" LastChildFill="False">
-                    
-                </DockPanel>         
-        </ScrollViewer>
+
+                </DockPanel>
+            </ScrollViewer>
         </Grid>
+
     </Grid>
 </UserControl>

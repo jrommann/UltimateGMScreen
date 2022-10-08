@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using System.Windows.Markup;
+using Markdig.Wpf;
 
 namespace Ultimate_GM_Screen.Entities
 {
@@ -29,16 +30,14 @@ namespace Ultimate_GM_Screen.Entities
         Entity _current = new Entity();
         public Entity Current { get { return _current; } }
 
-        bool _edit = false;
-        bool _webInit = false;
-        
+        bool _edit = false;        
 
         public UC_EntityEditor()
         {
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
 
             InitializeComponent();
-            InitializeAsync();
+            //InitializeAsync();
 
             DatabaseManager.OnRelationshipsChanged += DatabaseManager_OnRelationshipsChanged;            
         }        
@@ -74,9 +73,9 @@ namespace Ultimate_GM_Screen.Entities
             catch { }
         }
 
-        async private void saveBtn_Click(object sender, RoutedEventArgs e)
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            await Save();
+            Save();
         }
 
         private void newBtn_Click(object sender, RoutedEventArgs e)
@@ -90,7 +89,7 @@ namespace Ultimate_GM_Screen.Entities
                 textBox_path.Text = path;           
         }
 
-        public async Task Save()
+        public void Save()
         {
             if (string.IsNullOrEmpty(textBox_name.Text))
                 return;
@@ -116,7 +115,7 @@ namespace Ultimate_GM_Screen.Entities
                 _current.Tags = textBox_tags.Text;
             }
 
-            string text = await GetBrowserText();
+            string text = markdownEditor.GetMarkdown();
             if (_current.Details != text)
             {
                 save = true;
@@ -137,46 +136,22 @@ namespace Ultimate_GM_Screen.Entities
             }
         }
 
-        async private void copyBtn_Click(object sender, RoutedEventArgs e)
+        private void copyBtn_Click(object sender, RoutedEventArgs e)
         {            
             _current = new Entity();
             _edit = false;
             textBox_name.Text += "(Copy)";
 
-            await Save();
+            Save();
             Load(_current, true);            
-        }
-
-        private void WebView_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
-        {
-            if (_webInit)
-                SetBrowserText(_current.Details);
-        }
-
-        async void InitializeAsync()
-        {
-            await webView.EnsureCoreWebView2Async(null);
-            _webInit = true;
-
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tinymce\\index.html");
-            webView.Source = new Uri("file:///" + path);
-            webView.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);
-            webView.NavigationCompleted += WebView_NavigationCompleted;
         }
 
         void SetBrowserText(string text)
         {
-            if (_webInit)
-                webView.ExecuteScriptAsync(string.Format("set(\"{0}\")", text));    
+
+            markdownEditor.SetMarkdown(text);
         }
 
-        async Task<string> GetBrowserText()
-        {
-            string result = await webView.ExecuteScriptAsync(@"save()");
-            result = result.Remove(0, 1).Remove(result.Length - 2, 1);
-            return result;
-        }
-        
         private void button_addRelationship_Click(object sender, RoutedEventArgs e)
         {
             var w = new Window_EditRelationship();
@@ -192,17 +167,9 @@ namespace Ultimate_GM_Screen.Entities
             dockpanel_relationships.Children.Add(r);
         }
 
-        private void webView_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (_webInit)
-            {               
-                try { webView.Reload(); } catch { }
-            }
-        }        
-
-        async private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            await Save();
+            Save();
         }
 
         private void revisionsBtn_Click(object sender, RoutedEventArgs e)

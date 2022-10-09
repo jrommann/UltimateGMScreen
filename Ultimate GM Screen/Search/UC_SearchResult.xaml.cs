@@ -43,7 +43,7 @@ namespace Ultimate_GM_Screen.Search
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            detailsHtml.Html = System.Text.RegularExpressions.Regex.Unescape(_entry.Details);
+            Viewer.Markdown = _entry.Details;            
         }
     }
 }

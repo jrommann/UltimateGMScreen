@@ -50,7 +50,7 @@ namespace Ultimate_GM_Screen.Entities
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            detailsHtml.Html = System.Text.RegularExpressions.Regex.Unescape(Current.Details);
+            details.Markdown = Current.Details;
         }
     }
 }

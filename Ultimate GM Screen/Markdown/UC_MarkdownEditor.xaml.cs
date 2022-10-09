@@ -18,7 +18,7 @@ namespace Ultimate_GM_Screen.Markdown
     {
         public UC_MarkdownEditor()
         {
-            InitializeComponent();            
+            InitializeComponent(); 
         }
        
         public string GetMarkdown()

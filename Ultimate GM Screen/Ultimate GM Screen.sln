@@ -5,16 +5,27 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ultimate GM Screen", "Ultimate GM Screen.csproj", "{C1180BB1-9009-4757-97D1-F1D80F776550}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig.Wpf", "..\Markdig.WPF\src\Markdig.Wpf\Markdig.Wpf.csproj", "{BFE8A846-CBD2-41E6-B475-463003D7C97F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release_Signed|Any CPU = Release_Signed|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C1180BB1-9009-4757-97D1-F1D80F776550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C1180BB1-9009-4757-97D1-F1D80F776550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1180BB1-9009-4757-97D1-F1D80F776550}.Release_Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{C1180BB1-9009-4757-97D1-F1D80F776550}.Release_Signed|Any CPU.Build.0 = Release|Any CPU
 		{C1180BB1-9009-4757-97D1-F1D80F776550}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1180BB1-9009-4757-97D1-F1D80F776550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE8A846-CBD2-41E6-B475-463003D7C97F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE8A846-CBD2-41E6-B475-463003D7C97F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE8A846-CBD2-41E6-B475-463003D7C97F}.Release_Signed|Any CPU.ActiveCfg = Release_Signed|Any CPU
+		{BFE8A846-CBD2-41E6-B475-463003D7C97F}.Release_Signed|Any CPU.Build.0 = Release_Signed|Any CPU
+		{BFE8A846-CBD2-41E6-B475-463003D7C97F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE8A846-CBD2-41E6-B475-463003D7C97F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

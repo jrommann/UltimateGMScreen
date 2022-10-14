@@ -148,8 +148,8 @@ namespace Ultimate_GM_Screen.Entities
 
         void SetBrowserText(string text)
         {
-            if (!String.IsNullOrEmpty(text))
-                text = System.Text.RegularExpressions.Regex.Unescape(text);
+            //if (!String.IsNullOrEmpty(text))
+            //    try { text = System.Text.RegularExpressions.Regex.Unescape(text); } catch{ }
 
             markdownEditor.SetMarkdown(text);
         }

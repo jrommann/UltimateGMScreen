@@ -20,11 +20,25 @@ namespace Ultimate_GM_Screen.Resources
     /// </summary>
     public partial class UC_ResourceEditor : UserControl
     {
+        public delegate void Event_PinClicked(Resource item = null);
+        public event Event_PinClicked OnPinClicked;
+        public event Event_PinClicked OnUnpinClicked;
+
         Resource _current = new Resource();
+        public Resource Current { get { return _current; } }
+
         bool _edit = false;
+     
+        bool _canPopout = true;
+        public bool CanPopout { get { return _canPopout; } set { _canPopout = value; popoutBtn.Visibility = (value ? Visibility.Visible : Visibility.Collapsed); } }
+        bool _canPin = true;
+        public bool CanPin { get { return _canPin; } set { _canPin = value; pinBtn.Visibility = (value ? Visibility.Visible : Visibility.Collapsed); } }
+
+        bool _pinned = false;
+        public bool Pinned { get { return _pinned; } set { _pinned = value; pinBtn.Content = (value ? "Unpin" : "Pin"); } }
         public UC_ResourceEditor()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         public void Load(Resource current = null, bool edit = false)
@@ -136,6 +150,30 @@ namespace Ultimate_GM_Screen.Resources
                 textbox_address.Text = dlg.FileName;
             }
             #endregion
+        }
+
+        private void pinBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CanPin)
+            {
+                if (_pinned)
+                    OnUnpinClicked?.Invoke(_current);
+                else
+                    OnPinClicked?.Invoke(_current);
+            }
+        }
+
+        private void popoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CanPopout && _current != null)
+            {
+                var win = new Window_Resource();
+                win.Load(_current);
+                win.ShowInTaskbar = true;
+                win.Owner = this.Parent as Window;
+                win.ShowActivated = true;
+                win.Show();
+            }
         }
     }
 }

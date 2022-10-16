@@ -34,6 +34,9 @@ namespace Ultimate_GM_Screen.Resources
         {
             Title = res.Name;
             editor.Load(res, true);
+            editor.CanPin = false;
+            editor.CanPopout = false;
+
         }
     }
 }

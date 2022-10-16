@@ -19,6 +19,15 @@
             </TreeView.Resources>
         </TreeView>
         <GridSplitter Grid.Column="1"></GridSplitter>
-        <local:UC_ResourceEditor x:Name="resourceEditor" Grid.Column="2" Margin="0"/>
+        <Grid x:Name="notesGrid" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="stackpanel_pinnedNotes" Grid.Row="0" Orientation="Horizontal">
+                <Button x:Name="btn_Current" Content="Home" Click="btn_Current_Click"/>
+            </StackPanel>
+            <local:UC_ResourceEditor x:Name="resourceEditor" Grid.Column="2" Grid.Row="1" Margin="0"/>
+        </Grid>        
     </Grid>
 </UserControl>

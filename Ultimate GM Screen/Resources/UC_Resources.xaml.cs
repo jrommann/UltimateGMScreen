@@ -21,6 +21,8 @@ namespace Ultimate_GM_Screen.Resources
     /// </summary>
     public partial class UC_Resources : UserControl
     {
+        List<UC_ResourceEditor> _pinnedEditors = new List<UC_ResourceEditor>();
+        List<Button> _pinnedButtons = new List<Button>();
         Resource _currentResource;
         bool _loaded = false;
 
@@ -29,6 +31,8 @@ namespace Ultimate_GM_Screen.Resources
             InitializeComponent();
             
             DatabaseManager.OnResourcesChanged += DatabaseManager_OnResourcesChanged;
+
+            resourceEditor.OnPinClicked += Editor_OnPinClicked;
         }
 
         private void DatabaseManager_OnResourcesChanged(Resource specificItem = null)
@@ -147,6 +151,56 @@ namespace Ultimate_GM_Screen.Resources
                 DatabaseManager.Delete(_currentResource);
                 _currentResource = null;
             }
+        }
+
+        private void btn_Current_Click(object sender, RoutedEventArgs e)
+        {
+            Switch_Displayed_Note(resourceEditor);
+        }
+
+        void Switch_Displayed_Note(UC_ResourceEditor show)
+        {
+            resourceEditor.Visibility = Visibility.Hidden;
+            _pinnedEditors.ForEach(x => x.Visibility = Visibility.Hidden);
+
+            show.Visibility = Visibility.Visible;
+        }
+
+        private void Editor_OnPinClicked(Resource note = null)
+        {
+            if (note == null)
+                return;
+
+            var editor = new UC_ResourceEditor();
+            editor.SetValue(Grid.RowProperty, 1);
+            editor.Load(note, true);
+            editor.CanPopout = false;
+            editor.Visibility = Visibility.Hidden;
+            editor.Pinned = true;
+            editor.OnUnpinClicked += Editor_OnUnpinClicked;
+            notesGrid.Children.Add(editor);
+            _pinnedEditors.Add(editor);
+
+            var btn = new Button();
+            btn.Content = note.Name;
+            btn.Click += (object sender, RoutedEventArgs e) => { Switch_Displayed_Note(editor); };
+            btn.Tag = note;
+            _pinnedButtons.Add(btn);
+
+            stackpanel_pinnedNotes.Children.Add(btn);
+        }
+
+        private void Editor_OnUnpinClicked(Resource item = null)
+        {
+            var btn = _pinnedButtons.Find(x => x.Tag == item);
+            var editor = _pinnedEditors.Find(x => x.Current == item);
+            _pinnedButtons.Remove(btn);
+            _pinnedEditors.Remove(editor);
+
+            stackpanel_pinnedNotes.Children.Remove(btn);
+            notesGrid.Children.Remove(editor);
+
+            Switch_Displayed_Note(resourceEditor);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

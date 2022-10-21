@@ -95,16 +95,19 @@ namespace Ultimate_GM_Screen.Entities
                 return;
 
             bool save = false;
+            bool pathNameChanged = false;
             var revision = new EntityRevision(_current);
 
             if (_current.Path != textBox_path.Text)
             {
+                pathNameChanged = true;
                 save = true;
                 _current.Path = textBox_path.Text;
             }
 
             if (_current.Name != textBox_name.Text)
             {
+                pathNameChanged = true;
                 save = true;
                 _current.Name = textBox_name.Text;
             }
@@ -127,7 +130,7 @@ namespace Ultimate_GM_Screen.Entities
                 if (_edit)
                 {
                     DatabaseManager.Add(revision);
-                    DatabaseManager.Update(_current);
+                    DatabaseManager.Update(_current, pathNameChanged);
                 }
                 else
                     DatabaseManager.Add(_current);

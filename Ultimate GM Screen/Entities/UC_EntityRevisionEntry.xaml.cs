@@ -33,7 +33,7 @@ namespace Ultimate_GM_Screen.Entities
             if (entity != null)
             {
                 entity.Details = Current.Details;
-                DatabaseManager.Update(entity);
+                DatabaseManager.Update(entity, false);
             }            
         }
 

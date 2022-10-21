@@ -35,9 +35,10 @@ namespace Ultimate_GM_Screen.Resources
             resourceEditor.OnPinClicked += Editor_OnPinClicked;
         }
 
-        private void DatabaseManager_OnResourcesChanged(Resource specificItem = null)
+        private void DatabaseManager_OnResourcesChanged(Resource specificItem = null, bool pathChanged = false)
         {
-            LoadTreeView(DatabaseManager.Resources_GetAll());
+            if(pathChanged)
+                LoadTreeView(DatabaseManager.Resources_GetAll());
         }
 
         void LoadTreeView(List<Resource> entries)

@@ -55,7 +55,7 @@ namespace Ultimate_GM_Screen.Entities
                 Relationship.ChildID = (listBox_choices.SelectedItem as Entity).ID;
             
             if (_isEdit)
-                DatabaseManager.Update(Relationship);
+                DatabaseManager.Update(Relationship, false);
             else
                 DatabaseManager.Add(Relationship);
 

@@ -24,9 +24,10 @@ namespace Ultimate_GM_Screen.Magic_Items
             try { itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll(); } catch { }
         }
 
-        private void DatabaseManager_OnItemsChanged(MagicItem specificItem = null)
+        private void DatabaseManager_OnItemsChanged(MagicItem specificItem = null, bool pathChanged=false)
         {
-            try { itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll(); } catch { }
+            if(pathChanged)
+                try { itemListBox.ItemsSource = DatabaseManager.MagicItem_GetAll(); } catch { }
         }        
 
         private void perchanceBtn_Click(object sender, RoutedEventArgs e)

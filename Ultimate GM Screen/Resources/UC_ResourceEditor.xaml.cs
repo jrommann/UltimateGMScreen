@@ -79,16 +79,19 @@ namespace Ultimate_GM_Screen.Resources
                 return;
 
             bool save = false;
+            bool namePathChanged = false;
 
             if (_current.Path != textbox_path.Text)
             {
                 _current.Path = textbox_path.Text;
                 save = true;
+                namePathChanged = true;
             }
             if (_current.Name != textbox_name.Text)
             {
                 _current.Name = textbox_name.Text;
                 save = true;
+                namePathChanged = true;
             }
             if (_current.Address != textbox_address.Text)
             {
@@ -99,7 +102,7 @@ namespace Ultimate_GM_Screen.Resources
             if (save)
             {
                 if (_edit)
-                    DatabaseManager.Update(_current);
+                    DatabaseManager.Update(_current, namePathChanged);
                 else
                     DatabaseManager.Add(_current);
 

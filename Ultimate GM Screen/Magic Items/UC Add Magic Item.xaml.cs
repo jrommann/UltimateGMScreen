@@ -72,12 +72,16 @@ namespace Ultimate_GM_Screen.Magic_Items
 
         void UpdateItem()
         {
+            bool namePathChanged = false;
+            if (_currentItem.Name != nameText.Text)
+                namePathChanged = true;            
+
             _currentItem.Name = CamelCase(nameText.Text);
             _currentItem.Source = sourceText.Text;
             _currentItem.PageNumber = pageNumber.Value.Value;
             _currentItem.Description = descText.Text;
             _currentItem.Tags = tagsText.Text;
-            DatabaseManager.Update(_currentItem);
+            DatabaseManager.Update(_currentItem, namePathChanged);
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)

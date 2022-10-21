@@ -75,9 +75,10 @@ namespace Ultimate_GM_Screen.Entities
             Switch_Displayed_Note(noteEditor);
         }
 
-        private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null)
+        private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null, bool pathChanged = false)
         {            
-            LoadTreeView(DatabaseManager.Entities_GetAll());
+            if(pathChanged)
+                LoadTreeView(DatabaseManager.Entities_GetAll());
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)

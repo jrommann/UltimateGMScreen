@@ -18,16 +18,16 @@ namespace Ultimate_GM_Screen
 {
     class DatabaseManager
     {
-        public delegate void Event_MagicItemsChanged(MagicItem specificItem=null);
+        public delegate void Event_MagicItemsChanged(MagicItem specificItem=null, bool pathChanged=false);
         static public event Event_MagicItemsChanged OnMagicItemsChanged;
 
-        public delegate void Event_EntitiesChanged(Entity specificItem = null);
+        public delegate void Event_EntitiesChanged(Entity specificItem = null, bool pathChanged=false);
         static public event Event_EntitiesChanged OnEntitiesChanged;
 
         public delegate void Event_RelationshipsChanged(EntityRelationship specificItem = null);
         static public event Event_RelationshipsChanged OnRelationshipsChanged;
 
-        public delegate void Event_ResourcesChanged(Resource specificItem = null);
+        public delegate void Event_ResourcesChanged(Resource specificItem = null, bool pathChanged=false);
         static public event Event_ResourcesChanged OnResourcesChanged;
 
         public delegate void Event_RevisionsChanged();
@@ -89,7 +89,7 @@ namespace Ultimate_GM_Screen
             try
             {
                 _db.Insert(item);
-                TriggerEvents(item);
+                TriggerEvents(item, true, true);
                 
             }
             catch (System.Exception x)
@@ -115,7 +115,7 @@ namespace Ultimate_GM_Screen
                     Delete_Revisions(item as Entity);
                 }
 
-                TriggerEvents(item, false);
+                TriggerEvents(item, false, true);
             }
             catch(SystemException x)
             { 
@@ -126,15 +126,15 @@ namespace Ultimate_GM_Screen
             return true;
         }
 
-        static public bool Update(object item)
+        static public bool Update(object item, bool pathChanged)
         {
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
             try
             {
-                _db.Update(item);
-                TriggerEvents(item);
+                _db.Update(item); 
+                TriggerEvents(item, true, pathChanged);              
             }
             catch { return false; }
 
@@ -155,21 +155,21 @@ namespace Ultimate_GM_Screen
                 Delete(r);
         }
 
-        static void TriggerEvents(object item, bool saved = true)
+        static void TriggerEvents(object item, bool saved = true, bool isNew=false)
         {
             if (item is MagicItem)
             {
                 if (saved)
                     _notifier.ShowSuccess("Saved " + (item as MagicItem).Name);
 
-                OnMagicItemsChanged?.Invoke(item as MagicItem);
+                OnMagicItemsChanged?.Invoke(item as MagicItem, isNew);
             }
             else if (item is Entity)
             {
                 if (saved)
                     _notifier.ShowSuccess("Saved " + (item as Entity).Name);
 
-                OnEntitiesChanged?.Invoke(item as Entity);
+                OnEntitiesChanged?.Invoke(item as Entity, isNew);
             }
             else if (item is EntityRelationship)
                 OnRelationshipsChanged?.Invoke(item as EntityRelationship);
@@ -178,7 +178,7 @@ namespace Ultimate_GM_Screen
                 if (saved)
                     _notifier.ShowSuccess("Saved " + (item as Resource).Name);
 
-                OnResourcesChanged?.Invoke(item as Resource);
+                OnResourcesChanged?.Invoke(item as Resource, isNew);
             }
             else if (item is EntityRevision)
                 OnRevisionsChanged?.Invoke();

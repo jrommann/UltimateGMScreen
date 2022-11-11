@@ -149,6 +149,11 @@ namespace Ultimate_GM_Screen.Entities
             Load(_current, true);            
         }
 
+        public void InsertLink(Entity note)
+        {
+            markdownEditor.InsertLink(note);
+        }
+
         void SetBrowserText(string text)
         {
             //if (!String.IsNullOrEmpty(text))

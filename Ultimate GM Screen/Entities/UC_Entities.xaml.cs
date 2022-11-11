@@ -22,11 +22,14 @@ namespace Ultimate_GM_Screen.Entities
     /// </summary>
     public partial class UC_Entities : UserControl
     {
+        public static UC_Entities Notes { get; private set; }
+
         Entity _currentEntity;
         
         List<UC_EntityEditor> _pinnedEditors = new List<UC_EntityEditor>();
         List<Button> _pinnedButtons = new List<Button>();
-        ObservableCollection<Entity> _noteHistory = new ObservableCollection<Entity>();       
+        ObservableCollection<Entity> _noteHistory = new ObservableCollection<Entity>();
+        UC_EntityEditor _visibleEditor;
 
         public UC_Entities()
         {
@@ -36,6 +39,8 @@ namespace Ultimate_GM_Screen.Entities
             noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
 
             comboBox_history.ItemsSource = _noteHistory;
+
+            Notes = this;
         }
 
         private void NoteEditor_OnPinClicked(Entity note = null)
@@ -60,6 +65,8 @@ namespace Ultimate_GM_Screen.Entities
             _pinnedButtons.Add(btn);
 
             stackpanel_pinnedNotes.Children.Add(btn);
+            noteEditor.Load();
+            Switch_Displayed_Note(editor);
         }
 
         private void Editor_OnUnpinClicked(Entity item = null)
@@ -194,7 +201,7 @@ namespace Ultimate_GM_Screen.Entities
             }
         }
 
-        void ChangeNote(Entity ent, bool edit)
+        public void ChangeNote(Entity ent, bool edit)
         {            
             noteEditor.Save();
             AddToHistory(noteEditor.Current);   
@@ -249,6 +256,7 @@ namespace Ultimate_GM_Screen.Entities
             _pinnedEditors.ForEach(x => x.Visibility = Visibility.Hidden);
 
             show.Visibility = Visibility.Visible;
+            _visibleEditor = show;
         }
 
         private void comboBox_history_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -271,6 +279,26 @@ namespace Ultimate_GM_Screen.Entities
         private void button_clearSearch_Click(object sender, RoutedEventArgs e)
         {
             textBox_search.Text = "";
+        }
+
+        private void treeView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                TreeViewItem treeViewItem = Common.VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+                if (treeViewItem != null)
+                {
+                    e.Handled = true;
+                    if (treeViewItem.Header is Entity)
+                    {
+                        if(_visibleEditor != null)
+                            _visibleEditor.InsertLink(treeViewItem.Header as Entity);
+                        else
+                            noteEditor.InsertLink(treeViewItem.Header as Entity);
+                    }
+                }
+            }
         }
     }
 }

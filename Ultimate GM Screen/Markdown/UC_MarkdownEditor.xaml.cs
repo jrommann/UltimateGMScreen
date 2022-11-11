@@ -9,6 +9,7 @@ using System.Xaml;
 using Markdig;
 using Markdig.Wpf;
 using XamlReader = System.Windows.Markup.XamlReader;
+using Ultimate_GM_Screen.Entities;
 
 namespace Ultimate_GM_Screen.Markdown
 {
@@ -41,12 +42,28 @@ namespace Ultimate_GM_Screen.Markdown
         {
             markdownText.Text = markdown;
             Viewer.Markdown = markdownText.Text;
-        }       
+        }
+
+        public void InsertLink(Entity note)
+        {
+            markdownText.Text += string.Format("\n\n[{0}]({1})", note.Name, note.ID);
+        }
 
         private void markdownText_TextChanged(object sender, TextChangedEventArgs e)
         {
             _updateTimer.Stop();
             _updateTimer.Start();
+        }
+
+        private void Command_HyperlinkClicked(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            int id = -1;
+            if (int.TryParse(e.Parameter as string, out id))
+            {
+                var note = DatabaseManager.Entity_FromID(id);
+                if(note != null)
+                    UC_Entities.Notes.ChangeNote(note, true);
+            }
         }
     }
 }

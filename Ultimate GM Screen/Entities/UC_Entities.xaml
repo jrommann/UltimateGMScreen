@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TreeView x:Name="treeView" Margin="10,67,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
+        <TreeView x:Name="treeView" Margin="10,67,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown" PreviewMouseDown="treeView_PreviewMouseDown">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
             </TreeView.Resources>

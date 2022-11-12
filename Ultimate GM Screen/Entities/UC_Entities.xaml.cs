@@ -83,9 +83,9 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null, bool pathChanged = false)
-        {            
-            if(pathChanged)
-                LoadTreeView(DatabaseManager.Entities_GetAll());
+        {
+            if (pathChanged)
+                UpdateNotesList();
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)
@@ -94,111 +94,19 @@ namespace Ultimate_GM_Screen.Entities
                 DatabaseManager.Delete(_currentEntity);
         }
 
-        void LoadTreeView(List<Entity> entries)
+        void UpdateNotesList(List<Entity> notes=null)
         {
-            var parents = new List<Dictionary<string, TreeViewItem>>();
-            treeView.Items.Clear();
-
-            #region -> build tree
-            foreach (var e in entries)
-            {
-                if (!string.IsNullOrEmpty(e.Path))
-                {
-                    #region -> build tree
-                    var split = e.Path.Split('/');
-                    TreeViewItem parent = null;
-                    for (int i = 0; i < split.Length; i++)
-                    {
-                        if (parents.Count <= i)
-                            parents.Add(new Dictionary<string, TreeViewItem>());
-
-                        if (parents[i].ContainsKey(split[i]))
-                            parent = parents[i][split[i]];
-                        else
-                        {
-                            var p = new TreeViewItem();
-                            p.Header = split[i];
-                            p.IsExpanded = true;
-
-                            if (parent != null)
-                                parent.Items.Add(p);
-                            else
-                                treeView.Items.Add(p);
-
-                            parents[i].Add(split[i], p);
-                            parent = p;
-                        }
-                    }
-                    #endregion     
-                }
-            }
-            #endregion
-
-            #region -> populate tree
-            foreach (var e in entries)
-            {
-                if (!string.IsNullOrEmpty(e.Path))
-                {                    
-                    string path = string.Format("{0}/{1}", e.Path, e.Name);
-                    var split = path.Split('/');
-                    TreeViewItem parent = null;
-                    int pCount = parents.Count;
-                    for (int i = 0; i < split.Length; i++)
-                    {
-                        if (i<pCount && parents[i].ContainsKey(split[i]))
-                            parent = parents[i][split[i]];   
-                    }
-
-                    if (parent.Header as string == e.Name)
-                        parent.Header = e;
-                    else
-                        parent.Items.Add(e);
-                }
-                else
-                    treeView.Items.Add(e);                
-            }
-            #endregion
-
-            try
-            {
-                treeView.Items.SortDescriptions.Clear();
-                treeView.Items.SortDescriptions.Add(new SortDescription("Header", ListSortDirection.Ascending));
-                foreach (var i in parents)
-                {
-                    foreach (var kv in i)
-                    {
-                        kv.Value.Items.SortDescriptions.Clear();
-
-                        if (kv.Value.Items[0] is Entity)
-                            kv.Value.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                        else
-                            kv.Value.Items.SortDescriptions.Add(new SortDescription("Header", ListSortDirection.Ascending));
-                    }
-                }
-            }
-            catch { }
-        }
+            if (notes != null)
+                listBoxNotes.ItemsSource = notes;
+            else
+                listBoxNotes.ItemsSource = DatabaseManager.Entities_GetAll();
+        }        
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             noteEditor.Load();
-            try { LoadTreeView(DatabaseManager.Entities_GetAll()); } catch { }
+            UpdateNotesList();
             Loaded -= UserControl_Loaded;
-        }
-
-        private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (e.NewValue != null)
-            {
-                if (e.NewValue is Entity)
-                    ChangeNote(e.NewValue as Entity, true);
-                else if (e.NewValue is TreeViewItem)
-                {
-                    var t = e.NewValue as TreeViewItem;
-                    if (t.Header is Entity)
-                        ChangeNote(t.Header as Entity, true);
-                }
-            }
         }
 
         public void ChangeNote(Entity ent, bool edit)
@@ -212,36 +120,17 @@ namespace Ultimate_GM_Screen.Entities
             Switch_Displayed_Note(noteEditor);
         }
 
-        private void treeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            TreeViewItem treeViewItem = Common.VisualUpwardSearch(e.OriginalSource as DependencyObject);
-
-            if (treeViewItem != null)
-            {
-                e.Handled = true;
-                if (treeViewItem.Header is Entity)
-                {
-                    var win = new Window_Entity();                   
-                    win.Load(treeViewItem.Header as Entity);                    
-                    win.ShowInTaskbar = true;
-                    win.Owner = this.Parent as Window;
-                    win.ShowActivated = true;
-                    win.Show();
-                }
-            }
-        }
-
         private void textBox_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!DatabaseManager.IsOpened)
                 return;
 
             if (string.IsNullOrEmpty(textBox_search.Text))
-                LoadTreeView(DatabaseManager.Entities_GetAll());
+                UpdateNotesList();
             else
             {
                 var notes = DatabaseManager.Entities_FindByName(textBox_search.Text);
-                LoadTreeView(notes);
+                UpdateNotesList(notes);
             }
         }
 
@@ -281,21 +170,44 @@ namespace Ultimate_GM_Screen.Entities
             textBox_search.Text = "";
         }
 
-        private void treeView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void listBoxNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.MiddleButton == MouseButtonState.Pressed)
-            {
-                TreeViewItem treeViewItem = Common.VisualUpwardSearch(e.OriginalSource as DependencyObject);
+            if(listBoxNotes.SelectedItem is Entity)
+                ChangeNote(listBoxNotes.SelectedItem as Entity, true);
+        }
 
-                if (treeViewItem != null)
+        private void listBoxNotes_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is TextBlock)
+            {
+                if (e.MiddleButton == MouseButtonState.Pressed)
                 {
-                    e.Handled = true;
-                    if (treeViewItem.Header is Entity)
+
+                    if ((e.OriginalSource as TextBlock).DataContext is Entity)
                     {
-                        if(_visibleEditor != null)
-                            _visibleEditor.InsertLink(treeViewItem.Header as Entity);
+                        e.Handled = true;
+
+                        var note = (e.OriginalSource as TextBlock).DataContext as Entity;
+                        if (_visibleEditor != null)
+                            _visibleEditor.InsertLink(note);
                         else
-                            noteEditor.InsertLink(treeViewItem.Header as Entity);
+                            noteEditor.InsertLink(note);
+                    }
+
+                }
+                else if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    if ((e.OriginalSource as TextBlock).DataContext is Entity)
+                    {
+                        e.Handled = true;
+
+                        var note = (e.OriginalSource as TextBlock).DataContext as Entity;
+                        var win = new Window_Entity();
+                        win.Load(note);
+                        win.ShowInTaskbar = true;
+                        win.Owner = this.Parent as Window;
+                        win.ShowActivated = true;
+                        win.Show();
                     }
                 }
             }

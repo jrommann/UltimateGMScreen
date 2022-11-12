@@ -12,12 +12,6 @@
             <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
-        <TreeView x:Name="treeView" Margin="10,67,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown" PreviewMouseDown="treeView_PreviewMouseDown">
-            <TreeView.Resources>
-                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
-            </TreeView.Resources>
-        </TreeView>
         <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
         <GridSplitter Grid.Column="1"></GridSplitter>
         <Grid x:Name="notesGrid" Grid.Column="2">
@@ -33,5 +27,6 @@
         <TextBox x:Name="textBox_search" Height="23" Margin="10,39,35,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
         <Button x:Name="button_clearSearch" Content="X" Margin="0,39,10,0" Click="button_clearSearch_Click" HorizontalAlignment="Right" Width="25" Height="23" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox_history" Margin="10,10,10,0" VerticalAlignment="Top" SelectionChanged="comboBox_history_SelectionChanged"/>
+        <ListBox x:Name="listBoxNotes" Margin="10,67,10,39" SelectionChanged="listBoxNotes_SelectionChanged" PreviewMouseDown="listBoxNotes_PreviewMouseDown"/>
     </Grid>
 </UserControl>

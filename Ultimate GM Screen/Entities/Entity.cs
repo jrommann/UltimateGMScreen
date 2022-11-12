@@ -19,7 +19,7 @@ namespace Ultimate_GM_Screen.Entities
 
         public override string ToString()
         {
-            return Name;
+            return Path + Name;
         }
     }
 }

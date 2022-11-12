@@ -18,7 +18,7 @@ namespace Ultimate_GM_Screen.Resources
 
         public override string ToString()
         {
-            return Name;
+            return Path + Name;
         }        
     }
 }

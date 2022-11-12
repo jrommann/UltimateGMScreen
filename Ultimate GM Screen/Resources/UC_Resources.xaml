@@ -13,11 +13,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
-        <TreeView x:Name="treeView" Margin="10,10,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseRightButtonDown="treeView_PreviewMouseRightButtonDown">
-            <TreeView.Resources>
-                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
-            </TreeView.Resources>
-        </TreeView>
+
         <GridSplitter Grid.Column="1"></GridSplitter>
         <Grid x:Name="notesGrid" Grid.Column="2">
             <Grid.RowDefinitions>
@@ -28,6 +24,7 @@
                 <Button x:Name="btn_Current" Content="Home" Click="btn_Current_Click"/>
             </StackPanel>
             <local:UC_ResourceEditor x:Name="resourceEditor" Grid.Column="2" Grid.Row="1" Margin="0"/>
-        </Grid>        
+        </Grid>
+        <ListBox x:Name="listBox_resources" Margin="10,10,10,39" SelectionChanged="listBox_resources_SelectionChanged" PreviewMouseDown="listBox_resources_PreviewMouseDown"/>
     </Grid>
 </UserControl>

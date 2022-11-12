@@ -37,105 +37,16 @@ namespace Ultimate_GM_Screen.Resources
 
         private void DatabaseManager_OnResourcesChanged(Resource specificItem = null, bool pathChanged = false)
         {
-            if(pathChanged)
-                LoadTreeView(DatabaseManager.Resources_GetAll());
+            if (pathChanged)
+                UpdateResourceList();
         }
 
-        void LoadTreeView(List<Resource> entries)
+        void UpdateResourceList(List<Resource> notes = null)
         {
-            var parents = new List<Dictionary<string, TreeViewItem>>();
-            treeView.Items.Clear();
-
-            #region -> build tree
-            foreach (var e in entries)
-            {
-                if (!string.IsNullOrEmpty(e.Path))
-                {
-                    #region -> build tree
-                    var split = e.Path.Split('/');
-                    TreeViewItem parent = null;
-                    for (int i = 0; i < split.Length; i++)
-                    {
-                        if (parents.Count <= i)
-                            parents.Add(new Dictionary<string, TreeViewItem>());
-
-                        if (parents[i].ContainsKey(split[i]))
-                            parent = parents[i][split[i]];
-                        else
-                        {
-                            var p = new TreeViewItem();
-                            p.Header = split[i];
-                            p.IsExpanded = true;
-
-                            if (parent != null)
-                                parent.Items.Add(p);
-                            else
-                                treeView.Items.Add(p);
-
-                            parents[i].Add(split[i], p);
-                            parent = p;
-                        }
-                    }
-                    #endregion     
-                }
-            }
-            #endregion
-
-            #region -> populate tree
-            foreach (var e in entries)
-            {
-                if (!string.IsNullOrEmpty(e.Path))
-                {
-                    string path = string.Format("{0}/{1}", e.Path, e.Name);
-                    var split = path.Split('/');
-                    TreeViewItem parent = null;
-                    int pCount = parents.Count;
-                    for (int i = 0; i < split.Length; i++)
-                    {
-                        if (i < pCount && parents[i].ContainsKey(split[i]))
-                            parent = parents[i][split[i]];
-                    }
-
-                    if (parent.Header as string == e.Name)
-                        parent.Header = e;
-                    else
-                        parent.Items.Add(e);
-                }
-                else
-                    treeView.Items.Add(e);
-            }
-            #endregion
-
-            try
-            {
-                treeView.Items.SortDescriptions.Clear();
-                treeView.Items.SortDescriptions.Add(new SortDescription("Header", ListSortDirection.Ascending));
-                foreach (var i in parents)
-                {
-                    foreach (var kv in i)
-                    {
-                        kv.Value.Items.SortDescriptions.Clear();
-
-                        if (kv.Value.Items[0] is Resource)
-                            kv.Value.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                        else
-                            kv.Value.Items.SortDescriptions.Add(new SortDescription("Header", ListSortDirection.Ascending));
-                    }
-                }
-            }
-            catch { }
-        }
-
-        private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (e.NewValue is Resource)
-                ChangeResource(e.NewValue as Resource, true);
-            else if (e.NewValue is TreeViewItem)
-            {
-                var t = e.NewValue as TreeViewItem;
-                if (t.Header is Resource)
-                    ChangeResource(t.Header as Resource, true);
-            }
+            if (notes != null)
+                listBox_resources.ItemsSource = notes;
+            else
+                listBox_resources.ItemsSource = DatabaseManager.Resources_GetAll();
         }
 
         void ChangeResource(Resource res, bool edit)
@@ -209,22 +120,39 @@ namespace Ultimate_GM_Screen.Resources
             if (_loaded)
                 return;
 
-            try { LoadTreeView(DatabaseManager.Resources_GetAll()); } catch { }
+            UpdateResourceList();
             _loaded = true;
+        }      
+        private void listBox_resources_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBox_resources.SelectedItem is Resource)
+                ChangeResource(listBox_resources.SelectedItem as Resource, true);
         }
 
-        private void treeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void listBox_resources_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            TreeViewItem treeViewItem = Common.VisualUpwardSearch(e.OriginalSource as DependencyObject);
-
-            if (treeViewItem != null)
-            {                
-                e.Handled = true;
-                if (treeViewItem.Header is Resource)
+            if (e.OriginalSource is TextBlock)
+            {
+                if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    var w = new Window_Resource();
-                    w.Load(treeViewItem.Header as Resource);
-                    w.Show();
+                    if ((e.OriginalSource as TextBlock).DataContext is Resource)
+                    {
+                        e.Handled = true;
+
+                        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
+                        var w = new Window_Resource();
+                        w.Load(r);
+                        w.Show();
+                    }
+                }
+                else if (e.MiddleButton == MouseButtonState.Pressed)
+                {
+                    if ((e.OriginalSource as TextBlock).DataContext is Resource)
+                    {
+                        e.Handled = true;
+                        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
+                        Editor_OnPinClicked(r);
+                    }
                 }
             }
         }

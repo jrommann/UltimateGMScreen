@@ -197,7 +197,7 @@ namespace Ultimate_GM_Screen
                 throw new Exception("Database NOT opened");
 
             var list = _db.Table<Resource>().ToList();
-            list.Sort((x, y) => x.Name.CompareTo(y.Name));
+            list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
             return list;
         }
         #endregion
@@ -240,7 +240,7 @@ namespace Ultimate_GM_Screen
                 throw new Exception("Database NOT opened");
 
             var list = _db.Table<Entity>().ToList();           
-            list.Sort((x, y) => x.Name.CompareTo(y.Name));
+            list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
             return list;
         }
 
@@ -265,7 +265,7 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            return _db.Table<Entity>().AsEnumerable().Where(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.Name).ToList();
+            return _db.Table<Entity>().AsEnumerable().Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.ToString()).ToList();
         }
         #endregion
 

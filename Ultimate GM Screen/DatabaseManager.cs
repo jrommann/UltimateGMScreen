@@ -185,6 +185,13 @@ namespace Ultimate_GM_Screen
         }
 
         #region -> resource specific
+        static public List<Resource> Resource_Search(string name)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return _db.Table<Resource>().AsEnumerable().Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.ToString()).ToList();
+        }
         static public int Resource_Count()
         {
             if (_db == null)
@@ -260,12 +267,12 @@ namespace Ultimate_GM_Screen
             return _db.Table<EntityRelationship>().Where(t => t.ParentID == parentID).ToList();
         }
 
-        static public List<Entity> Entities_FindByName(string name)
+        static public List<Entity> Entities_Search(string name)
         {
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            return _db.Table<Entity>().AsEnumerable().Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.ToString()).ToList();
+            return _db.Table<Entity>().AsEnumerable().Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase) || x.Tags.Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.ToString()).ToList();
         }
         #endregion
 

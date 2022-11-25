@@ -138,22 +138,48 @@ namespace Ultimate_GM_Screen.Resources
                     if ((e.OriginalSource as TextBlock).DataContext is Resource)
                     {
                         e.Handled = true;
-
-                        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
-                        var w = new Window_Resource();
-                        w.Load(r);
-                        w.Show();
-                    }
-                }
-                else if (e.MiddleButton == MouseButtonState.Pressed)
-                {
-                    if ((e.OriginalSource as TextBlock).DataContext is Resource)
-                    {
-                        e.Handled = true;
                         var r = (e.OriginalSource as TextBlock).DataContext as Resource;
                         Editor_OnPinClicked(r);
                     }
+
+                    //if ((e.OriginalSource as TextBlock).DataContext is Resource)
+                    //{
+                    //    e.Handled = true;
+
+                    //    var r = (e.OriginalSource as TextBlock).DataContext as Resource;
+                    //    var w = new Window_Resource();
+                    //    w.Load(r);
+                    //    w.Show();
+                    //}
                 }
+                //else if (e.MiddleButton == MouseButtonState.Pressed)
+                //{
+                //    if ((e.OriginalSource as TextBlock).DataContext is Resource)
+                //    {
+                //        e.Handled = true;
+                //        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
+                //        Editor_OnPinClicked(r);
+                //    }
+                //}
+            }
+        }
+
+        private void button_clearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            textBox_search.Text = "";
+        }
+
+        private void textBox_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!DatabaseManager.IsOpened)
+                return;
+
+            if (string.IsNullOrEmpty(textBox_search.Text))
+                UpdateResourceList();
+            else
+            {
+                var results = DatabaseManager.Resource_Search(textBox_search.Text);
+                UpdateResourceList(results);
             }
         }
     }

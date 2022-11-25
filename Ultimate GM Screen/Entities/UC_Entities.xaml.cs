@@ -129,7 +129,7 @@ namespace Ultimate_GM_Screen.Entities
                 UpdateNotesList();
             else
             {
-                var notes = DatabaseManager.Entities_FindByName(textBox_search.Text);
+                var notes = DatabaseManager.Entities_Search(textBox_search.Text);
                 UpdateNotesList(notes);
             }
         }
@@ -202,12 +202,13 @@ namespace Ultimate_GM_Screen.Entities
                         e.Handled = true;
 
                         var note = (e.OriginalSource as TextBlock).DataContext as Entity;
-                        var win = new Window_Entity();
-                        win.Load(note);
-                        win.ShowInTaskbar = true;
-                        win.Owner = this.Parent as Window;
-                        win.ShowActivated = true;
-                        win.Show();
+                        NoteEditor_OnPinClicked(note);
+                        //var win = new Window_Entity();
+                        //win.Load(note);
+                        //win.ShowInTaskbar = true;
+                        //win.Owner = this.Parent as Window;
+                        //win.ShowActivated = true;
+                        //win.Show();
                     }
                 }
             }

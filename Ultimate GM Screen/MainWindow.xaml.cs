@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-
+using Ultimate_GM_Screen.Archive;
 
 namespace Ultimate_GM_Screen
 {
@@ -154,6 +154,15 @@ namespace Ultimate_GM_Screen
             resources.Visibility = Visibility.Hidden;
             notes.Visibility = Visibility.Hidden;
             browser.Visibility = Visibility.Hidden;
+        }
+
+        private void buttonArchives_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new Window_Archives();            
+            win.ShowInTaskbar = true;
+            win.Owner = this.Parent as Window;
+            win.ShowActivated = true;
+            win.Show();
         }
     }
 }

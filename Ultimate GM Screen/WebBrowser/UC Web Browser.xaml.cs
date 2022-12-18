@@ -61,5 +61,10 @@ namespace Ultimate_GM_Screen.WebBrowser
         {
             browser.Source = new Uri(addressbox.Text, UriKind.Absolute);
         }
+
+        private async void clearCacheBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await browser.CoreWebView2.Profile.ClearBrowsingDataAsync();
+        }
     }
 }

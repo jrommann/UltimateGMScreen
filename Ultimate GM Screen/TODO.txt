@@ -1,5 +1,4 @@
 ﻿Trackers - Clocks and Timers
 Dice
 Roll Tables
-set web cache to user data
 added clear cache button

@@ -16,7 +16,8 @@ namespace Ultimate_GM_Screen.Entities
         public string Name { get; set; }
         public string Details { get; set; }
         public string Tags { get; set; }
-        public bool Archived { get; set; }
+        [NotNull]
+        public bool Archived { get; set; } = false;
         public override string ToString()
         {
             return Path + Name;

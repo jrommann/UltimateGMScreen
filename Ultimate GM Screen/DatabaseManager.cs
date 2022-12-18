@@ -246,8 +246,10 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Table<Entity>().Where(x=>x.Archived == false).ToList();           
-            list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
+            var list = _db.Table<Entity>()
+                .Where(x=>x.Archived == false)
+                .ToList();           
+           list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
             return list;
         }
 
@@ -256,7 +258,9 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Table<Entity>().Where(x => x.Archived == true).ToList();
+            var list = _db.Table<Entity>()
+                .Where(x => x.Archived == true)
+                .ToList();
             list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
             return list;
         }

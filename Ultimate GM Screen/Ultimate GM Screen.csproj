@@ -258,6 +258,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Archive\Window_Archives.xaml.cs">
+      <DependentUpon>Window_Archives.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Common.cs" />
     <Compile Include="DatabaseManager.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -314,6 +317,10 @@
     <Compile Include="WebBrowser\UC Web Browser.xaml.cs">
       <DependentUpon>UC Web Browser.xaml</DependentUpon>
     </Compile>
+    <Page Include="Archive\Window_Archives.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Entities\UC_EntityRevisionEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -33,17 +33,7 @@ namespace Ultimate_GM_Screen.Entities
 
         public UC_Entities()
         {
-            InitializeComponent();
-
-            if (DatabaseManager.IsOpened)
-            {
-                DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
-                noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
-
-                comboBox_history.ItemsSource = _noteHistory;
-
-                Notes = this;
-            }
+            InitializeComponent();            
         }
 
         private void NoteEditor_OnPinClicked(Entity note = null)
@@ -97,6 +87,7 @@ namespace Ultimate_GM_Screen.Entities
             {
                 _currentEntity.Archived = true;
                 DatabaseManager.Update(_currentEntity, true);
+                noteEditor.Load();
             }
         }
 
@@ -112,6 +103,13 @@ namespace Ultimate_GM_Screen.Entities
         {
             if (DatabaseManager.IsOpened)
             {
+                DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
+                noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
+
+                comboBox_history.ItemsSource = _noteHistory;
+
+                Notes = this;
+            
                 noteEditor.Load();
                 UpdateNotesList();             
             }

@@ -1,9 +1,4 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ultimate_GM_Screen.Entities
 {
@@ -16,7 +11,6 @@ namespace Ultimate_GM_Screen.Entities
         public string Name { get; set; }
         public string Details { get; set; }
         public string Tags { get; set; }
-        [NotNull]
         public bool Archived { get; set; } = false;
         public override string ToString()
         {

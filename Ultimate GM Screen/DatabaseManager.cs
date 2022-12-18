@@ -246,10 +246,11 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Table<Entity>()
-                .Where(x=>x.Archived == false)
-                .ToList();           
-           list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
+            var list = _db.Table<Entity>().AsEnumerable()
+                .Where(x => x.Archived == false)
+                .OrderBy(x => x.ToString())
+                .ToList();
+
             return list;
         }
 
@@ -258,10 +259,11 @@ namespace Ultimate_GM_Screen
             if (_db == null)
                 throw new Exception("Database NOT opened");
 
-            var list = _db.Table<Entity>()
+            var list = _db.Table<Entity>().AsEnumerable()
                 .Where(x => x.Archived == true)
+                .OrderBy(x => x.ToString())
                 .ToList();
-            list.Sort((x, y) => x.ToString().CompareTo(y.ToString()));
+
             return list;
         }
 
@@ -288,7 +290,7 @@ namespace Ultimate_GM_Screen
 
             return _db.Table<Entity>().AsEnumerable()
                 .Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase) || x.Tags.Contains(name, StringComparison.OrdinalIgnoreCase))
-                .Where(x=>x.Archived == false)
+                .Where(x => x.Archived == false)
                 .OrderBy(x => x.ToString())
                 .ToList();
         }

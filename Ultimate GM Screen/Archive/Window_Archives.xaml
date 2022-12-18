@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Ultimate_GM_Screen.Archive" xmlns:wpf="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         mc:Ignorable="d"
-        Title="Notes Archive" Height="450" Width="800">
+        Title="Notes Archive" Height="450" Width="800" Loaded="AdonisWindow_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"></ColumnDefinition>

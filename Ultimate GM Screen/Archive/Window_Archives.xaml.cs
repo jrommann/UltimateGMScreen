@@ -71,7 +71,10 @@ namespace Ultimate_GM_Screen.Archive
         private void listBoxNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listBoxNotes.SelectedItem is Entity)
-                Viewer.Markdown = (listBoxNotes.SelectedItem as Entity).Details;
+            {
+                _currentEntity = listBoxNotes.SelectedItem as Entity;
+                Viewer.Markdown = _currentEntity.Details;
+            }
         }
 
         void UpdateNotesList(List<Entity> notes = null)
@@ -82,6 +85,10 @@ namespace Ultimate_GM_Screen.Archive
                 listBoxNotes.ItemsSource = DatabaseManager.Entities_GetAll_Archieved();
         }
 
-        
+        private void AdonisWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DatabaseManager.IsOpened)
+                UpdateNotesList();
+        }
     }
 }

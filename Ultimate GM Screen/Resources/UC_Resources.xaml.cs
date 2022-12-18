@@ -43,10 +43,13 @@ namespace Ultimate_GM_Screen.Resources
 
         void UpdateResourceList(List<Resource> notes = null)
         {
-            if (notes != null)
-                listBox_resources.ItemsSource = notes;
-            else
-                listBox_resources.ItemsSource = DatabaseManager.Resources_GetAll();
+            if (DatabaseManager.IsOpened)
+            {
+                if (notes != null)
+                    listBox_resources.ItemsSource = notes;
+                else
+                    listBox_resources.ItemsSource = DatabaseManager.Resources_GetAll();
+            }
         }
 
         void ChangeResource(Resource res, bool edit)

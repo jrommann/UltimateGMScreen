@@ -1,0 +1,24 @@
+﻿<adonisControls:AdonisWindow  xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI" x:Class="Ultimate_GM_Screen.Archive.Window_Archives"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ultimate_GM_Screen.Archive" xmlns:wpf="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        mc:Ignorable="d"
+        Title="Notes Archive" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="textBox_search" Height="23" Margin="10,9,35,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
+        <Button x:Name="button_clearSearch" Content="X" Margin="0,9,10,0" Click="button_clearSearch_Click" HorizontalAlignment="Right" Width="25" Height="23" VerticalAlignment="Top"/>
+        <ListBox x:Name="listBoxNotes" Margin="10,37,10,68" SelectionChanged="listBoxNotes_SelectionChanged" />
+        <Button x:Name="button_restore" Content="Restore" Margin="10,0,10,39" VerticalAlignment="Bottom" Click="button_restore_Click"/>
+        <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
+        <GridSplitter Grid.Column="1"></GridSplitter>
+        <wpf:MarkdownViewer x:Name="Viewer" Grid.Column="2"/>
+    </Grid>
+</adonisControls:AdonisWindow>

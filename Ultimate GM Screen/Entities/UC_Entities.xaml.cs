@@ -35,12 +35,15 @@ namespace Ultimate_GM_Screen.Entities
         {
             InitializeComponent();
 
-            DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
-            noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
+            if (DatabaseManager.IsOpened)
+            {
+                DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
+                noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
 
-            comboBox_history.ItemsSource = _noteHistory;
+                comboBox_history.ItemsSource = _noteHistory;
 
-            Notes = this;
+                Notes = this;
+            }
         }
 
         private void NoteEditor_OnPinClicked(Entity note = null)
@@ -89,9 +92,12 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         private void button_delete_Click(object sender, RoutedEventArgs e)
-        {            
-            if(_currentEntity != null)
-                DatabaseManager.Delete(_currentEntity);
+        {
+            if (_currentEntity != null)
+            {
+                _currentEntity.Archived = true;
+                DatabaseManager.Update(_currentEntity, true);
+            }
         }
 
         void UpdateNotesList(List<Entity> notes=null)
@@ -104,8 +110,12 @@ namespace Ultimate_GM_Screen.Entities
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            noteEditor.Load();
-            UpdateNotesList();
+            if (DatabaseManager.IsOpened)
+            {
+                noteEditor.Load();
+                UpdateNotesList();             
+            }
+
             Loaded -= UserControl_Loaded;
         }
 

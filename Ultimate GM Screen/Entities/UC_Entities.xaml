@@ -12,7 +12,7 @@
             <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button x:Name="button_delete" Content="Delete" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
+        <Button x:Name="button_delete" Content="Archive" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="button_delete_Click"/>
         <GridSplitter Grid.Column="1"></GridSplitter>
         <Grid x:Name="notesGrid" Grid.Column="2">
             <Grid.RowDefinitions>

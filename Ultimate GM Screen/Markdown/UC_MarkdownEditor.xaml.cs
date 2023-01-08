@@ -19,6 +19,7 @@ namespace Ultimate_GM_Screen.Markdown
     public partial class UC_MarkdownEditor : UserControl
     {
         Timer _updateTimer = new Timer(500);
+        bool _isEditMode = false;
 
         public UC_MarkdownEditor()
         {
@@ -64,6 +65,16 @@ namespace Ultimate_GM_Screen.Markdown
                 if(note != null)
                     UC_Entities.Notes.ChangeNote(note, true);
             }
+        }
+
+        private void editBtn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if(_isEditMode)
+                grid.ColumnDefinitions[0].Width = new System.Windows.GridLength(0);
+            else
+                grid.ColumnDefinitions[0].Width = new System.Windows.GridLength(400, System.Windows.GridUnitType.Star);
+
+            _isEditMode = !_isEditMode;
         }
     }
 }

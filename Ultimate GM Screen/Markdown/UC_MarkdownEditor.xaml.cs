@@ -32,7 +32,10 @@ namespace Ultimate_GM_Screen.Markdown
         private void _updateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if(_isEditMode)
-                edit_Viewer.Dispatcher.Invoke(() => Viewer.Markdown = markdownText.Text);
+                edit_Viewer.Dispatcher.Invoke(() =>
+                {
+                    edit_Viewer.Markdown = markdownText.Text;                    
+                });
         }
 
         public string GetMarkdown()
@@ -76,6 +79,7 @@ namespace Ultimate_GM_Screen.Markdown
             {
                 editor_grid.Visibility = System.Windows.Visibility.Hidden;
                 viewer_grid.Visibility = System.Windows.Visibility.Visible;
+                Viewer.Markdown = markdownText.Text;
             }
             else
             {

@@ -31,7 +31,8 @@ namespace Ultimate_GM_Screen.Markdown
 
         private void _updateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Viewer.Dispatcher.Invoke(() => Viewer.Markdown = markdownText.Text);
+            if(_isEditMode)
+                edit_Viewer.Dispatcher.Invoke(() => Viewer.Markdown = markdownText.Text);
         }
 
         public string GetMarkdown()
@@ -43,11 +44,13 @@ namespace Ultimate_GM_Screen.Markdown
         {
             markdownText.Text = markdown;
             Viewer.Markdown = markdownText.Text;
+            edit_Viewer.Markdown = markdownText.Text;
         }
 
         public void InsertLink(Entity note)
         {
-            markdownText.Text += string.Format("\n\n[{0}]({1})", note.Name, note.ID);
+            if(_isEditMode)
+                markdownText.Text += string.Format("\n\n[{0}]({1})", note.Name, note.ID);
         }
 
         private void markdownText_TextChanged(object sender, TextChangedEventArgs e)
@@ -69,10 +72,16 @@ namespace Ultimate_GM_Screen.Markdown
 
         private void editBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if(_isEditMode)
-                grid.ColumnDefinitions[0].Width = new System.Windows.GridLength(0);
+            if (_isEditMode)
+            {
+                editor_grid.Visibility = System.Windows.Visibility.Hidden;
+                viewer_grid.Visibility = System.Windows.Visibility.Visible;
+            }
             else
-                grid.ColumnDefinitions[0].Width = new System.Windows.GridLength(400, System.Windows.GridUnitType.Star);
+            {
+                editor_grid.Visibility = System.Windows.Visibility.Visible;
+                viewer_grid.Visibility = System.Windows.Visibility.Hidden;
+            }
 
             _isEditMode = !_isEditMode;
         }

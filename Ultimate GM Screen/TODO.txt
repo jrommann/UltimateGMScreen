@@ -2,3 +2,4 @@
 Dice
 Roll Tables
 added clear cache button
+updater notifier

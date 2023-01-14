@@ -20,18 +20,22 @@
             </ToolBar>
         </ToolBarTray>
 
-        <Grid  x:Name="grid" Grid.Row="1">
+        <Grid x:Name="viewer_grid" Grid.Row="1" Visibility="Visible">
+            <wpf:MarkdownViewer x:Name="Viewer"/>
+        </Grid>
+        
+        <Grid x:Name="editor_grid" Grid.Row="1" Visibility="Hidden">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0"/>
+            <ColumnDefinition Width="400*"/>
             <ColumnDefinition Width="4"/>
             <ColumnDefinition Width="400*"/>
         </Grid.ColumnDefinitions>        
         
-        <wpf:MarkdownViewer x:Name="Viewer" Grid.Column="2"/>
+        <wpf:MarkdownViewer x:Name="edit_Viewer" Grid.Column="2"/>
         
         <GridSplitter Grid.Column="1" Background="#FF3D3D4C"></GridSplitter>
         
-        <ScrollViewer Grid.Column="0">
+        <ScrollViewer Grid.Column="0" x:Name="scroll">
         <TextBox x:Name="markdownText" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" TextChanged="markdownText_TextChanged" VerticalAlignment="Top"/>
         </ScrollViewer>
         </Grid>

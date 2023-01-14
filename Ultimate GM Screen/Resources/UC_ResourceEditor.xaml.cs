@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,19 @@ namespace Ultimate_GM_Screen.Resources
         public bool Pinned { get { return _pinned; } set { _pinned = value; pinBtn.Content = (value ? "Unpin" : "Pin"); } }
         public UC_ResourceEditor()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            InitializeAsync();
+        }
+
+        async void InitializeAsync()
+        {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+                return;
+
+            var browserEnviorment = await CoreWebView2Environment.CreateAsync(null, Common.UserDataFolder);
+            await browser.EnsureCoreWebView2Async(browserEnviorment);
+
+            browser.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);            
         }
 
         public void Load(Resource current = null, bool edit = false)

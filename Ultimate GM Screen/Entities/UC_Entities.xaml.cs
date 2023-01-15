@@ -77,7 +77,7 @@ namespace Ultimate_GM_Screen.Entities
 
         private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null, bool pathChanged = false)
         {
-            if (pathChanged)
+            //if (pathChanged)
                 UpdateNotesList();
         }
 

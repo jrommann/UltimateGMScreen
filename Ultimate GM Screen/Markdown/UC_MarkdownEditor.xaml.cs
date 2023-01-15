@@ -46,8 +46,8 @@ namespace Ultimate_GM_Screen.Markdown
         public void SetMarkdown(string markdown)
         {
             markdownText.Text = markdown;
-            Viewer.Markdown = markdownText.Text;
-            edit_Viewer.Markdown = markdownText.Text;
+            Viewer.Markdown = markdown;
+            edit_Viewer.Markdown = markdown;
         }
 
         public void InsertLink(Entity note)

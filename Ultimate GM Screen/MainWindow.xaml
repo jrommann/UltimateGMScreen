@@ -11,26 +11,26 @@
         Title="Ultimate Tabletop Screen" Height="450" Width="800" Loaded="Window_Loaded" WindowState="Maximized" Closing="AdonisWindow_Closing">
     <Grid>        
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>            
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ToolBarTray x:Name="toolBar" Height="29" VerticalAlignment="Top" Grid.Row="0">
             <ToolBar>
-                <Button x:Name="buttonSearch" Content="Search Notes" Click="buttonSearch_Click"/>
-                <Button x:Name="buttonArchives" Content="Note Archives" Click="buttonArchives_Click" Margin="1,0,0,0"/>
+                <Button x:Name="buttonTable" Content="Table" Click="buttonTable_Click"/>
+                <Separator/>
+                <Button x:Name="buttonNotes" Content="Notes" Click="buttonNotes_Click"/>
+                <Button x:Name="buttonSearch" Content="Search Notes" Click="buttonSearch_Click" ToolBar.OverflowMode="Always"/>
+                <Button x:Name="buttonArchives" Content="Note Archives" Click="buttonArchives_Click" ToolBar.OverflowMode="Always"/>
+                <Separator/>
+                <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click"/>
+                <Separator/>
+                <Button x:Name="buttonMagicItems" Content="Magic Items" Click="buttonMagicItems_Click"/>                
             </ToolBar>
-        </ToolBarTray>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button x:Name="buttonTable" Content="Table" Margin="0" Click="buttonTable_Click"/>
-            <Button x:Name="buttonNotes" Content="Notes" Margin="1,0,0,0" Click="buttonNotes_Click"/>
-            <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click" Margin="1,0,0,0"/>            
-            <Button x:Name="buttonMagicItems" Content="Magic Items" Margin="1,0" Click="buttonMagicItems_Click"/>
-        </StackPanel>
-        <WebBrowser:UC_Web_Browser Grid.Row="2" x:Name="browser" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-        <Entities:UC_Entities Grid.Row="2" x:Name="notes" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
-        <Resources:UC_Resources Grid.Row="2" x:Name="resources" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>        
+        </ToolBarTray>        
+        <WebBrowser:UC_Web_Browser Grid.Row="1" x:Name="browser" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Entities:UC_Entities Grid.Row="1" x:Name="notes" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
+        <Resources:UC_Resources Grid.Row="1" x:Name="resources" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>        
         <Magic_Items:UC_Manage_Magic_Items Grid.Row="2" x:Name="magicItems" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
-        <Search:UC_Search Grid.Row="2" x:Name="search" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
+        <Search:UC_Search Grid.Row="1" x:Name="search" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
     </Grid>
 </adonisControls:AdonisWindow>

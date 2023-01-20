@@ -13,6 +13,7 @@ using ToastNotifications.Position;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using System.Linq.Expressions;
+using Ultimate_GM_Screen.Folders;
 
 namespace Ultimate_GM_Screen
 {
@@ -46,6 +47,7 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<EntityRelationship>();
             _db.CreateTable<EntityRevision>();
             _db.CreateTable<Resource>();
+            _db.CreateTable<Folders.FolderEntry>();
 
             _notifier = new Notifier(cfg =>
             {
@@ -317,6 +319,19 @@ namespace Ultimate_GM_Screen
             var list = _db.Table<MagicItem>().ToList();
             list.Sort((x, y) => x.Name.CompareTo(y.Name));
             return list;
+        }
+        #endregion
+
+        #region -> folder specific
+        static public List<FolderEntry> Folders_GetAll(FolderType type)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return _db.Table<FolderEntry>().AsEnumerable()
+                .Where(x => x.Type == type)
+                .OrderBy(x => x.Name)
+                .ToList();
         }
         #endregion
     }

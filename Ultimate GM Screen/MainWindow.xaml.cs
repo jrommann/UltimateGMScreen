@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Ultimate_GM_Screen.Archive;
+using Ultimate_GM_Screen.Folders;
 
 namespace Ultimate_GM_Screen
 {
@@ -46,7 +47,7 @@ namespace Ultimate_GM_Screen
                     Caption = "Existing or New GM Database",
                     Icon = AdonisUI.Controls.MessageBoxImage.Question,
                     Buttons = btns.ToArray(),
-                    IsSoundEnabled = false,                    
+                    IsSoundEnabled = false,                       
                 };
                 #endregion
 
@@ -159,6 +160,15 @@ namespace Ultimate_GM_Screen
         private void buttonArchives_Click(object sender, RoutedEventArgs e)
         {
             var win = new Window_Archives();            
+            win.ShowInTaskbar = true;
+            win.Owner = this.Parent as Window;
+            win.ShowActivated = true;
+            win.Show();
+        }
+
+        private void buttonFolders_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new Window_Folders();
             win.ShowInTaskbar = true;
             win.Owner = this.Parent as Window;
             win.ShowActivated = true;

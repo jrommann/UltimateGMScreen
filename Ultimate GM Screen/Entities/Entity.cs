@@ -12,6 +12,7 @@ namespace Ultimate_GM_Screen.Entities
         public string Details { get; set; }
         public string Tags { get; set; }
         public bool Archived { get; set; } = false;
+        public int FolderID { get; set; } = -1;
         public override string ToString()
         {
             return Path + Name;

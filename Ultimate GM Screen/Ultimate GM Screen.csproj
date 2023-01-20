@@ -291,6 +291,13 @@
       <DependentUpon>Window_EntityRevisions.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Folders\FolderEntry.cs" />
+    <Compile Include="Folders\UC_FolderManager.xaml.cs">
+      <DependentUpon>UC_FolderManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Folders\Window_Folders.xaml.cs">
+      <DependentUpon>Window_Folders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Magic Items\MagicItem.cs" />
     <Compile Include="Magic Items\UC Add Magic Item.xaml.cs">
       <DependentUpon>UC Add Magic Item.xaml</DependentUpon>
@@ -349,6 +356,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Entities\Window_EntityRevisions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Folders\UC_FolderManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Folders\Window_Folders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

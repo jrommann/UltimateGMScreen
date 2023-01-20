@@ -24,7 +24,9 @@
                 <Separator/>
                 <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click"/>
                 <Separator/>
-                <Button x:Name="buttonMagicItems" Content="Magic Items" Click="buttonMagicItems_Click"/>                
+                <Button x:Name="buttonMagicItems" Content="Magic Items" Click="buttonMagicItems_Click"/>
+                <Separator/>
+                <Button x:Name="buttonFolders" Content="Folders" Click="buttonFolders_Click" ToolBar.OverflowMode="Always"/>
             </ToolBar>
         </ToolBarTray>        
         <WebBrowser:UC_Web_Browser Grid.Row="1" x:Name="browser" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

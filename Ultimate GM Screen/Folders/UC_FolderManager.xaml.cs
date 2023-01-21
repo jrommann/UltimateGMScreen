@@ -20,6 +20,8 @@ namespace Ultimate_GM_Screen.Folders
     /// </summary>
     public partial class UC_FolderManager : UserControl
     {
+        FolderEntry _selectedEntry = null;
+
         public UC_FolderManager()
         {
             InitializeComponent();
@@ -37,7 +39,6 @@ namespace Ultimate_GM_Screen.Folders
             list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
             comboBox_notes.ItemsSource = list;
             comboBox_notes.SelectedIndex = 0;
-            //comboBox_notes.SelectedItem = comboBox_notes.Items[0];
         }
 
         void Note_UpdateTreeView()
@@ -77,7 +78,7 @@ namespace Ultimate_GM_Screen.Folders
             }
         }
 
-        private void button_notes_Click(object sender, RoutedEventArgs e)
+        private void button_notesAdd_Click(object sender, RoutedEventArgs e)
         {
             var fe = new FolderEntry();
             fe.Name = textBox_notes.Text;
@@ -88,6 +89,48 @@ namespace Ultimate_GM_Screen.Folders
 
             Note_UpdateParentList();
             Note_UpdateTreeView();
+        }
+
+        private void button_notesUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedEntry != null)
+            {
+                _selectedEntry.Name = textBox_notes.Text;
+                _selectedEntry.ParentID = (comboBox_notes.SelectedItem as FolderEntry).ID;
+
+                DatabaseManager.Update(_selectedEntry, true);
+
+                Note_UpdateParentList();
+                Note_UpdateTreeView();
+            }
+        }
+
+        private void button_notesDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedEntry != null)
+            {
+                DatabaseManager.Delete(_selectedEntry);
+                _selectedEntry = null;
+
+                textBox_notes.Text = "";
+                comboBox_notes.SelectedIndex = 0;
+
+                Note_UpdateParentList();
+                Note_UpdateTreeView();
+            }
+        }
+
+        private void treeView_notes_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView_notes.SelectedItem != null)
+            {
+                _selectedEntry = (treeView_notes.SelectedItem as TreeViewItem).Header as FolderEntry;
+                if (_selectedEntry != null)
+                {
+                    textBox_notes.Text = _selectedEntry.Name;
+                    comboBox_notes.SelectedItem = comboBox_notes.Items.Cast<FolderEntry>().ToList().Find(x => x.ID == _selectedEntry.ParentID);
+                }
+            }
         }
     }
 }

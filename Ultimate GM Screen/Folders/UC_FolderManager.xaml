@@ -11,13 +11,15 @@
             <ColumnDefinition Width="400*"/>
             <ColumnDefinition Width="400*"/>
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="treeView_notes" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="172">
+        <TreeView x:Name="treeView_notes" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="172" SelectedItemChanged="treeView_notes_SelectedItemChanged">
             <TreeView.Resources>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
             </TreeView.Resources>
-        </TreeView>
-        <Button x:Name="button_notes" Content="Add" HorizontalAlignment="Left" Margin="193,67,0,0" VerticalAlignment="Top" Width="75" Click="button_notes_Click"/>
+        </TreeView>        
         <TextBox x:Name="textBox_notes" HorizontalAlignment="Left" Height="23" Margin="193,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="comboBox_notes" HorizontalAlignment="Left" Margin="193,38,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="button_notesAdd" Content="Add" HorizontalAlignment="Left" Margin="193,67,0,0" VerticalAlignment="Top" Width="75" Click="button_notesAdd_Click"/>
+        <Button x:Name="button_notesUpdate" Content="Update" HorizontalAlignment="Left" Margin="193,96,0,0" VerticalAlignment="Top" Width="75" Click="button_notesUpdate_Click"/>
+        <Button x:Name="button_notesDelete" Content="Delete" HorizontalAlignment="Left" Margin="193,125,0,0" VerticalAlignment="Top" Width="75" Click="button_notesDelete_Click"/>
     </Grid>
 </UserControl>

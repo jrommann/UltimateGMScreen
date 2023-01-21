@@ -34,6 +34,9 @@ namespace Ultimate_GM_Screen
         public delegate void Event_RevisionsChanged();
         static public event Event_RevisionsChanged OnRevisionsChanged;
 
+        public delegate void Event_FoldersChanged();
+        static public event Event_FoldersChanged OnFoldersChanged;
+
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
@@ -184,6 +187,8 @@ namespace Ultimate_GM_Screen
             }
             else if (item is EntityRevision)
                 OnRevisionsChanged?.Invoke();
+            else if (item is FolderEntry)
+                OnFoldersChanged?.Invoke();
         }
 
         #region -> resource specific

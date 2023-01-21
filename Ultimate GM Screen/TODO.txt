@@ -1,6 +1,8 @@
 ﻿Trackers - Clocks and Timers
 Dice
 Roll Tables
-added clear cache button
 updater notifier
 rework notes list
+clean up revisions
+image support
+graph editor

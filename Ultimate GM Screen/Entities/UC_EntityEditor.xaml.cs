@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using Markdig.Wpf;
+using Ultimate_GM_Screen.Folders;
 
 namespace Ultimate_GM_Screen.Entities
 {
@@ -37,10 +39,18 @@ namespace Ultimate_GM_Screen.Entities
             SaveCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
 
             InitializeComponent();
-            //InitializeAsync();
 
-            DatabaseManager.OnRelationshipsChanged += DatabaseManager_OnRelationshipsChanged;            
-        }        
+            DatabaseManager.OnRelationshipsChanged += DatabaseManager_OnRelationshipsChanged;
+            DatabaseManager.OnFoldersChanged += DatabaseManager_OnFoldersChanged;            
+        }
+
+        private void DatabaseManager_OnFoldersChanged()
+        {
+            var list = DatabaseManager.Folders_GetAll(FolderType.Note);
+            list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
+            comboBox_parent.ItemsSource = list;
+            comboBox_parent.SelectedIndex = 0;
+        }
 
         private void DatabaseManager_OnRelationshipsChanged(EntityRelationship specificItem = null)
         {
@@ -63,6 +73,11 @@ namespace Ultimate_GM_Screen.Entities
             textBox_tags.Text = _current.Tags;
             SetBrowserText(_current.Details);
 
+            if (_current.FolderID != -1)
+                comboBox_parent.SelectedItem = comboBox_parent.Items.Cast<FolderEntry>().ToList().Find(x => x.ID == _current.FolderID);
+            else
+                comboBox_parent.SelectedIndex = 0;
+
             dockpanel_relationships.Children.Clear();
             try
             {
@@ -83,10 +98,7 @@ namespace Ultimate_GM_Screen.Entities
             string path = textBox_path.Text;
             Load();
 
-            textBox_name.Text = "Note " + DatabaseManager.Entity_Count();
-
-            if (checkBox_keepPath.IsChecked.Value)
-                textBox_path.Text = path;           
+            textBox_name.Text = "New Note";            
         }
 
         public void Save()
@@ -100,14 +112,14 @@ namespace Ultimate_GM_Screen.Entities
 
             if (_current.Path != textBox_path.Text)
             {
-                pathNameChanged = true;
+                //pathNameChanged = true;
                 save = true;
                 _current.Path = textBox_path.Text;
             }
 
             if (_current.Name != textBox_name.Text)
             {
-                pathNameChanged = true;
+                //pathNameChanged = true;
                 save = true;
                 _current.Name = textBox_name.Text;
             }
@@ -124,6 +136,15 @@ namespace Ultimate_GM_Screen.Entities
                 save = true;
                 _current.Details = text;
             }
+
+            int parentID = (comboBox_parent.SelectedItem as FolderEntry).ID;
+            if (_current.FolderID != parentID)
+            {
+                save = true;
+                _current.FolderID = parentID;
+                pathNameChanged = true;
+            }
+            
 
             if (save)
             {
@@ -213,6 +234,12 @@ namespace Ultimate_GM_Screen.Entities
                 win.ShowActivated = true;
                 win.Show();
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DatabaseManager.IsOpened)
+                DatabaseManager_OnFoldersChanged();
         }
     }
 }

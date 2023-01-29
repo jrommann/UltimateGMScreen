@@ -2,7 +2,7 @@
 Dice
 Roll Tables
 updater notifier
-rework notes list
 clean up revisions
 image support
 graph editor
+resource folders

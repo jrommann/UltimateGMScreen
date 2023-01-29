@@ -17,6 +17,8 @@ namespace Ultimate_GM_Screen
 
         public MainWindow()
         {
+            Properties.Settings.Default.Upgrade();
+
             InitializeComponent();
             browser.StartingAddress = Properties.Settings.Default.TableTopAddress;
         }

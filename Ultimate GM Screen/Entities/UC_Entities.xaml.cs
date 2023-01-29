@@ -25,7 +25,7 @@ namespace Ultimate_GM_Screen.Entities
         public static UC_Entities Notes { get; private set; }
 
         Entity _currentEntity;
-        
+
         List<UC_EntityEditor> _pinnedEditors = new List<UC_EntityEditor>();
         List<Button> _pinnedButtons = new List<Button>();
         ObservableCollection<Entity> _noteHistory = new ObservableCollection<Entity>();
@@ -81,6 +81,11 @@ namespace Ultimate_GM_Screen.Entities
                 UpdateNotesList();
         }
 
+        private void DatabaseManager_OnFoldersChanged()
+        {            
+            UpdateNotesList();
+        }
+
         private void button_delete_Click(object sender, RoutedEventArgs e)
         {
             if (_currentEntity != null)
@@ -93,17 +98,91 @@ namespace Ultimate_GM_Screen.Entities
 
         void UpdateNotesList(List<Entity> notes=null)
         {
-            if (notes != null)
-                listBoxNotes.ItemsSource = notes;
+            #region -> full list
+            if (notes == null)
+            {
+                #region -> build tree
+                var folders = DatabaseManager.Folders_GetAll(Folders.FolderType.Note);
+                folders.Sort((x, y) => x.ParentID.CompareTo(y.ParentID));
+
+                Dictionary<int, TreeViewItem> treeFolders = new Dictionary<int, TreeViewItem>();
+                treeView.Items.Clear();
+
+                foreach (var f in folders)
+                {
+                    TreeViewItem tvi = new TreeViewItem();
+                    tvi.Header = f;
+                    tvi.IsExpanded = f.IsExpanded;
+
+                    #region -> save expanded / collasped
+                    //tvi.Expanded += (sender, e) => 
+                    //{
+                    //    var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
+                    //    fe.IsExpanded = true;
+                    //    DatabaseManager.Update(fe, false);
+                    //};
+                    //tvi.Collapsed += (sender, e) =>
+                    //{
+                    //    var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
+                    //    fe.IsExpanded = false;
+                    //    DatabaseManager.Update(fe, false);
+                    //};
+                    #endregion
+
+                    treeFolders.Add(f.ID, tvi);
+
+                    if (f.ParentID == -1)
+                        treeView.Items.Add(tvi);
+                    else
+                    {
+                        var treeviewItem = treeFolders[f.ParentID];
+                        if (treeviewItem != null)
+                            treeviewItem.Items.Add(tvi);
+                    }
+                }
+                #endregion
+
+                if (notes == null)
+                    notes = DatabaseManager.Entities_GetAll();
+                                
+                foreach (var n in notes)
+                {
+                    TreeViewItem tvi = new TreeViewItem();
+                    tvi.Header = n;
+
+                    if (n.FolderID == -1)
+                        treeView.Items.Add(tvi);
+                    else
+                    {
+                        TreeViewItem parent = null;
+                        if (treeFolders.TryGetValue(n.FolderID, out parent))
+                            parent.Items.Add(tvi);
+                    }
+                }
+            }
+            #endregion
+            #region -> search list
             else
-                listBoxNotes.ItemsSource = DatabaseManager.Entities_GetAll();
-        }        
+            {                
+                treeView.Items.Clear();
+
+                foreach (var n in notes)
+                {
+                    TreeViewItem tvi = new TreeViewItem();
+                    tvi.Header = n;
+                    treeView.Items.Add(tvi);
+                }
+            }
+            #endregion
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (DatabaseManager.IsOpened)
             {
                 DatabaseManager.OnEntitiesChanged += DatabaseManager_OnEntitiesChanged;
+                DatabaseManager.OnFoldersChanged += DatabaseManager_OnFoldersChanged;
+
                 noteEditor.OnPinClicked += NoteEditor_OnPinClicked;
 
                 comboBox_history.ItemsSource = _noteHistory;
@@ -116,6 +195,8 @@ namespace Ultimate_GM_Screen.Entities
 
             Loaded -= UserControl_Loaded;
         }
+
+        
 
         public void ChangeNote(Entity ent, bool edit)
         {            
@@ -178,13 +259,7 @@ namespace Ultimate_GM_Screen.Entities
             textBox_search.Text = "";
         }
 
-        private void listBoxNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(listBoxNotes.SelectedItem is Entity)
-                ChangeNote(listBoxNotes.SelectedItem as Entity, true);
-        }
-
-        private void listBoxNotes_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void treeView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource is TextBlock)
             {
@@ -211,14 +286,18 @@ namespace Ultimate_GM_Screen.Entities
 
                         var note = (e.OriginalSource as TextBlock).DataContext as Entity;
                         NoteEditor_OnPinClicked(note);
-                        //var win = new Window_Entity();
-                        //win.Load(note);
-                        //win.ShowInTaskbar = true;
-                        //win.Owner = this.Parent as Window;
-                        //win.ShowActivated = true;
-                        //win.Show();
                     }
                 }
+            }
+        }
+
+        private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {            
+            if (treeView.SelectedItem != null)
+            {
+                var note = (treeView.SelectedItem as TreeViewItem).Header as Entity;
+                if (note != null)
+                    ChangeNote(note, true);
             }
         }
     }

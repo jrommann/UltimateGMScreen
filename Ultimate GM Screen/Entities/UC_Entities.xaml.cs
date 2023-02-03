@@ -77,8 +77,7 @@ namespace Ultimate_GM_Screen.Entities
 
         private void DatabaseManager_OnEntitiesChanged(Entity specificItem = null, bool pathChanged = false)
         {
-            //if (pathChanged)
-                UpdateNotesList();
+            UpdateNotesList();
         }
 
         private void DatabaseManager_OnFoldersChanged()
@@ -298,9 +297,12 @@ namespace Ultimate_GM_Screen.Entities
             if (treeView.SelectedItem != null)
             {
                 var noteListing = (treeView.SelectedItem as TreeViewItem).Header as NoteListing;
-                var note = DatabaseManager.Entity_FromID(noteListing.ID);
-                if (note != null)
-                    ChangeNote(note, true);
+                if (noteListing != null)
+                {
+                    var note = DatabaseManager.Entity_FromID(noteListing.ID);
+                    if (note != null)
+                        ChangeNote(note, true);
+                }
             }
         }
     }

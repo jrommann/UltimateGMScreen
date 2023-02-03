@@ -45,11 +45,20 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         private void DatabaseManager_OnFoldersChanged()
-        {
+        {            
             var list = DatabaseManager.Folders_GetAll(FolderType.Note);
             list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
-            comboBox_parent.ItemsSource = list;
-            comboBox_parent.SelectedIndex = 0;
+            comboBox_parent.ItemsSource = list;           
+
+            if (_current != null)
+            {
+                if (_current.FolderID != -1)
+                    comboBox_parent.SelectedIndex = comboBox_parent.Items.Cast<FolderEntry>().ToList().FindIndex(x => x.ID == _current.FolderID);
+                else
+                    comboBox_parent.SelectedIndex = 0;
+            }
+            else
+                comboBox_parent.SelectedIndex = 0;
         }
 
         private void DatabaseManager_OnRelationshipsChanged(EntityRelationship specificItem = null)
@@ -61,8 +70,8 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         public void Load(Entity current=null, bool edit=false)
-        {            
-            _edit = edit;
+          {            
+                           _edit = edit;
             if (current == null)
                 _current = new Entity();
             else
@@ -71,10 +80,10 @@ namespace Ultimate_GM_Screen.Entities
             textBox_path.Text = _current.Path;
             textBox_name.Text = _current.Name;
             textBox_tags.Text = _current.Tags;
-            SetBrowserText(_current.Details);
+            SetBrowserText(_current.Details);            
 
             if (_current.FolderID != -1)
-                comboBox_parent.SelectedItem = comboBox_parent.Items.Cast<FolderEntry>().ToList().Find(x => x.ID == _current.FolderID);
+                comboBox_parent.SelectedIndex = comboBox_parent.Items.Cast<FolderEntry>().ToList().FindIndex(x => x.ID == _current.FolderID);
             else
                 comboBox_parent.SelectedIndex = 0;
 
@@ -134,7 +143,7 @@ namespace Ultimate_GM_Screen.Entities
                 save = true;
                 _current.Details = text;
             }
-
+                        
             int parentID = (comboBox_parent.SelectedItem as FolderEntry).ID;
             if (_current.FolderID != parentID)
             {

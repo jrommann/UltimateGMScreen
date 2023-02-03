@@ -30,9 +30,13 @@ namespace Ultimate_GM_Screen.Folders
             {
                 Note_UpdateParentList();
                 Note_UpdateTreeView();
+
+                Resources_UpdateParentList();
+                Resources_UpdateTreeView();
             }
         }
 
+        #region -> notes
         void Note_UpdateParentList()
         {
             var list = DatabaseManager.Folders_GetAll(FolderType.Note);
@@ -132,5 +136,107 @@ namespace Ultimate_GM_Screen.Folders
                 }
             }
         }
+        #endregion
+        #region -> resources
+        void Resources_UpdateParentList()
+        {
+            var list = DatabaseManager.Folders_GetAll(FolderType.Resource);
+            list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
+            comboBox_resources.ItemsSource = list;
+            comboBox_resources.SelectedIndex = 0;
+        }
+
+        void Resources_UpdateTreeView()
+        {
+            treeView_resources.Items.Clear();
+
+            var list = DatabaseManager.Folders_GetAll(FolderType.Resource);
+            list.Sort((x, y) => x.ParentID.CompareTo(y.ParentID));
+
+            List<TreeViewItem> items = new List<TreeViewItem>();
+
+            foreach (var f in list)
+            {
+                if (f.ParentID == -1)
+                {
+                    TreeViewItem i = new TreeViewItem();
+                    i.Header = f;
+                    i.IsExpanded = true;
+                    items.Add(i);
+
+                    treeView_resources.Items.Add(i);
+                }
+                else
+                {
+                    var treeviewItem = items.Find(x => (x.Header as FolderEntry).ID == f.ParentID);
+
+                    if (treeviewItem != null)
+                    {
+                        TreeViewItem i = new TreeViewItem();
+                        i.Header = f;
+                        i.IsExpanded = true;
+                        items.Add(i);
+
+                        treeviewItem.Items.Add(i);
+                    }
+                }
+            }
+        }
+
+        private void treeView_resources_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView_resources.SelectedItem != null)
+            {
+                _selectedEntry = (treeView_resources.SelectedItem as TreeViewItem).Header as FolderEntry;
+                if (_selectedEntry != null)
+                {
+                    textBox_resources.Text = _selectedEntry.Name;
+                    comboBox_resources.SelectedItem = comboBox_resources.Items.Cast<FolderEntry>().ToList().Find(x => x.ID == _selectedEntry.ParentID);
+                }
+            }
+        }
+
+        private void button_resourcesAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var fe = new FolderEntry();
+            fe.Name = textBox_resources.Text;
+            fe.ParentID = (comboBox_resources.SelectedItem as FolderEntry).ID;
+            fe.Type = FolderType.Resource;
+
+            DatabaseManager.Add(fe);
+
+            Resources_UpdateParentList();
+            Resources_UpdateTreeView();
+        }
+
+        private void button_resourcesUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedEntry != null)
+            {
+                _selectedEntry.Name = textBox_resources.Text;
+                _selectedEntry.ParentID = (comboBox_resources.SelectedItem as FolderEntry).ID;
+
+                DatabaseManager.Update(_selectedEntry, true);
+
+                Resources_UpdateParentList();
+                Resources_UpdateTreeView();
+            }
+        }
+
+        private void button_resourcesDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedEntry != null)
+            {
+                DatabaseManager.Delete(_selectedEntry);
+                _selectedEntry = null;
+
+                textBox_resources.Text = "";
+                comboBox_resources.SelectedIndex = 0;
+
+                Resources_UpdateParentList();
+                Resources_UpdateTreeView();
+            }
+        }
+        #endregion
     }
 }

@@ -66,7 +66,7 @@ namespace Ultimate_GM_Screen.Resources
         {
             if (DatabaseManager.IsOpened)
             {
-                var list = DatabaseManager.Folders_GetAll(FolderType.Note);
+                var list = DatabaseManager.Folders_GetAll(FolderType.Resource);
                 list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
                 comboBox_parent.ItemsSource = list;
 

@@ -5,4 +5,3 @@ updater notifier
 clean up revisions
 image support
 graph editor
-resource folders

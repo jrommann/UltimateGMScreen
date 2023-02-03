@@ -43,8 +43,7 @@ namespace Ultimate_GM_Screen.Resources
 
         private void DatabaseManager_OnResourcesChanged(Resource specificItem = null, bool pathChanged = false)
         {
-            if (pathChanged)
-                UpdateResourceList();
+            UpdateResourceList();
         }
 
         void UpdateResourceList(List<Resource> notes = null)

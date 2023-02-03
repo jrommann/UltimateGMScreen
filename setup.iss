@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Ultimate Tabletop Screen"
-#define MyAppVersion "5.0"
+#define MyAppVersion "6.0"
 #define MyAppPublisher "Rabid Design Studios"
 #define MyAppURL "https://www.rabiddesignstudios.com/"
 #define MyAppExeName "Ultimate Tabletop Screen.exe"

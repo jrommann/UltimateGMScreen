@@ -187,7 +187,7 @@ namespace Ultimate_GM_Screen
             }
             else if (item is EntityRevision)
                 OnRevisionsChanged?.Invoke();
-            else if (item is FolderEntry)
+            else if (item is FolderEntry && isNew)
                 OnFoldersChanged?.Invoke();
         }
 
@@ -248,6 +248,17 @@ namespace Ultimate_GM_Screen
                 throw new Exception("Database NOT opened");
             return _db.Table<Entity>().Count();
         }
+        static public List<NoteListing> Entities_GetAll_Listing()
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return  _db.Table<Entity>().AsEnumerable()
+                .Where(x => x.Archived == false)
+                .OrderBy(x => x.ToString())
+                .Select(c => new NoteListing { ID = c.ID, FolderID = c.FolderID, Name = c.Name, Path = c.Path })
+                .ToList();
+        }
         static public List<Entity> Entities_GetAll()
         {
             if (_db == null)
@@ -298,7 +309,20 @@ namespace Ultimate_GM_Screen
             return _db.Table<Entity>().AsEnumerable()
                 .Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase) || x.Tags.Contains(name, StringComparison.OrdinalIgnoreCase))
                 .Where(x => x.Archived == false)
+                .OrderBy(x => x.ToString())                
+                .ToList();
+        }
+
+        static public List<NoteListing> Entities_Search_Listing(string name)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            return _db.Table<Entity>().AsEnumerable()
+                .Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase) || x.Tags.Contains(name, StringComparison.OrdinalIgnoreCase))
+                .Where(x => x.Archived == false)
                 .OrderBy(x => x.ToString())
+                .Select(c => new NoteListing { ID = c.ID, FolderID = c.FolderID, Name = c.Name, Path = c.Path})
                 .ToList();
         }
 

@@ -96,7 +96,7 @@ namespace Ultimate_GM_Screen.Entities
             }
         }
 
-        void UpdateNotesList(List<Entity> notes=null)
+        void UpdateNotesList(List<NoteListing> notes=null)
         {
             #region -> full list
             if (notes == null)
@@ -115,18 +115,18 @@ namespace Ultimate_GM_Screen.Entities
                     tvi.IsExpanded = f.IsExpanded;
 
                     #region -> save expanded / collasped
-                    //tvi.Expanded += (sender, e) => 
-                    //{
-                    //    var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
-                    //    fe.IsExpanded = true;
-                    //    DatabaseManager.Update(fe, false);
-                    //};
-                    //tvi.Collapsed += (sender, e) =>
-                    //{
-                    //    var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
-                    //    fe.IsExpanded = false;
-                    //    DatabaseManager.Update(fe, false);
-                    //};
+                    tvi.Expanded += (sender, e) =>
+                    {
+                        var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
+                        fe.IsExpanded = true;
+                        DatabaseManager.Update(fe, false);
+                    };
+                    tvi.Collapsed += (sender, e) =>
+                    {
+                        var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
+                        fe.IsExpanded = false;
+                        DatabaseManager.Update(fe, false);
+                    };
                     #endregion
 
                     treeFolders.Add(f.ID, tvi);
@@ -143,7 +143,7 @@ namespace Ultimate_GM_Screen.Entities
                 #endregion
 
                 if (notes == null)
-                    notes = DatabaseManager.Entities_GetAll();
+                    notes = DatabaseManager.Entities_GetAll_Listing();
                                 
                 foreach (var n in notes)
                 {
@@ -218,7 +218,7 @@ namespace Ultimate_GM_Screen.Entities
                 UpdateNotesList();
             else
             {
-                var notes = DatabaseManager.Entities_Search(textBox_search.Text);
+                var notes = DatabaseManager.Entities_Search_Listing(textBox_search.Text);
                 UpdateNotesList(notes);
             }
         }
@@ -265,12 +265,13 @@ namespace Ultimate_GM_Screen.Entities
             {
                 if (e.MiddleButton == MouseButtonState.Pressed)
                 {
-
-                    if ((e.OriginalSource as TextBlock).DataContext is Entity)
+                    if ((e.OriginalSource as TextBlock).DataContext is NoteListing)
                     {
                         e.Handled = true;
 
-                        var note = (e.OriginalSource as TextBlock).DataContext as Entity;
+                        var noteListing = (e.OriginalSource as TextBlock).DataContext as NoteListing;
+                        var note = DatabaseManager.Entity_FromID(noteListing.ID);
+
                         if (_visibleEditor != null)
                             _visibleEditor.InsertLink(note);
                         else
@@ -280,11 +281,12 @@ namespace Ultimate_GM_Screen.Entities
                 }
                 else if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    if ((e.OriginalSource as TextBlock).DataContext is Entity)
+                    if ((e.OriginalSource as TextBlock).DataContext is NoteListing)
                     {
                         e.Handled = true;
 
-                        var note = (e.OriginalSource as TextBlock).DataContext as Entity;
+                        var noteListing = (e.OriginalSource as TextBlock).DataContext as NoteListing;
+                        var note = DatabaseManager.Entity_FromID(noteListing.ID);
                         NoteEditor_OnPinClicked(note);
                     }
                 }
@@ -295,7 +297,8 @@ namespace Ultimate_GM_Screen.Entities
         {            
             if (treeView.SelectedItem != null)
             {
-                var note = (treeView.SelectedItem as TreeViewItem).Header as Entity;
+                var noteListing = (treeView.SelectedItem as TreeViewItem).Header as NoteListing;
+                var note = DatabaseManager.Entity_FromID(noteListing.ID);
                 if (note != null)
                     ChangeNote(note, true);
             }

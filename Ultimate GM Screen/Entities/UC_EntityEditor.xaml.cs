@@ -111,15 +111,13 @@ namespace Ultimate_GM_Screen.Entities
             var revision = new EntityRevision(_current);
 
             if (_current.Path != textBox_path.Text)
-            {
-                //pathNameChanged = true;
+            {                
                 save = true;
                 _current.Path = textBox_path.Text;
             }
 
             if (_current.Name != textBox_name.Text)
             {
-                //pathNameChanged = true;
                 save = true;
                 _current.Name = textBox_name.Text;
             }

@@ -14,8 +14,8 @@ namespace Ultimate_GM_Screen.Resources
         public int ID { get; set; }
         public string Path { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }            
-
+        public string Address { get; set; }
+        public int FolderID { get; set; } = -1;
         public override string ToString()
         {
             return Path + Name;

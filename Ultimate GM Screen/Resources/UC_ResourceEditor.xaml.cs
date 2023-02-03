@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ultimate_GM_Screen.Folders;
 
 namespace Ultimate_GM_Screen.Resources
 {
@@ -41,6 +42,8 @@ namespace Ultimate_GM_Screen.Resources
         {
             InitializeComponent();
             InitializeAsync();
+
+            DatabaseManager.OnFoldersChanged += DatabaseManager_OnFoldersChanged;            
         }
 
         async void InitializeAsync()
@@ -52,6 +55,31 @@ namespace Ultimate_GM_Screen.Resources
             await browser.EnsureCoreWebView2Async(browserEnviorment);
 
             browser.DefaultBackgroundColor = System.Drawing.Color.FromArgb(61, 61, 76);            
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            DatabaseManager_OnFoldersChanged();
+        }
+
+        private void DatabaseManager_OnFoldersChanged()
+        {
+            if (DatabaseManager.IsOpened)
+            {
+                var list = DatabaseManager.Folders_GetAll(FolderType.Note);
+                list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
+                comboBox_parent.ItemsSource = list;
+
+                if (_current != null)
+                {
+                    if (_current.FolderID != -1)
+                        comboBox_parent.SelectedIndex = comboBox_parent.Items.Cast<FolderEntry>().ToList().FindIndex(x => x.ID == _current.FolderID);
+                    else
+                        comboBox_parent.SelectedIndex = 0;
+                }
+                else
+                    comboBox_parent.SelectedIndex = 0;
+            }
         }
 
         public void Load(Resource current = null, bool edit = false)
@@ -68,6 +96,11 @@ namespace Ultimate_GM_Screen.Resources
             textbox_path.Text = _current.Path;
             textbox_name.Text = _current.Name;
             textbox_address.Text = _current.Address;
+
+            if (_current.FolderID != -1)
+                comboBox_parent.SelectedItem = comboBox_parent.Items.Cast<FolderEntry>().ToList().Find(x => x.ID == _current.FolderID);
+            else
+                comboBox_parent.SelectedIndex = 0;
 
             button_go_Click(this, null);
         }
@@ -92,30 +125,36 @@ namespace Ultimate_GM_Screen.Resources
                 return;
 
             bool save = false;
-            bool namePathChanged = false;
+            bool folderChanged = false;
 
             if (_current.Path != textbox_path.Text)
             {
                 _current.Path = textbox_path.Text;
                 save = true;
-                namePathChanged = true;
             }
             if (_current.Name != textbox_name.Text)
             {
                 _current.Name = textbox_name.Text;
                 save = true;
-                namePathChanged = true;
             }
             if (_current.Address != textbox_address.Text)
             {
                 _current.Address = textbox_address.Text;
                 save = true;
             }
+            
+            int parentID = (comboBox_parent.SelectedItem as FolderEntry).ID;
+            if (_current.FolderID != parentID)
+            {
+                save = true;
+                _current.FolderID = parentID;
+                folderChanged = true;
+            }
 
             if (save)
             {
                 if (_edit)
-                    DatabaseManager.Update(_current, namePathChanged);
+                    DatabaseManager.Update(_current, folderChanged);
                 else
                     DatabaseManager.Add(_current);
 
@@ -190,6 +229,6 @@ namespace Ultimate_GM_Screen.Resources
                 win.ShowActivated = true;
                 win.Show();
             }
-        }
+        }        
     }
 }

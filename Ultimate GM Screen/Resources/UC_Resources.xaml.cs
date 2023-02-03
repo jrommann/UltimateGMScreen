@@ -31,8 +31,14 @@ namespace Ultimate_GM_Screen.Resources
             InitializeComponent();
             
             DatabaseManager.OnResourcesChanged += DatabaseManager_OnResourcesChanged;
+            DatabaseManager.OnFoldersChanged += DatabaseManager_OnFoldersChanged;
 
             resourceEditor.OnPinClicked += Editor_OnPinClicked;
+        }
+
+        private void DatabaseManager_OnFoldersChanged()
+        {
+            UpdateResourceList();
         }
 
         private void DatabaseManager_OnResourcesChanged(Resource specificItem = null, bool pathChanged = false)
@@ -45,10 +51,82 @@ namespace Ultimate_GM_Screen.Resources
         {
             if (DatabaseManager.IsOpened)
             {
-                if (notes != null)
-                    listBox_resources.ItemsSource = notes;
+                #region -> full list
+                if (notes == null)
+                {
+                    #region -> build tree
+                    var folders = DatabaseManager.Folders_GetAll(Folders.FolderType.Resource);
+                    folders.Sort((x, y) => x.ParentID.CompareTo(y.ParentID));
+
+                    Dictionary<int, TreeViewItem> treeFolders = new Dictionary<int, TreeViewItem>();
+                    treeView.Items.Clear();
+
+                    foreach (var f in folders)
+                    {
+                        TreeViewItem tvi = new TreeViewItem();
+                        tvi.Header = f;
+                        tvi.IsExpanded = f.IsExpanded;
+
+                        #region -> save expanded / collasped
+                        tvi.Expanded += (sender, e) =>
+                        {
+                            var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
+                            fe.IsExpanded = true;
+                            DatabaseManager.Update(fe, false);
+                        };
+                        tvi.Collapsed += (sender, e) =>
+                        {
+                            var fe = (sender as TreeViewItem).Header as Folders.FolderEntry;
+                            fe.IsExpanded = false;
+                            DatabaseManager.Update(fe, false);
+                        };
+                        #endregion
+
+                        treeFolders.Add(f.ID, tvi);
+
+                        if (f.ParentID == -1)
+                            treeView.Items.Add(tvi);
+                        else
+                        {
+                            var treeviewItem = treeFolders[f.ParentID];
+                            if (treeviewItem != null)
+                                treeviewItem.Items.Add(tvi);
+                        }
+                    }
+                    #endregion
+
+                    if (notes == null)
+                        notes = DatabaseManager.Resources_GetAll();
+
+                    foreach (var n in notes)
+                    {
+                        TreeViewItem tvi = new TreeViewItem();
+                        tvi.Header = n;
+
+                        if (n.FolderID == -1)
+                            treeView.Items.Add(tvi);
+                        else
+                        {
+                            TreeViewItem parent = null;
+                            if (treeFolders.TryGetValue(n.FolderID, out parent))
+                                parent.Items.Add(tvi);
+                        }
+                    }
+                }
+                #endregion
+                #region -> search list
                 else
-                    listBox_resources.ItemsSource = DatabaseManager.Resources_GetAll();
+                {
+                    treeView.Items.Clear();
+
+                    foreach (var n in notes)
+                    {
+                        TreeViewItem tvi = new TreeViewItem();
+                        tvi.Header = n;
+                        treeView.Items.Add(tvi);
+                    }
+                }
+                #endregion
             }
         }
 
@@ -126,47 +204,7 @@ namespace Ultimate_GM_Screen.Resources
             UpdateResourceList();
             _loaded = true;
         }      
-        private void listBox_resources_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (listBox_resources.SelectedItem is Resource)
-                ChangeResource(listBox_resources.SelectedItem as Resource, true);
-        }
-
-        private void listBox_resources_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.OriginalSource is TextBlock)
-            {
-                if (e.RightButton == MouseButtonState.Pressed)
-                {
-                    if ((e.OriginalSource as TextBlock).DataContext is Resource)
-                    {
-                        e.Handled = true;
-                        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
-                        Editor_OnPinClicked(r);
-                    }
-
-                    //if ((e.OriginalSource as TextBlock).DataContext is Resource)
-                    //{
-                    //    e.Handled = true;
-
-                    //    var r = (e.OriginalSource as TextBlock).DataContext as Resource;
-                    //    var w = new Window_Resource();
-                    //    w.Load(r);
-                    //    w.Show();
-                    //}
-                }
-                //else if (e.MiddleButton == MouseButtonState.Pressed)
-                //{
-                //    if ((e.OriginalSource as TextBlock).DataContext is Resource)
-                //    {
-                //        e.Handled = true;
-                //        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
-                //        Editor_OnPinClicked(r);
-                //    }
-                //}
-            }
-        }
-
+       
         private void button_clearSearch_Click(object sender, RoutedEventArgs e)
         {
             textBox_search.Text = "";
@@ -183,6 +221,31 @@ namespace Ultimate_GM_Screen.Resources
             {
                 var results = DatabaseManager.Resource_Search(textBox_search.Text);
                 UpdateResourceList(results);
+            }
+        }
+
+        private void treeView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is TextBlock)
+            {
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    if ((e.OriginalSource as TextBlock).DataContext is Resource)
+                    {
+                        e.Handled = true;
+                        var r = (e.OriginalSource as TextBlock).DataContext as Resource;
+                        Editor_OnPinClicked(r);
+                    }
+                }
+            }
+        }
+
+        private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView.SelectedItem != null)
+            {
+                var r = (treeView.SelectedItem as TreeViewItem).Header as Resource;
+                ChangeResource(r, true);
             }
         }
     }

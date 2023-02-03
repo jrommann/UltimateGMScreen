@@ -27,7 +27,11 @@
         </Grid>
         <TextBox x:Name="textBox_search" Height="23" Margin="10,5,35,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="textBox_search_TextChanged"/>
         <Button x:Name="button_clearSearch" Content="X" Margin="0,5,10,0" Click="button_clearSearch_Click" HorizontalAlignment="Right" Width="25" Height="23" VerticalAlignment="Top"/>
-
-        <ListBox x:Name="listBox_resources" Margin="10,33,10,39" SelectionChanged="listBox_resources_SelectionChanged" PreviewMouseDown="listBox_resources_PreviewMouseDown"/>
+        
+        <TreeView x:Name="treeView" Margin="10,33,10,39" SelectedItemChanged="treeView_SelectedItemChanged" PreviewMouseDown="treeView_PreviewMouseDown">
+            <TreeView.Resources>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
+            </TreeView.Resources>
+        </TreeView>
     </Grid>
 </UserControl>

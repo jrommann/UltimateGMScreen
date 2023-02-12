@@ -9,6 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="400*"/>
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Background="#003D3D4C" Header="Note Folders">
@@ -25,7 +26,7 @@
                 <Button x:Name="button_notesDelete" Content="Delete" HorizontalAlignment="Left" Margin="193,125,0,0" VerticalAlignment="Top" Width="75" Click="button_notesDelete_Click"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Column="1" Background="#003D3D4C" Header="Resource Folders">
+        <GroupBox Grid.Column="2" Background="#003D3D4C" Header="Resource Folders">
             <Grid>
                 <TreeView x:Name="treeView_resources" HorizontalAlignment="Left" Margin="10,10,0,10" Width="172" SelectedItemChanged="treeView_resources_SelectedItemChanged">
                     <TreeView.Resources>

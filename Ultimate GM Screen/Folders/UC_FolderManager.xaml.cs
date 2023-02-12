@@ -53,31 +53,26 @@ namespace Ultimate_GM_Screen.Folders
             list.Sort((x,y) => x.ParentID.CompareTo(y.ParentID));
                         
             List<TreeViewItem> items = new List<TreeViewItem>();
-
             foreach (var f in list)
             {
+                TreeViewItem i = new TreeViewItem();
+                i.Header = f;
+                i.IsExpanded = true;
+                items.Add(i);
+            }
+
+            foreach (var i in items)
+            {
+                var f = i.Header as Folders.FolderEntry;
                 if (f.ParentID == -1)
                 {
-                    TreeViewItem i = new TreeViewItem();
-                    i.Header = f;
-                    i.IsExpanded = true;                    
-                    items.Add(i);
-
                     treeView_notes.Items.Add(i);
                 }
                 else
                 {
                     var treeviewItem = items.Find(x => (x.Header as FolderEntry).ID == f.ParentID);
-
                     if (treeviewItem != null)
-                    {
-                        TreeViewItem i = new TreeViewItem();
-                        i.Header = f;
-                        i.IsExpanded = true;
-                        items.Add(i);
-
                         treeviewItem.Items.Add(i);
-                    }
                 }
             }
         }
@@ -154,31 +149,26 @@ namespace Ultimate_GM_Screen.Folders
             list.Sort((x, y) => x.ParentID.CompareTo(y.ParentID));
 
             List<TreeViewItem> items = new List<TreeViewItem>();
-
             foreach (var f in list)
             {
+                TreeViewItem i = new TreeViewItem();
+                i.Header = f;
+                i.IsExpanded = true;
+                items.Add(i);
+            }
+
+            foreach (var i in items)
+            {
+                var f = i.Header as Folders.FolderEntry;
                 if (f.ParentID == -1)
                 {
-                    TreeViewItem i = new TreeViewItem();
-                    i.Header = f;
-                    i.IsExpanded = true;
-                    items.Add(i);
-
                     treeView_resources.Items.Add(i);
                 }
                 else
                 {
                     var treeviewItem = items.Find(x => (x.Header as FolderEntry).ID == f.ParentID);
-
                     if (treeviewItem != null)
-                    {
-                        TreeViewItem i = new TreeViewItem();
-                        i.Header = f;
-                        i.IsExpanded = true;
-                        items.Add(i);
-
                         treeviewItem.Items.Add(i);
-                    }
                 }
             }
         }

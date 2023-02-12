@@ -103,10 +103,11 @@ namespace Ultimate_GM_Screen.Entities
                 #region -> build tree
                 var folders = DatabaseManager.Folders_GetAll(Folders.FolderType.Note);
                 folders.Sort((x, y) => x.ParentID.CompareTo(y.ParentID));
-
+                
                 Dictionary<int, TreeViewItem> treeFolders = new Dictionary<int, TreeViewItem>();
                 treeView.Items.Clear();
 
+                #region -> create all tree view items
                 foreach (var f in folders)
                 {
                     TreeViewItem tvi = new TreeViewItem();
@@ -129,16 +130,24 @@ namespace Ultimate_GM_Screen.Entities
                     #endregion
 
                     treeFolders.Add(f.ID, tvi);
+                }
+                #endregion
+
+                #region -> add to tree view and set parents
+                foreach (var kv in treeFolders)
+                {
+                    var f = kv.Value.Header as Folders.FolderEntry;
 
                     if (f.ParentID == -1)
-                        treeView.Items.Add(tvi);
+                        treeView.Items.Add(kv.Value);
                     else
                     {
                         var treeviewItem = treeFolders[f.ParentID];
                         if (treeviewItem != null)
-                            treeviewItem.Items.Add(tvi);
+                            treeviewItem.Items.Add(kv.Value);
                     }
                 }
+                #endregion
                 #endregion
 
                 if (notes == null)

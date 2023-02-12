@@ -24,6 +24,9 @@ namespace Ultimate_GM_Screen
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            Title += string.Format(" - v{0}.{1}", version.Major, version.Minor);
+
             if (_db == null)
             {
                 #region -> ask

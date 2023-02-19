@@ -3,6 +3,7 @@ Single windows desktop application for GMing and playing table top games in virt
 
 ## Alpha software use at own risk.
 
+More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
 Download - https://www.rabiddesignstudios.com/downloads/Install%20Ultimate%20Tabletop%20Screen%20v6.2.exe
 
 ## Requirements

@@ -93,7 +93,18 @@ namespace Ultimate_GM_Screen.Resources
             else
                 _current = current;
 
-            textbox_path.Text = _current.Path;
+            if (string.IsNullOrEmpty(_current.Path))
+            {
+                textbox_path.Visibility = Visibility.Hidden;
+                label_path.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                textbox_path.Visibility = Visibility.Visible;
+                label_path.Visibility = Visibility.Visible;
+                textbox_path.Text = _current.Path;
+            }
+
             textbox_name.Text = _current.Name;
             textbox_address.Text = _current.Address;
 

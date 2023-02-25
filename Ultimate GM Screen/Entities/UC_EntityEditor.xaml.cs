@@ -77,7 +77,18 @@ namespace Ultimate_GM_Screen.Entities
             else
                 _current = current;
 
-            textBox_path.Text = _current.Path;
+            if (string.IsNullOrEmpty(_current.Path))
+            {
+                textBox_path.Visibility = Visibility.Hidden;
+                lbl_path.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                textBox_path.Visibility = Visibility.Visible;
+                lbl_path.Visibility = Visibility.Visible;
+                textBox_path.Text = _current.Path;
+            }
+
             textBox_name.Text = _current.Name;
             textBox_tags.Text = _current.Tags;
             SetBrowserText(_current.Details);            

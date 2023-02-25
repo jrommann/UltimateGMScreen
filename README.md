@@ -21,3 +21,8 @@ Single windows desktop application for GMing and playing table top games in virt
 - Folders for organization
 - Search all notes
 
+## Changelog
+### v6.3
+- marked path as obsolete
+- path is hidden on entries that are empty
+

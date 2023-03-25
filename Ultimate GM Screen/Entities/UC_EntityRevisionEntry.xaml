@@ -14,7 +14,7 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Label x:Name="dateLbl" Content="Date" Grid.Row="0" VerticalAlignment="Center"/>        
-        <Expander Grid.Row="1" IsExpanded="False" Expanded="Expander_Expanded">
+        <Expander Grid.Row="1" IsExpanded="False" Expanded="Expander_Expanded" x:Name="expander">
             <wpf:MarkdownViewer x:Name="details"/>
         </Expander>
         <Button x:Name="restoreBtn" Content="Restore" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="25" Click="restoreBtn_Click"/>

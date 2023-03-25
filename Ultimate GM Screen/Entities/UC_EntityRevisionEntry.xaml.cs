@@ -42,10 +42,15 @@ namespace Ultimate_GM_Screen.Entities
             DatabaseManager.Delete(Current);
         }
 
-        public void Load(EntityRevision er)
+        public void Load(EntityRevision er, bool loadTxt=false)
         {
             Current = er;
-            dateLbl.Content = Current.Date;            
+            dateLbl.Content = Current.Date;
+            if (loadTxt)
+            {
+                details.Markdown = Current.Details;
+                expander.IsExpanded = true;
+            }
         }
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)

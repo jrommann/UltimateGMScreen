@@ -2,7 +2,7 @@
 Single windows desktop application for GMing and playing table top games in virtual and in person environments.
 
 - More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
-- Download - https://www.rabiddesignstudios.com/downloads/uts/Install%20Ultimate%20Tabletop%20Screen%20v6.3.exe
+- Download Latest v7.0 - https://www.rabiddesignstudios.com/downloads/uts/Install%20Ultimate%20Tabletop%20Screen%20v7.0.exe
 
 ## Requirements
 * Windows 10 or higher.

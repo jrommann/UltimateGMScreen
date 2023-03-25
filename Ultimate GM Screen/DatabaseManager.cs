@@ -86,6 +86,14 @@ namespace Ultimate_GM_Screen
             _db = null;
         }
 
+        static public void Vacuum()
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            _db.Execute("VACUUM");
+        }
+
         static public bool Add(object item)
         {
             if (_db == null)

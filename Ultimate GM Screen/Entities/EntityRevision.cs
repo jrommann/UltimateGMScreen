@@ -24,5 +24,10 @@ namespace Ultimate_GM_Screen.Entities
             EntityID = ent.ID;           
             Details = ent.Details;
         }
+
+        public override string ToString()
+        {
+            return Date.ToString();
+        }
     }
 }

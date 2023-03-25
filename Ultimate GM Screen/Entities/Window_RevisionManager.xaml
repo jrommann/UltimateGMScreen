@@ -1,0 +1,35 @@
+﻿<adonisControls:AdonisWindow  xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI" x:Class="Ultimate_GM_Screen.Window_RevisionManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ultimate_GM_Screen" xmlns:entities="clr-namespace:Ultimate_GM_Screen.Entities" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                              mc:Ignorable="d"
+        Title="Revision Manager" Height="450" Width="800" WindowState="Maximized" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Revisions to Keep" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+        <xctk:IntegerUpDown x:Name="revisionsToKeep" Value="5" Grid.Column="0" Height="26" VerticalAlignment="Top" Margin="124,5,10,0" Minimum="0"/>
+        <Button x:Name="deletAllRevisions" Content="Delete ALL Revisions but #" Margin="10,34,10,0" Grid.Column="0" Height="27" VerticalAlignment="Top" Click="deletAllRevisions_Click"/>
+        <TreeView x:Name="treeView" Grid.Column="0" Margin="10,66,10,10" SelectedItemChanged="treeView_SelectedItemChanged">
+            <TreeView.Resources>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ResourceKey=TreeViewItemStyle}"/>
+            </TreeView.Resources>
+        </TreeView>
+        <GridSplitter Grid.Column="1"/>
+        <entities:UC_EntityRevisionEntry x:Name="revision" Grid.Column="2" Visibility="Hidden"/>
+        <StackPanel x:Name="notePanel" Grid.Column="2" Visibility="Visible" Orientation="Vertical">
+            <Label x:Name="noteLbl" Content="Selected Note" FontWeight="Bold" FontSize="20" Margin="5"/>
+            <StackPanel Orientation="Horizontal">
+            <Label Content="Revisions to Keep" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+            <xctk:IntegerUpDown x:Name="noteRevisionsToKeep" Value="5" Height="26" Minimum="0"/>
+            </StackPanel>
+            <Button x:Name="deletNoteRevisions" Content="Delete All Note Revisions but #" Margin="10,34,10,0" Height="27" VerticalAlignment="Top" Click="deletNoteRevisions_Click"/>
+        </StackPanel>
+        
+    </Grid>
+</adonisControls:AdonisWindow>

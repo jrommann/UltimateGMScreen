@@ -2,6 +2,6 @@
 Dice
 Roll Tables
 updater notifier
-clean up revisions
 image support
 graph editor
+export all notes

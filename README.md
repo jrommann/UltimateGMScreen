@@ -20,6 +20,9 @@ Single windows desktop application for GMing and playing table top games in virt
 - Search all notes
 
 ## Changelog
+### v7.0
+- added revision manager, easy to clean up revisions for all notes.
+
 ### v6.3
 - marked path as obsolete
 - path is hidden on entries that are empty

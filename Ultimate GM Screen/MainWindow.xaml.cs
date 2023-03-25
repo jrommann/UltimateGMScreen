@@ -179,5 +179,14 @@ namespace Ultimate_GM_Screen
             win.ShowActivated = true;
             win.Show();
         }
+        
+        private void buttonRevisions_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new Window_RevisionManager();
+            win.ShowInTaskbar = true;
+            win.Owner = this.Parent as Window;
+            win.ShowActivated = true;
+            win.Show();
+        }
     }
 }

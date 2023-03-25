@@ -21,6 +21,7 @@
                 <Button x:Name="buttonNotes" Content="Notes" Click="buttonNotes_Click"/>
                 <Button x:Name="buttonSearch" Content="Search Notes" Click="buttonSearch_Click" ToolBar.OverflowMode="Always"/>
                 <Button x:Name="buttonArchives" Content="Note Archives" Click="buttonArchives_Click" ToolBar.OverflowMode="Always"/>
+                <Button x:Name="buttonRevisions" Content="Note Revisions" Click="buttonRevisions_Click" ToolBar.OverflowMode="Always"/>
                 <Separator/>
                 <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click"/>
                 <Separator/>

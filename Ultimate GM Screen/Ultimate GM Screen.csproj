@@ -290,6 +290,9 @@
     <Compile Include="Entities\Window_EntityRevisions.xaml.cs">
       <DependentUpon>Window_EntityRevisions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Window_RevisionManager.xaml.cs">
+      <DependentUpon>Window_RevisionManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Folders\FolderEntry.cs" />
     <Compile Include="Folders\UC_FolderManager.xaml.cs">
@@ -358,6 +361,10 @@
     <Page Include="Entities\Window_EntityRevisions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Entities\Window_RevisionManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Folders\UC_FolderManager.xaml">
       <SubType>Designer</SubType>

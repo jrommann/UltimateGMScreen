@@ -6,7 +6,7 @@ Single windows desktop application for GMing and playing table top games in virt
 
 ## Requirements
 * Windows 10 or higher.
-* Microsoft Edge WebView2 - https://developer.microsoft.com/en-us/microsoft-edge/webview2/
+* May need to install - Microsoft Edge WebView2 - https://developer.microsoft.com/en-us/microsoft-edge/webview2/
 
 ## Features
 - Single file database

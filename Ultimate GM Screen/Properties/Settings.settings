@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Ultimate_GM_Screen.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="TableTopAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="LastDatabase" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ApplicationVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">7.0.0.1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

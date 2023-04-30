@@ -21,7 +21,25 @@ namespace Ultimate_GM_Screen.WebBrowser
     /// </summary>
     public partial class UC_Web_Browser : UserControl
     {
-        public string StartingAddress { get; set; }        
+        string _startingAddresss = string.Empty;
+        public string StartingAddress 
+        {
+            get 
+            {
+                if (browser.IsInitialized)
+                    return browser.Source.ToString();
+                else
+                    return _startingAddresss;
+            }
+            set
+            {
+                if (browser.IsInitialized)
+                    browser.Source = new Uri(value);
+
+                addressbox.Text = value;
+                _startingAddresss = value;
+            }
+        }        
 
         public UC_Web_Browser()
         {

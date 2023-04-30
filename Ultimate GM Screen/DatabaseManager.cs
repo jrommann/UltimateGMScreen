@@ -51,6 +51,7 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<EntityRevision>();
             _db.CreateTable<Resource>();
             _db.CreateTable<Folders.FolderEntry>();
+            _db.CreateTable<SettingsDB>();
 
             _notifier = new Notifier(cfg =>
             {
@@ -369,6 +370,33 @@ namespace Ultimate_GM_Screen
                 .Where(x => x.Type == type)
                 .OrderBy(x => x.Name)
                 .ToList();
+        }
+        #endregion
+
+        #region -> settings
+        public static string TableURL
+        {
+            get
+            {
+                if (_db == null)
+                    return string.Empty;
+                else if (_db.Table<SettingsDB>().Count() > 0)
+                    return _db.Table<SettingsDB>().ToList()[0].TableURL;
+                else
+                    return string.Empty;
+            }
+            set
+            {
+                if (_db != null)
+                {
+                    var s = _db.Table<SettingsDB>().FirstOrDefault<SettingsDB>();
+                    if (s == null)
+                        s = new SettingsDB();
+
+                    s.TableURL = value;
+                    _db.InsertOrReplace(s);
+                }
+            }
         }
         #endregion
     }

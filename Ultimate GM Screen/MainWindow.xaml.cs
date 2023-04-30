@@ -17,10 +17,15 @@ namespace Ultimate_GM_Screen
 
         public MainWindow()
         {
-            Properties.Settings.Default.Upgrade();
+            string appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            if (Properties.Settings.Default.ApplicationVersion != appVersion)
+            { 
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.ApplicationVersion = appVersion;
+                Properties.Settings.Default.Save(); 
+            }
 
-            InitializeComponent();
-            browser.StartingAddress = Properties.Settings.Default.TableTopAddress;
+            InitializeComponent();            
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -114,13 +119,14 @@ namespace Ultimate_GM_Screen
                         }
                         break;
                 }
-            }            
+
+                browser.StartingAddress = DatabaseManager.TableURL;
+            }
         }
 
         private void AdonisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Properties.Settings.Default.TableTopAddress = browser.browser.Source.ToString();
-            Properties.Settings.Default.Save();
+            DatabaseManager.TableURL = browser.browser.Source.ToString();
         }  
 
         private void buttonTable_Click(object sender, RoutedEventArgs e)

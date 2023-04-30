@@ -159,6 +159,12 @@ namespace Ultimate_GM_Screen
             magicItems.Visibility = Visibility.Visible;            
         }
 
+        private void buttonDice_Click(object sender, RoutedEventArgs e)
+        {
+            HideAll();
+            dice.Visibility = Visibility.Visible;
+        }
+
         void HideAll()
         {            
             magicItems.Visibility = Visibility.Hidden;
@@ -166,6 +172,7 @@ namespace Ultimate_GM_Screen
             resources.Visibility = Visibility.Hidden;
             notes.Visibility = Visibility.Hidden;
             browser.Visibility = Visibility.Hidden;
+            dice.Visibility = Visibility.Hidden;
         }
 
         private void buttonArchives_Click(object sender, RoutedEventArgs e)
@@ -194,5 +201,7 @@ namespace Ultimate_GM_Screen
             win.ShowActivated = true;
             win.Show();
         }
+
+
     }
 }

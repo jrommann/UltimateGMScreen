@@ -52,6 +52,7 @@ namespace Ultimate_GM_Screen
             _db.CreateTable<Resource>();
             _db.CreateTable<Folders.FolderEntry>();
             _db.CreateTable<SettingsDB>();
+            _db.CreateTable<Dice.DiceDB>();
 
             _notifier = new Notifier(cfg =>
             {

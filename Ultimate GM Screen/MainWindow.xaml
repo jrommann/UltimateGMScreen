@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:Ultimate_GM_Screen"                             
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
-        xmlns:Magic_Items="clr-namespace:Ultimate_GM_Screen.Magic_Items" xmlns:WebBrowser="clr-namespace:Ultimate_GM_Screen.WebBrowser" xmlns:Entities="clr-namespace:Ultimate_GM_Screen.Entities" xmlns:Resources="clr-namespace:Ultimate_GM_Screen.Resources" x:Class="Ultimate_GM_Screen.MainWindow"
+        xmlns:Magic_Items="clr-namespace:Ultimate_GM_Screen.Magic_Items"
+        xmlns:WebBrowser="clr-namespace:Ultimate_GM_Screen.WebBrowser"
+        xmlns:Entities="clr-namespace:Ultimate_GM_Screen.Entities"
+        xmlns:Resources="clr-namespace:Ultimate_GM_Screen.Resources" 
+        xmlns:Dice="clr-namespace:Ultimate_GM_Screen.Dice" 
+        x:Class="Ultimate_GM_Screen.MainWindow"
         mc:Ignorable="d"
         Title="Ultimate Tabletop Screen" Height="450" Width="800" Loaded="Window_Loaded" WindowState="Maximized" Closing="AdonisWindow_Closing">
     <Grid>        
@@ -18,16 +23,20 @@
             <ToolBar>
                 <Button x:Name="buttonTable" Content="Table" Click="buttonTable_Click"/>
                 <Separator/>
-                <Button x:Name="buttonNotes" Content="Notes" Click="buttonNotes_Click"/>
-                <Button x:Name="buttonSearch" Content="Search Notes" Click="buttonSearch_Click" ToolBar.OverflowMode="Always"/>
-                <Button x:Name="buttonArchives" Content="Note Archives" Click="buttonArchives_Click" ToolBar.OverflowMode="Always"/>
-                <Button x:Name="buttonRevisions" Content="Note Revisions" Click="buttonRevisions_Click" ToolBar.OverflowMode="Always"/>
+                <Button x:Name="buttonNotes" Content="Notes" Click="buttonNotes_Click"/>                
                 <Separator/>
                 <Button x:Name="buttonResources" Content="Resources" Click="buttonResources_Click"/>
                 <Separator/>
                 <Button x:Name="buttonMagicItems" Content="Magic Items" Click="buttonMagicItems_Click"/>
                 <Separator/>
+                <Button x:Name="buttonDice" Content="Dice" Click="buttonDice_Click"/>
+                <Separator/>
+                <Button x:Name="buttonSearch" Content="Search Notes" Click="buttonSearch_Click" ToolBar.OverflowMode="Always"/>
+                <Button x:Name="buttonArchives" Content="Note Archives" Click="buttonArchives_Click" ToolBar.OverflowMode="Always"/>
+                <Button x:Name="buttonRevisions" Content="Note Revisions" Click="buttonRevisions_Click" ToolBar.OverflowMode="Always"/>
                 <Button x:Name="buttonFolders" Content="Folders" Click="buttonFolders_Click" ToolBar.OverflowMode="Always"/>
+                
+                
             </ToolBar>
         </ToolBarTray>        
         <WebBrowser:UC_Web_Browser Grid.Row="1" x:Name="browser" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
@@ -35,5 +44,6 @@
         <Resources:UC_Resources Grid.Row="1" x:Name="resources" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>        
         <Magic_Items:UC_Manage_Magic_Items Grid.Row="2" x:Name="magicItems" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
         <Search:UC_Search Grid.Row="1" x:Name="search" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
+        <Dice:UC_Dice Grid.Row="1" x:Name="dice" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
     </Grid>
 </adonisControls:AdonisWindow>

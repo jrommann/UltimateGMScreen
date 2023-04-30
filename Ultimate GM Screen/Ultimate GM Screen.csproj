@@ -266,6 +266,10 @@
     </Compile>
     <Compile Include="Common.cs" />
     <Compile Include="DatabaseManager.cs" />
+    <Compile Include="Dice\DiceDB.cs" />
+    <Compile Include="Dice\UC_Dice.xaml.cs">
+      <DependentUpon>UC_Dice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntityRelationship.cs" />
     <Compile Include="Entities\EntityRevision.cs" />
@@ -332,6 +336,10 @@
       <DependentUpon>UC Web Browser.xaml</DependentUpon>
     </Compile>
     <Page Include="Archive\Window_Archives.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dice\UC_Dice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -37,6 +37,9 @@ namespace Ultimate_GM_Screen
         public delegate void Event_FoldersChanged();
         static public event Event_FoldersChanged OnFoldersChanged;
 
+        public delegate void Event_DatabaseOpened();
+        static public event Event_DatabaseOpened OnOpened;
+
         static DatabaseManager _instance = null;
         static SQLiteConnection _db;
 
@@ -68,6 +71,8 @@ namespace Ultimate_GM_Screen
 
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });
+
+            OnOpened?.Invoke();
         }
 
         #region -> public methods
@@ -398,6 +403,13 @@ namespace Ultimate_GM_Screen
                     _db.InsertOrReplace(s);
                 }
             }
+        }
+        #endregion
+
+        #region -> Dice sets
+        static public List<Dice.DiceDB> Dice_GetAll()
+        {
+            return _db.Table<Dice.DiceDB>().ToList();
         }
         #endregion
     }

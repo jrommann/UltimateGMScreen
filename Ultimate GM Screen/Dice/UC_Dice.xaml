@@ -8,7 +8,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Label Content="Expression" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="20" Height="35"/>
-        <TextBox x:Name="textbox_expression" Text="1d20" Margin="115,10,101,0" VerticalAlignment="Top" Height="35" FontSize="20"/>
-        <Button x:Name="btn_roll" Content="ROLL" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Height="35" Width="86" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textbox_expression" Text="1d20" Margin="115,10,192,0" VerticalAlignment="Top" Height="35" FontSize="20" KeyDown="textbox_expression_KeyDown"/>
+        <Label Content="Roll notation: https://skizzerz.net/DiceRoller/Dice_Reference" VerticalAlignment="Top" Margin="160,50,0,0" Height="18" Width="448" HorizontalAlignment="Left" FontWeight="Normal" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseDown="Label_MouseDown"/>
+        <Button x:Name="btn_roll" Content="ROLL" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,101,0" Height="35" Width="86" FontSize="20" FontWeight="Bold" Click="btn_roll_Click"/>
+        <Button x:Name="btn_save" Content="ADD" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Height="35" Width="86" FontSize="20" FontWeight="Bold" Click="btn_save_Click"/>
+        <GroupBox Header="Results" Margin="10,50,0,10" HorizontalAlignment="Left" Width="145" RenderTransformOrigin="0.5,0.5">
+            <ListBox x:Name="listbox_results" Margin="0"/>
+        </GroupBox>
+        <StackPanel x:Name="diceSets" Margin="160,73,10,10"/>
+
     </Grid>
 </UserControl>

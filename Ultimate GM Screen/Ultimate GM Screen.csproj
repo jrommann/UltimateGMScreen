@@ -46,6 +46,12 @@
     <Reference Include="AdonisUI.ClassicTheme, Version=1.17.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\AdonisUI.ClassicTheme.1.17.1\lib\net45\AdonisUI.ClassicTheme.dll</HintPath>
     </Reference>
+    <Reference Include="Antlr4.Runtime.Standard, Version=4.8.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
+      <HintPath>packages\Antlr4.Runtime.Standard.4.8.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="Dice, Version=4.2.0.0, Culture=neutral, PublicKeyToken=71b60f2a3a7f9f66, processorArchitecture=MSIL">
+      <HintPath>packages\DiceRoller.4.2.0\lib\net452\Dice.dll</HintPath>
+    </Reference>
     <Reference Include="Markdig.Signed, Version=0.30.0.0, Culture=neutral, PublicKeyToken=870da25a133885f8, processorArchitecture=MSIL">
       <HintPath>packages\Markdig.Signed.0.30.4\lib\net452\Markdig.Signed.dll</HintPath>
     </Reference>
@@ -217,6 +223,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -269,6 +278,9 @@
     <Compile Include="Dice\DiceDB.cs" />
     <Compile Include="Dice\UC_Dice.xaml.cs">
       <DependentUpon>UC_Dice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dice\UC_DiceExpression.xaml.cs">
+      <DependentUpon>UC_DiceExpression.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntityRelationship.cs" />
@@ -340,6 +352,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dice\UC_Dice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dice\UC_DiceExpression.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

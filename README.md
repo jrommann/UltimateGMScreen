@@ -2,7 +2,6 @@
 Single windows desktop application for GMing and playing table top games in virtual and in person environments.
 
 - More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
-- Download Latest v7.0 - https://www.rabiddesignstudios.com/downloads/uts/Install%20Ultimate%20Tabletop%20Screen%20v7.0.exe
 
 ## Requirements
 * Windows 10 or higher.
@@ -10,7 +9,7 @@ Single windows desktop application for GMing and playing table top games in virt
 
 ## Features
 - Single file database
-- Tabs for Table, Notes, Resources, and Magic Items
+- Tabs for Table, Notes, Resources, and Magic Items, Dice
 - Notes are in markdown with a view / edit mode
 - Notes have revision history
 - Notes can be pinned and popped out
@@ -20,6 +19,11 @@ Single windows desktop application for GMing and playing table top games in virt
 - Search all notes
 
 ## Changelog
+### v8.0
+- Added Dice section
+- Moved saved table url to database
+- Fixed some bugs
+
 ### v7.0
 - added revision manager, easy to clean up revisions for all notes.
 

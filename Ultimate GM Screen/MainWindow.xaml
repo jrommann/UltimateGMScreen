@@ -1,4 +1,4 @@
-﻿<adonisControls:AdonisWindow xmlns:Search="clr-namespace:Ultimate_GM_Screen.Search"  xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" 
+﻿<adonisControls:AdonisWindow xmlns:WindowHost="clr-namespace:Ultimate_GM_Screen.WindowHost"  xmlns:Search="clr-namespace:Ultimate_GM_Screen.Search"  xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -38,8 +38,8 @@
                 
                 
             </ToolBar>
-        </ToolBarTray>        
-        <WebBrowser:UC_Web_Browser Grid.Row="1" x:Name="browser" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        </ToolBarTray>
+        <WindowHost:UC_WIndowHost Grid.Row="1" x:Name="table" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
         <Entities:UC_Entities Grid.Row="1" x:Name="notes" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>
         <Resources:UC_Resources Grid.Row="1" x:Name="resources" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>        
         <Magic_Items:UC_Manage_Magic_Items Grid.Row="2" x:Name="magicItems" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden"/>

@@ -120,19 +120,20 @@ namespace Ultimate_GM_Screen
                         break;
                 }
 
-                browser.StartingAddress = DatabaseManager.TableURL;
+                //browser.StartingAddress = DatabaseManager.TableURL;
             }
         }
 
         private void AdonisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            DatabaseManager.TableURL = browser.browser.Source.ToString();
+            //DatabaseManager.TableURL = browser.browser.Source.ToString();
         }  
 
         private void buttonTable_Click(object sender, RoutedEventArgs e)
         {
             HideAll();
-            browser.Visibility = Visibility.Visible;
+            //browser.Visibility = Visibility.Visible;
+            table.Visibility = Visibility.Visible;
         }
 
         private void buttonNotes_Click(object sender, RoutedEventArgs e)
@@ -171,7 +172,8 @@ namespace Ultimate_GM_Screen
             search.Visibility = Visibility.Hidden;
             resources.Visibility = Visibility.Hidden;
             notes.Visibility = Visibility.Hidden;
-            browser.Visibility = Visibility.Hidden;
+            //browser.Visibility = Visibility.Hidden;
+            table.Visibility = Visibility.Hidden;
             dice.Visibility = Visibility.Hidden;
         }
 

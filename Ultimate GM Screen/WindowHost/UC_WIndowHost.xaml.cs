@@ -42,7 +42,8 @@ namespace Ultimate_GM_Screen.WindowHost
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            Load("notepad.exe");
+            Load(@"C:\Users\Jacob\AppData\Local\MapTool\MapTool.exe");
+            //Load(@"java");
         }
 
         private void UserControl_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
@@ -62,6 +63,10 @@ namespace Ultimate_GM_Screen.WindowHost
         public void Load(string filename)
         {            
             ProcessStartInfo psi = new ProcessStartInfo(filename);
+            //psi.Arguments = @"-jar C:\Users\Jacob\AppData\Local\MapTool\app\MapTool.jar";
+            psi.WorkingDirectory = @"C:\Users\Jacob\AppData\Local\MapTool\";
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
             _process = Process.Start(psi);
             _process.WaitForInputIdle();
             SetParent(_process.MainWindowHandle, _panel.Handle);

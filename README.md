@@ -2,6 +2,7 @@
 Single windows desktop application for GMing and playing table top games in virtual and in person environments.
 
 - More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
+- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_8
 
 ## Requirements
 * Windows 10 or higher.

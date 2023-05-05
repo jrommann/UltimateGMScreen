@@ -1,5 +1,4 @@
 ﻿Trackers - Clocks and Timers
-Dice
 Roll Tables
 updater notifier
 image support

@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ApplicationVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">8.0.0.0</Value>
+      <Value Profile="(Default)">8.1.0.0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -53,8 +53,12 @@ namespace Ultimate_GM_Screen.Dice
 
         void Roll()
         {
-            var result = Roller.Roll(textbox_expression.Text);
-            listbox_results.Items.Insert(0, string.Format("{0} : {1}", result.Expression, result.Value));
+            try
+            {
+                var result = Roller.Roll(textbox_expression.Text);
+                listbox_results.Items.Insert(0, string.Format("{0} : {1}", result.Expression, result.Value));                
+            }
+            catch (Exception x) { MessageBox.Show("Invalid dice text. Check your expression syntax.", "ERROR - Dice Experssion"); }
         }
 
         #region -> doc label / link

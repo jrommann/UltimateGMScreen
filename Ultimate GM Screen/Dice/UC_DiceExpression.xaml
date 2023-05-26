@@ -10,7 +10,7 @@
         <Label Content="Name" FontSize="20" Height="35" HorizontalAlignment="Left"/>
         <TextBox x:Name="textbox_name" Text="" FontSize="20" Margin="61,0,0,0" HorizontalAlignment="Left" Width="144"/>
         <Label Content="Expression" FontSize="20" Height="35" HorizontalAlignment="Left" Margin="210,0,0,0"/>
-        <TextBox x:Name="textbox_expression" Text="" FontSize="20" KeyDown="textbox_expression_KeyDown" Margin="315,0,232,0"/>
+        <TextBox x:Name="textbox_expression" Text="" FontSize="20" Margin="315,0,232,0" KeyDown="textbox_expression_KeyDown"/>
         <Button x:Name="btn_roll" Content="ROLL" Height="35" Width="86" FontSize="20" FontWeight="Bold" Click="btn_roll_Click" HorizontalAlignment="Right" Margin="0,0,141,0"/>
         <Button x:Name="btn_save" Content="SAVE" Height="35" Width="86" FontSize="20" FontWeight="Bold" Click="btn_save_Click" HorizontalAlignment="Right" Margin="0,0,50,0"/>
         <Button x:Name="btn_delete" Content="X" Width="35" FontSize="20" FontWeight="Bold" Click="btn_delete_Click" HorizontalAlignment="Right" Margin="0,0,10,0"/>

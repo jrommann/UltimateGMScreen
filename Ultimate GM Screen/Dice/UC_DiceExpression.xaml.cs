@@ -50,8 +50,15 @@ namespace Ultimate_GM_Screen.Dice
 
         void Roll()
         {
-            var result = Roller.Roll(textbox_expression.Text);
-            ListboxResults.Items.Insert(0, string.Format("{0} : {1}", DiceEntry.Name, result.Value));
+            try
+            {
+                var result = Roller.Roll(textbox_expression.Text);
+                ListboxResults.Items.Insert(0, string.Format("{0} : {1}", DiceEntry.Name, result.Value));
+            }
+            catch (Exception x)
+            {
+                MessageBox.Show("Invalid dice text. Check your expression syntax.", "ERROR - Dice Experssion");
+            }
         }
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
@@ -76,8 +83,8 @@ namespace Ultimate_GM_Screen.Dice
 
         private void textbox_expression_KeyDown(object sender, KeyEventArgs e)
         {
-            Roll();
-        }
-
+            if(e.Key == Key.Enter)
+                Roll();
+        }       
     }
 }

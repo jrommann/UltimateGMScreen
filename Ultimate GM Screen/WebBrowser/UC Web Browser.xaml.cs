@@ -33,7 +33,7 @@ namespace Ultimate_GM_Screen.WebBrowser
             }
             set
             {
-                if (browser.IsInitialized)
+                if (browser.IsInitialized && !string.IsNullOrEmpty(value))
                     browser.Source = new Uri(value);
 
                 addressbox.Text = value;

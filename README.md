@@ -2,7 +2,7 @@
 Single windows desktop application for GMing and playing table top games in virtual and in person environments.
 
 - More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
-- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_8.2
+- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_8.3
 
 ## Requirements
 * Windows 10 or higher.
@@ -20,6 +20,9 @@ Single windows desktop application for GMing and playing table top games in virt
 - Search all notes
 
 ## Changelog
+### v8.3
+- Folder dropdown displays full folder path
+
 ### v8.2
 - Fixed crashing on empty start url
 

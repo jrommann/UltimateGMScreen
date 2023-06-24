@@ -15,13 +15,17 @@ namespace Ultimate_GM_Screen.Folders
 
     [Table("Folders")]
     public class FolderEntry
-    {        
+    {
+        public const int NO_PARENT_FOLDER = -1;
+
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }            
         public string Name { get; set; }
-        public int ParentID { get; set; } = -1;
+        public int ParentID { get; set; } = NO_PARENT_FOLDER;
         public FolderType Type { get; set; }
         public bool IsExpanded { get; set; } = true;
+        [Ignore]
+        public string Fullpath { get { return DatabaseManager.Folder_Fullpath(ID); } }
 
         public override string ToString()
         {

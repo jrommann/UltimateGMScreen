@@ -377,6 +377,32 @@ namespace Ultimate_GM_Screen
                 .OrderBy(x => x.Name)
                 .ToList();
         }
+
+        static public string Folder_Fullpath(int folderID)
+        {
+            if (_db == null)
+                throw new Exception("Database NOT opened");
+
+            StringBuilder sb = new StringBuilder();
+            Folder_BuildPath(folderID, sb); //RECURSIVE!!!!
+            return sb.ToString();
+        }
+
+        #region -> RECURSIVE!!!
+        static void Folder_BuildPath(int id, StringBuilder sb)
+        {
+            var entry = _db.Find<FolderEntry>(x => x.ID == id);
+            if (entry != null)
+            {
+                sb.Insert(0, entry.Name);
+                if (entry.ParentID != FolderEntry.NO_PARENT_FOLDER)
+                {
+                    sb.Insert(0, '/');
+                    Folder_BuildPath(entry.ParentID, sb);
+                }
+            }
+        }
+        #endregion
         #endregion
 
         #region -> settings

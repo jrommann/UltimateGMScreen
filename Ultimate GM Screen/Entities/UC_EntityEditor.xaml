@@ -4,12 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
-             xmlns:Ultimate_GM_Screen="clr-namespace:Ultimate_GM_Screen" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:markdown="clr-namespace:Ultimate_GM_Screen.Markdown"
+             xmlns:dbFolder="clr-namespace:Ultimate_GM_Screen.Folders"
+             xmlns:Ultimate_GM_Screen="clr-namespace:Ultimate_GM_Screen" xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:markdown="clr-namespace:Ultimate_GM_Screen.Markdown"             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCmdExecuted"/>
     </UserControl.CommandBindings>
+    <UserControl.Resources>
+        <DataTemplate x:Key="FolderEntryTemplate" DataType="{x:Type dbFolder:FolderEntry}">
+            <TextBlock Text="{Binding Fullpath}" />
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
@@ -33,10 +39,10 @@
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Folder" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="5,10,0,0" Width="43"/>
-            <ComboBox Grid.Row="0" x:Name="comboBox_parent" Width="204" HorizontalAlignment="Left" Margin="48,5,0,2" Height="23"/>
-            <Label x:Name="lbl_path" Grid.Row="0" Content="Path (Obsolete)" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="257,10,0,0"/>
-            <TextBox Grid.Row="0" x:Name="textBox_path" Height="23" Margin="350,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Label Grid.Row="0" Content="Folder" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="5,8,0,0" Width="43"/>
+            <ComboBox Grid.Row="0" x:Name="comboBox_parent" Margin="48,5,403,2" Height="23" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
+            <Label x:Name="lbl_path" Grid.Row="0" Content="Path (Obsolete)" HorizontalAlignment="Right" Height="18" VerticalAlignment="Top" Margin="0,9,296,0"/>
+            <TextBox Grid.Row="0" x:Name="textBox_path" Height="23" Margin="0,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Right" Width="286"/>
             <Label Grid.Row="1" Content="Name" HorizontalAlignment="Left" Margin="5,8,0,0" VerticalAlignment="Top"/>
             <TextBox Grid.Row="1" x:Name="textBox_name" Height="23" Margin="41,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="356"/>
             <Label Grid.Row="1" Content="Tags" Margin="411,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25"/>

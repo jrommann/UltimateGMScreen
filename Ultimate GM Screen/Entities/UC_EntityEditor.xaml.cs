@@ -45,14 +45,14 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         private void DatabaseManager_OnFoldersChanged()
-        {            
+        {
             var list = DatabaseManager.Folders_GetAll(FolderType.Note);
-            list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
+            list.Insert(0, new FolderEntry() { ID = FolderEntry.NO_PARENT_FOLDER, Name = "None" });           
             comboBox_parent.ItemsSource = list;           
 
             if (_current != null)
             {
-                if (_current.FolderID != -1)
+                if (_current.FolderID != FolderEntry.NO_PARENT_FOLDER)
                     comboBox_parent.SelectedIndex = comboBox_parent.Items.Cast<FolderEntry>().ToList().FindIndex(x => x.ID == _current.FolderID);
                 else
                     comboBox_parent.SelectedIndex = 0;

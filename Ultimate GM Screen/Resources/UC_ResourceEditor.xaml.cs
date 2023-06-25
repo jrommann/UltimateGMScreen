@@ -153,14 +153,18 @@ namespace Ultimate_GM_Screen.Resources
                 _current.Address = textbox_address.Text;
                 save = true;
             }
+
+            int parentID = FolderEntry.NO_PARENT_FOLDER;
+            var fd = comboBox_parent.SelectedItem;
+            if (fd != null)
+                parentID = (fd as FolderEntry).ID;
             
-            int parentID = (comboBox_parent.SelectedItem as FolderEntry).ID;
             if (_current.FolderID != parentID)
             {
                 save = true;
                 _current.FolderID = parentID;
                 folderChanged = true;
-            }
+            }            
 
             if (save)
             {

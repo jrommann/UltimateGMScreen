@@ -95,9 +95,13 @@ namespace Ultimate_GM_Screen.Resources
                             treeView.Items.Add(kv.Value);
                         else
                         {
-                            var treeviewItem = treeFolders[f.ParentID];
-                            if (treeviewItem != null)
+                            if (treeFolders.ContainsKey(f.ParentID))
+                            {
+                                var treeviewItem = treeFolders[f.ParentID];                             
                                 treeviewItem.Items.Add(kv.Value);
+                            }
+                            else
+                                treeView.Items.Add(kv.Value);
                         }
                     }
                     #endregion
@@ -117,6 +121,8 @@ namespace Ultimate_GM_Screen.Resources
                             TreeViewItem parent = null;
                             if (treeFolders.TryGetValue(n.FolderID, out parent))
                                 parent.Items.Add(tvi);
+                            else
+                                treeView.Items.Add(tvi);
                         }
                     }
                     #endregion
@@ -253,7 +259,8 @@ namespace Ultimate_GM_Screen.Resources
             if (treeView.SelectedItem != null)
             {
                 var r = (treeView.SelectedItem as TreeViewItem).Header as Resource;
-                ChangeResource(r, true);
+                if(r != null)
+                    ChangeResource(r, true);
             }
         }
     }

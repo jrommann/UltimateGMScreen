@@ -135,6 +135,11 @@ namespace Ultimate_GM_Screen
                     Delete_Revisions(item as Entity);
                 }
 
+                if (item is FolderEntry)
+                {
+                    RemoveParentFolder(item as FolderEntry);
+                }
+
                 TriggerEvents(item, false, true);
             }
             catch(SystemException x)
@@ -367,6 +372,36 @@ namespace Ultimate_GM_Screen
         #endregion
 
         #region -> folder specific
+        private static void RemoveParentFolder(FolderEntry folderEntry)
+        {
+            var folders = _db.Table<FolderEntry>().Where(x => x.ParentID == folderEntry.ID);
+            foreach (var f in folders)
+            {
+                f.ParentID = FolderEntry.NO_PARENT_FOLDER;
+                Update(f, false);
+            }
+
+            if (folderEntry.Type == FolderType.Note)
+            {
+                var list = _db.Table<Entity>().Where(x => x.FolderID == folderEntry.ID);
+                foreach (var e in list)
+                {
+                    e.FolderID = FolderEntry.NO_PARENT_FOLDER;
+                    Update(e, false);
+                }
+            }
+            else if (folderEntry.Type == FolderType.Resource)
+            {
+                var list = _db.Table<Resource>().Where(x => x.FolderID == folderEntry.ID);
+                foreach (var e in list)
+                {
+                    e.FolderID = FolderEntry.NO_PARENT_FOLDER;
+                    Update(e, false);
+                }
+            }
+
+            OnFoldersChanged?.Invoke();
+        }
         static public List<FolderEntry> Folders_GetAll(FolderType type)
         {
             if (_db == null)

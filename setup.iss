@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Ultimate Tabletop Screen"
-#define MyAppVersion "8.3"
+#define MyAppVersion "8.4"
 #define MyAppPublisher "Rabid Design Studios"
 #define MyAppURL "https://www.rabiddesignstudios.com/"
 #define MyAppExeName "Ultimate Tabletop Screen.exe"
@@ -27,7 +27,7 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=.\releases
-OutputBaseFilename=Install Ultimate Tabletop Screen v{#MyAppVersion}
+OutputBaseFilename=Ultimate Tabletop Screen v{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern

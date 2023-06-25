@@ -2,7 +2,7 @@
 Single windows desktop application for GMing and playing table top games in virtual and in person environments.
 
 - More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
-- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_8.3
+- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_8.4
 
 ## Requirements
 * Windows 10 or higher.
@@ -20,6 +20,11 @@ Single windows desktop application for GMing and playing table top games in virt
 - Search all notes
 
 ## Changelog
+### 8.4
+- folder paths are sorted alphbetically
+- fixed bugs with folder deletion
+- moved roll button in dice entry to far left
+
 ### v8.3
 - Folder dropdown displays full folder path
 

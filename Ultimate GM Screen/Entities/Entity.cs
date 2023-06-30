@@ -17,6 +17,18 @@ namespace Ultimate_GM_Screen.Entities
         {
             return Path + Name;
         }
+        [Ignore]
+        public string FolderPath
+        {
+            get 
+            {
+                var name = DatabaseManager.Folder_Fullpath(FolderID);
+                if (string.IsNullOrEmpty(name))
+                    return ToString();
+                else
+                    return name + "/" + ToString();
+            }
+        }
     }
 }
 

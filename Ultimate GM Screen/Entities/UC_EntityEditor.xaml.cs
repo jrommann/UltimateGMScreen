@@ -46,9 +46,9 @@ namespace Ultimate_GM_Screen.Entities
 
         private void DatabaseManager_OnFoldersChanged()
         {
-            var list = DatabaseManager.Folders_GetAll(FolderType.Note);
-            list.Insert(0, new FolderEntry() { ID = FolderEntry.NO_PARENT_FOLDER, Name = "None" });
+            var list = DatabaseManager.Folders_GetAll(FolderType.Note);            
             list.Sort((x, y) => x.Fullpath.CompareTo(y.Fullpath));
+            list.Insert(0, new FolderEntry() { ID = FolderEntry.NO_PARENT_FOLDER, Name = "None" });
             comboBox_parent.ItemsSource = list;           
 
             if (_current != null)
@@ -82,6 +82,7 @@ namespace Ultimate_GM_Screen.Entities
             {
                 textBox_path.Visibility = Visibility.Hidden;
                 lbl_path.Visibility = Visibility.Hidden;
+                textBox_path.Text = "";
             }
             else
             {

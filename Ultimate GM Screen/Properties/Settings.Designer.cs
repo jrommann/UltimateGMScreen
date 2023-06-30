@@ -37,7 +37,7 @@ namespace Ultimate_GM_Screen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8.4.0.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8.5.0.0")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));

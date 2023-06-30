@@ -29,7 +29,9 @@ namespace Ultimate_GM_Screen.Entities
         {
             InitializeComponent();
 
-            listBox_choices.ItemsSource = DatabaseManager.Entities_GetAll();
+            var list = DatabaseManager.Entities_GetAll();
+            list.Sort((x, y) => x.FolderPath.CompareTo(y.FolderPath));
+            listBox_choices.ItemsSource = list;
         }
 
         public void Load(Entity parent, EntityRelationship rel, bool isEdit)

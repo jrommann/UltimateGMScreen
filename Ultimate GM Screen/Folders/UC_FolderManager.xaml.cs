@@ -39,7 +39,8 @@ namespace Ultimate_GM_Screen.Folders
         #region -> notes
         void Note_UpdateParentList()
         {
-            var list = DatabaseManager.Folders_GetAll(FolderType.Note);
+            var list = DatabaseManager.Folders_GetAll(FolderType.Note);            
+            list.Sort((x, y) => x.Fullpath.CompareTo(y.Fullpath));
             list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
             comboBox_notes.ItemsSource = list;
             comboBox_notes.SelectedIndex = 0;
@@ -135,7 +136,8 @@ namespace Ultimate_GM_Screen.Folders
         #region -> resources
         void Resources_UpdateParentList()
         {
-            var list = DatabaseManager.Folders_GetAll(FolderType.Resource);
+            var list = DatabaseManager.Folders_GetAll(FolderType.Resource);            
+            list.Sort((x, y) => x.Fullpath.CompareTo(y.Fullpath));
             list.Insert(0, new FolderEntry() { ID = -1, Name = "None" });
             comboBox_resources.ItemsSource = list;
             comboBox_resources.SelectedIndex = 0;

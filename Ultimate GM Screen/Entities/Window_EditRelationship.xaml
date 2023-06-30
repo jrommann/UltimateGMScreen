@@ -6,11 +6,17 @@
             xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
             xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
              xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
+                             xmlns:dbFolder="clr-namespace:Ultimate_GM_Screen.Folders"
              mc:Ignorable="d" Width="400
                              " Height="400
                              ">
+    <adonisControls:AdonisWindow.Resources>
+        <DataTemplate x:Key="FolderEntryTemplate" DataType="{x:Type local:Entity}">
+            <TextBlock Text="{Binding FolderPath}" />
+        </DataTemplate>
+    </adonisControls:AdonisWindow.Resources>
     <Grid>
-        <ListBox x:Name="listBox_choices" Margin="10,60,10,40"/>
+        <ListBox x:Name="listBox_choices" Margin="10,60,10,40" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
         <TextBox x:Name="textBox_description" Height="23" Margin="80,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
@@ -23,8 +29,8 @@
         </TextBox>
         <Label x:Name="label" Content="Description" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="Relation" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button_save" Content="Save" Margin="10,0,224,10" VerticalAlignment="Bottom" Click="button_save_Click"/>
-        <Button x:Name="button_cancel" Content="Cancel" Margin="224,0,10,10" VerticalAlignment="Bottom" Click="button_cancel_Click"/>
+        <Button x:Name="button_save" Content="Save" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="button_save_Click" HorizontalAlignment="Left" Width="158"/>
+        <Button x:Name="button_cancel" Content="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" Click="button_cancel_Click" HorizontalAlignment="Right" Width="158"/>
 
     </Grid>
 </adonisControls:AdonisWindow>

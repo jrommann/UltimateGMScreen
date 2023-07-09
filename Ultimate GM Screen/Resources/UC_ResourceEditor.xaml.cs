@@ -95,19 +95,6 @@ namespace Ultimate_GM_Screen.Resources
             else
                 _current = current;
 
-            if (string.IsNullOrEmpty(_current.Path))
-            {
-                textbox_path.Visibility = Visibility.Hidden;
-                textbox_path.Text = "";
-                label_path.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                textbox_path.Visibility = Visibility.Visible;
-                label_path.Visibility = Visibility.Visible;
-                textbox_path.Text = _current.Path;
-            }
-
             textbox_name.Text = _current.Name;
             textbox_address.Text = _current.Address;
 
@@ -120,17 +107,13 @@ namespace Ultimate_GM_Screen.Resources
         }
 
         public void New()
-        {
-            string path = textbox_path.Text;
+        {            
             Uri uri = browser.Source;
             Load();
 
             textbox_name.Text = "Resource " + DatabaseManager.Resource_Count();
             if(uri != null)
                 textbox_address.Text = uri.ToString();
-
-            if (checkBox_keepPath.IsChecked.Value)
-                textbox_path.Text = path;
         }
 
         public void Save()
@@ -140,12 +123,7 @@ namespace Ultimate_GM_Screen.Resources
 
             bool save = false;
             bool folderChanged = false;
-
-            if (_current.Path != textbox_path.Text)
-            {
-                _current.Path = textbox_path.Text;
-                save = true;
-            }
+                        
             if (_current.Name != textbox_name.Text)
             {
                 _current.Name = textbox_name.Text;

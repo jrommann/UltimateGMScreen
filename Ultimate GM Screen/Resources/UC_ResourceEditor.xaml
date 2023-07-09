@@ -27,15 +27,12 @@
                 <Button x:Name="newBtn" Content="New" Click="newBtn_Click"/>
                 <Button x:Name="pinBtn" Content="Pin" Click="pinBtn_Click"/>
                 <Button x:Name="popoutBtn" Content="Popout" Click="popoutBtn_Click"/>
-                <CheckBox x:Name="checkBox_keepPath" Content="Keep Path"/>
             </ToolBar>
         </ToolBarTray>
         <Label Grid.Row="1" Content="Folder" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="285,8,0,0" Width="43"/>
-        <ComboBox Grid.Row="1" x:Name="comboBox_parent" Margin="328,7,190,5" Height="23" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
+        <ComboBox Grid.Row="1" x:Name="comboBox_parent" Margin="328,7,10,5" Height="23" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
         <Label Content="Name" Grid.Row="1" HorizontalAlignment="Left" Margin="5,8,0,5"/>
-        <TextBox x:Name="textbox_name" Grid.Row="1" HorizontalAlignment="Left" Margin="43,6,0,5" Width="237"/>
-        <Label x:Name="label_path" Content="Path (Obsolete)"  Grid.Row="1" HorizontalAlignment="Right" Margin="0,8,97,6"/>
-        <TextBox x:Name="textbox_path"  Grid.Row="1" Margin="0,6,10,4" HorizontalAlignment="Right" Width="82"/>
+        <TextBox x:Name="textbox_name" Grid.Row="1" HorizontalAlignment="Left" Margin="43,6,0,5" Width="237"/>        
         <Label Grid.Row="2" Content="Address" Margin="0,10,753,5"/>
         <TextBox Grid.Row="2" x:Name="textbox_address" Margin="52,5,107,5"/>
         <Button x:Name="button_go" Content="GO" HorizontalAlignment="Right" Margin="0,5,67,4" Grid.Row="2" Width="35" Click="button_go_Click" />

@@ -55,7 +55,7 @@ namespace Ultimate_GM_Screen.Dice
                 var result = Roller.Roll(textbox_expression.Text);
                 ListboxResults.Items.Insert(0, string.Format("{0} : {1}", DiceEntry.Name, result.Value));
             }
-            catch (Exception x)
+            catch
             {
                 MessageBox.Show("Invalid dice text. Check your expression syntax.", "ERROR - Dice Experssion");
             }

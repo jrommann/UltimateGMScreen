@@ -4,33 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
-            xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+            xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"                             
              xmlns:local="clr-namespace:Ultimate_GM_Screen.Entities"
-                             xmlns:dbFolder="clr-namespace:Ultimate_GM_Screen.Folders"
+            xmlns:dbFolder="clr-namespace:Ultimate_GM_Screen.Folders"
              mc:Ignorable="d" Width="400
                              " Height="400
                              ">
     <adonisControls:AdonisWindow.Resources>
-        <DataTemplate x:Key="FolderEntryTemplate" DataType="{x:Type local:Entity}">
+        <DataTemplate x:Key="FolderEntryTemplate" DataType="{x:Type local:NoteListing}">
             <TextBlock Text="{Binding FolderPath}" />
-        </DataTemplate>
+        </DataTemplate>                    
     </adonisControls:AdonisWindow.Resources>
     <Grid>
-        <ListBox x:Name="listBox_choices" Margin="10,60,10,40" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
-        <TextBox x:Name="textBox_description" Height="23" Margin="80,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.307"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
+        <ListBox x:Name="listBox_choices" Margin="10,85,10,40" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
+        <TextBox x:Name="textBox_description" Height="23" Margin="80,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
         <Label x:Name="label" Content="Description" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy" Content="Relation" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy" Content="Relation" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
         <Button x:Name="button_save" Content="Save" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="button_save_Click" HorizontalAlignment="Left" Width="158"/>
         <Button x:Name="button_cancel" Content="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" Click="button_cancel_Click" HorizontalAlignment="Right" Width="158"/>
+        <StackPanel Orientation="Horizontal" Height="26" VerticalAlignment="Top" Margin="10,38,10,0" HorizontalAlignment="Stretch">
+            <Label Content="Search" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBox x:Name="textBox_search" Margin="5,0" Width="302" TextChanged="textBox_search_TextChanged"/>
+            <Button x:Name="btn_ClearSearch" Content="X" HorizontalAlignment="Right" Click="btn_ClearSearch_Click"/>
+        </StackPanel>
 
     </Grid>
 </adonisControls:AdonisWindow>

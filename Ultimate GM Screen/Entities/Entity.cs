@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using Ultimate_GM_Screen;
 
 namespace Ultimate_GM_Screen.Entities
 {
@@ -15,7 +16,7 @@ namespace Ultimate_GM_Screen.Entities
         public int FolderID { get; set; } = -1;
         public override string ToString()
         {
-            return Path + Name;
+            return Name;
         }
 
         string _folderPath = string.Empty;
@@ -38,17 +39,36 @@ namespace Ultimate_GM_Screen.Entities
             }
         }
     }
-}
-
-public class NoteListing
-{
-    public int ID { get; set; }
-    public int FolderID { get; set; }
-    public string Path { get; set; }
-    public string Name { get; set; }
-
-    public override string ToString()
+    public class NoteListing
     {
-        return Name;
+        public int ID { get; set; }
+        public int FolderID { get; set; }
+        public string Path { get; set; }
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        string _folderPath = string.Empty;        
+        public string FolderPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_folderPath))
+                {
+                    var name = DatabaseManager.Folder_Fullpath(FolderID);
+                    if (string.IsNullOrEmpty(name))
+                        _folderPath = ToString();
+                    else
+                        _folderPath = name + "/" + ToString();
+                }
+
+                return _folderPath;
+            }
+        }
     }
 }
+
+

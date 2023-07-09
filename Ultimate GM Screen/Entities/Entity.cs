@@ -7,8 +7,7 @@ namespace Ultimate_GM_Screen.Entities
     public class Entity
     {
         [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
-        public string Path { get; set; }
+        public int ID { get; set; }        
         public string Name { get; set; }
         public string Details { get; set; }
         public string Tags { get; set; }
@@ -42,8 +41,7 @@ namespace Ultimate_GM_Screen.Entities
     public class NoteListing
     {
         public int ID { get; set; }
-        public int FolderID { get; set; }
-        public string Path { get; set; }
+        public int FolderID { get; set; }        
         public string Name { get; set; }
 
         public override string ToString()

@@ -276,7 +276,7 @@ namespace Ultimate_GM_Screen
             return  _db.Table<Entity>().AsEnumerable()
                 .Where(x => x.Archived == false)
                 .OrderBy(x => x.ToString())
-                .Select(c => new NoteListing { ID = c.ID, FolderID = c.FolderID, Name = c.Name, Path = c.Path })
+                .Select(c => new NoteListing { ID = c.ID, FolderID = c.FolderID, Name = c.Name, })
                 .ToList();
         }
         static public List<Entity> Entities_GetAll()
@@ -342,7 +342,7 @@ namespace Ultimate_GM_Screen
                 .Where(x => x.ToString().Contains(name, StringComparison.OrdinalIgnoreCase) || x.Tags.Contains(name, StringComparison.OrdinalIgnoreCase))
                 .Where(x => x.Archived == false)
                 .OrderBy(x => x.ToString())
-                .Select(c => new NoteListing { ID = c.ID, FolderID = c.FolderID, Name = c.Name, Path = c.Path})
+                .Select(c => new NoteListing { ID = c.ID, FolderID = c.FolderID, Name = c.Name})
                 .ToList();
         }
 

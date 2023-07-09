@@ -78,19 +78,6 @@ namespace Ultimate_GM_Screen.Entities
             else
                 _current = current;
 
-            if (string.IsNullOrEmpty(_current.Path))
-            {
-                textBox_path.Visibility = Visibility.Hidden;
-                lbl_path.Visibility = Visibility.Hidden;
-                textBox_path.Text = "";
-            }
-            else
-            {
-                textBox_path.Visibility = Visibility.Visible;
-                lbl_path.Visibility = Visibility.Visible;
-                textBox_path.Text = _current.Path;
-            }
-
             textBox_name.Text = _current.Name;
             textBox_tags.Text = _current.Tags;
             SetBrowserText(_current.Details);            
@@ -116,8 +103,7 @@ namespace Ultimate_GM_Screen.Entities
         }
 
         private void newBtn_Click(object sender, RoutedEventArgs e)
-        {
-            string path = textBox_path.Text;
+        {            
             Load();
 
             textBox_name.Text = "New Note";            
@@ -130,13 +116,7 @@ namespace Ultimate_GM_Screen.Entities
 
             bool save = false;
             bool pathNameChanged = false;
-            var revision = new EntityRevision(_current);
-
-            if (_current.Path != textBox_path.Text)
-            {                
-                save = true;
-                _current.Path = textBox_path.Text;
-            }
+            var revision = new EntityRevision(_current);            
 
             if (_current.Name != textBox_name.Text)
             {

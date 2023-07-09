@@ -39,14 +39,12 @@
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Folder" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="5,8,0,0" Width="43"/>
-            <ComboBox Grid.Row="0" x:Name="comboBox_parent" Margin="48,5,403,2" Height="23" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
-            <Label x:Name="lbl_path" Grid.Row="0" Content="Path (Obsolete)" HorizontalAlignment="Right" Height="18" VerticalAlignment="Top" Margin="0,9,296,0"/>
-            <TextBox Grid.Row="0" x:Name="textBox_path" Height="23" Margin="0,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Right" Width="286"/>
-            <Label Grid.Row="1" Content="Name" HorizontalAlignment="Left" Margin="5,8,0,0" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="1" x:Name="textBox_name" Height="23" Margin="41,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="356"/>
-            <Label Grid.Row="1" Content="Tags" Margin="411,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25"/>
-            <TextBox Grid.Row="1" x:Name="textBox_tags" Height="23" Margin="441,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Label Grid.Row="1" Content="Folder" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Margin="5,8,0,0" Width="43"/>
+            <ComboBox Grid.Row="1" x:Name="comboBox_parent" Margin="48,5,10,2" Height="23" ItemTemplate="{StaticResource FolderEntryTemplate}"/>
+            <Label Grid.Row="0" Content="Name" HorizontalAlignment="Left" Margin="5,8,0,0" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="0" x:Name="textBox_name" Height="23" Margin="41,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="356"/>
+            <Label Grid.Row="0" Content="Tags" Margin="411,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25"/>
+            <TextBox Grid.Row="0" x:Name="textBox_tags" Height="23" Margin="441,5,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>
         <markdown:UC_MarkdownEditor x:Name="markdownEditor" Grid.Row="2"/>
         <GridSplitter Grid.Row="3" Background="#FF3D3D4C"></GridSplitter>

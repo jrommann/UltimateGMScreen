@@ -17,16 +17,24 @@ namespace Ultimate_GM_Screen.Entities
         {
             return Path + Name;
         }
+
+        string _folderPath = string.Empty;
+
         [Ignore]
         public string FolderPath
         {
             get 
             {
-                var name = DatabaseManager.Folder_Fullpath(FolderID);
-                if (string.IsNullOrEmpty(name))
-                    return ToString();
-                else
-                    return name + "/" + ToString();
+                if (string.IsNullOrEmpty(_folderPath))
+                {
+                    var name = DatabaseManager.Folder_Fullpath(FolderID);
+                    if (string.IsNullOrEmpty(name))
+                        _folderPath = ToString();
+                    else
+                        _folderPath = name + "/" + ToString();
+                }
+
+                return _folderPath;
             }
         }
     }
@@ -41,6 +49,6 @@ public class NoteListing
 
     public override string ToString()
     {
-        return Path + Name;
+        return Name;
     }
 }

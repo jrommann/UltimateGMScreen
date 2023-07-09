@@ -24,8 +24,19 @@ namespace Ultimate_GM_Screen.Folders
         public int ParentID { get; set; } = NO_PARENT_FOLDER;
         public FolderType Type { get; set; }
         public bool IsExpanded { get; set; } = true;
+
+        string _fullPath = string.Empty;
         [Ignore]
-        public string Fullpath { get { return DatabaseManager.Folder_Fullpath(ID); } }
+        public string Fullpath 
+        { 
+            get 
+            { 
+                if(string.IsNullOrEmpty(_fullPath))
+                    _fullPath = DatabaseManager.Folder_Fullpath(ID);
+
+                return _fullPath;
+            }
+        }
 
         public override string ToString()
         {

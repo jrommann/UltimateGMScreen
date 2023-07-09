@@ -89,5 +89,10 @@ namespace Ultimate_GM_Screen.Markdown
 
             _isEditMode = !_isEditMode;
         }
+
+        private void helpBtn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://commonmark.org/help/");
+        }
     }
 }

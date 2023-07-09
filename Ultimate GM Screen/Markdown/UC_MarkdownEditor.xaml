@@ -17,6 +17,7 @@
         <ToolBarTray x:Name="toolBar" Height="20" VerticalAlignment="Top" Grid.Row="0">
             <ToolBar>
                 <Button x:Name="editBtn" Content="View/Edit" Click="editBtn_Click" />
+                <Button x:Name="helpBtn" Content="Help" Click="helpBtn_Click" />
             </ToolBar>
         </ToolBarTray>
 

@@ -2,7 +2,7 @@
 Single windows desktop application for GMing and playing table top games in virtual and in person environments.
 
 - More Info - https://www.rabiddesignstudios.com/projects/ultimate-tabletop-screen/
-- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_8.5
+- Download - https://github.com/jrommann/UltimateGMScreen/releases/tag/release_9.0
 
 ## Requirements
 * Windows 10 or higher.
@@ -20,6 +20,12 @@ Single windows desktop application for GMing and playing table top games in virt
 - Search all notes
 
 ## Changelog
+### Release 9.0
+- Improved folder path performance
+- Removed the path field
+
+#### If you are still using the Path field DO NOT upgrade! It has been removed and no longer supported
+
 ### 8.5
 - added folder paths to relation linking
 - added folder paths to folder parent selection
